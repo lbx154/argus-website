@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Argus — 自治 AI 研究系统</title>
+<meta name="description" content="Argus 是一套 7×24 自治研究系统：自己定题、写代码、跑实验、写论文，并在禁读答案的约束下自创机制。">
+<link rel="icon" type="image/png" href="assets/argus-mark.png">
+<meta property="og:title" content="Argus — 自治 AI 研究系统">
+<meta property="og:description" content="它发明，不只是调参。7×24 自治跑通 research→论文，禁读答案下自创 37 个机制。">
+<meta property="og:image" content="https://argusbot.cn/assets/argus-og.png">
+<meta property="og:url" content="https://argusbot.cn"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+ :root{
+  --bg:#FAF9F6;--ink:#1B1813;--mut:#6E665A;--faint:#9A9082;
+  --accent:#BF5A3E;--accent2:#A24A32;--line:#E9E4DA;--card:#FFFFFF;--warm:#F2EEE5;--ink2:#26221C;
+  --serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
+ }
+ *{box-sizing:border-box;margin:0;padding:0}
+ html{scroll-behavior:smooth}
+ body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
+ .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+ a{color:inherit;text-decoration:none}
+ .mono{font-family:var(--mono)}
+ .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+ h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,44px);line-height:1.07;letter-spacing:-.015em}
+ nav{position:sticky;top:0;z-index:60;background:rgba(250,249,246,.82);backdrop-filter:saturate(150%) blur(12px);border-bottom:1px solid var(--line)}
+ nav .row{display:flex;align-items:center;justify-content:space-between;height:66px}
+ .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;letter-spacing:-.01em}
+ .brand .logo{width:26px;height:26px;border-radius:7px;display:block}
+ .nav-links{display:flex;gap:32px;font-size:14.5px;color:var(--mut)}
+ .nav-links a:hover{color:var(--ink)}
+ .nav-r{display:flex;align-items:center;gap:16px}
+ .nav-r .si{font-size:14.5px;color:var(--mut)}.nav-r .si:hover{color:var(--ink)}
+ .nav-cta{font-size:14px;padding:9px 18px;background:var(--ink);color:var(--bg);border-radius:100px;transition:.15s}
+ .nav-cta:hover{background:var(--accent)}
+ .lang-toggle{font-family:var(--mono);font-size:12.5px;color:var(--mut);background:none;border:1px solid var(--line);border-radius:100px;padding:6px 13px;cursor:pointer;transition:.15s;letter-spacing:.03em}
+ .lang-toggle:hover{border-color:var(--ink);color:var(--ink)}
+ @media(max-width:820px){.nav-links,.nav-r .si{display:none}}
+ .hero{padding:80px 0 64px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+ @media(max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding:56px 0 48px}}
+ .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mut);background:var(--warm);border:1px solid var(--line);padding:6px 13px;border-radius:100px;margin-bottom:26px}
+ .eyebrow .live{width:7px;height:7px;border-radius:50%;background:#1Fae74;box-shadow:0 0 0 3px rgba(31,174,116,.18)}
+ h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6.4vw,68px);line-height:1.03;letter-spacing:-.02em;margin-bottom:24px}
+ h1 em{font-style:italic;color:var(--accent)}
+ .lede{font-size:clamp(16.5px,2vw,19px);color:var(--mut);max-width:540px;margin-bottom:34px}
+ .lede b{color:var(--ink);font-weight:600}
+ .cta-row{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+ .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:13px 24px;border-radius:100px;transition:.16s}
+ .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent2)}
+ .btn-ghost{border:1px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--ink)}
+ .term{background:var(--ink);border-radius:14px;box-shadow:0 30px 60px -20px rgba(27,24,19,.4),0 0 0 1px rgba(27,24,19,.06);overflow:hidden;font-family:var(--mono);font-size:12.5px}
+ .term .bar{display:flex;align-items:center;gap:7px;padding:12px 15px;background:#26221C;border-bottom:1px solid #322d25}
+ .term .bar i{width:11px;height:11px;border-radius:50%;background:#4a443b}
+ .term .bar i:nth-child(1){background:#e0664f}.term .bar i:nth-child(2){background:#dca94a}.term .bar i:nth-child(3){background:#54b487}
+ .term .bar span{margin-left:10px;color:#857c6e;font-size:11.5px}
+ .term .body{padding:18px 18px 22px;color:#cfc7b8;line-height:1.85}
+ .term .pr{color:#7e7567}.term .ok{color:#54b487}.term .ac{color:#e08763}.term .di{color:#857c6e}
+ .term .pipe{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}
+ .term .pipe span{font-size:10.5px;padding:3px 8px;border-radius:5px;background:#2c2820;color:#857c6e}
+ .term .pipe span.done{background:#1f3b2e;color:#6dc79b}
+ .term .pipe span.run{background:#3b2c1f;color:#e0a06d;border:1px solid #5a3e29}
+ .term .big{font-family:var(--serif);font-size:30px;color:#fff;margin:8px 0 2px}
+ .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--warm)}
+ .trust .in{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;padding:34px 0}
+ @media(max-width:820px){.trust .in{grid-template-columns:repeat(3,1fr);gap:24px 12px}}
+ @media(max-width:480px){.trust .in{grid-template-columns:repeat(2,1fr)}}
+ .trust .s .n{font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:-.02em}
+ .trust .s .l{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:2px;letter-spacing:.03em}
+ section{padding:90px 0}
+ .feature{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+ .feature.rev .vis{order:-1}
+ @media(max-width:860px){.feature{grid-template-columns:1fr;gap:32px}.feature.rev .vis{order:0}}
+ .feature h2{margin-bottom:16px}
+ .feature p{color:var(--mut);font-size:16.5px;margin-bottom:14px;max-width:480px}
+ .feature .lnk{font-weight:600;color:var(--accent);font-size:15px;display:inline-flex;gap:6px;align-items:center;margin-top:6px}
+ .feature .lnk:hover{gap:10px}
+ .vis{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;min-height:280px}
+ .roles{display:flex;flex-direction:column;gap:14px}
+ .role{display:flex;align-items:center;gap:14px;background:var(--warm);border:1px solid var(--line);border-radius:12px;padding:15px 18px}
+ .role .b{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;color:#fff;flex:0 0 38px}
+ .role .t b{display:block;font-size:15px}.role .t span{font-size:12.5px;color:var(--mut)}
+ .roles .arrow{text-align:center;color:var(--faint);font-size:13px;margin:-6px 0}
+ .bars{display:flex;flex-direction:column;gap:11px}
+ .bars .row{display:flex;align-items:center;gap:12px;font-size:12.5px}
+ .bars .row .lab{flex:0 0 96px;font-family:var(--mono);font-size:11px;color:var(--mut);text-align:right}
+ .bars .row .track{flex:1;height:22px;background:var(--warm);border-radius:6px;position:relative;overflow:hidden}
+ .bars .row .track i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,#d98a6e,var(--accent))}
+ .bars .row .v{flex:0 0 56px;font-family:var(--mono);font-size:11.5px;font-weight:500}
+ .bars .row.win .track i{background:linear-gradient(90deg,#3fb98a,#1fae74)}
+ .bars .row.floor .track i{background:#c3bbac}
+ .how{background:var(--ink);color:#EDE8DE}
+ .how .pipe-steps{display:flex;gap:0;flex-wrap:wrap;margin-top:36px;border:1px solid #34302a;border-radius:14px;overflow:hidden}
+ .how .st{flex:1 1 12%;min-width:118px;padding:20px 16px;border-right:1px solid #34302a}
+ .how .st:last-child{border-right:none}
+ .how .st .i{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:9px}
+ .how .st b{font-size:14px;display:block;color:#FBF8F2}
+ .how .st span{font-size:11.5px;color:#9b9384}
+ .how h2{color:#FBF8F2}.how .sub{color:#A89F90;font-size:16px;max-width:560px;margin-top:14px}
+ .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+ @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+ .paper{display:flex;gap:22px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;transition:.16s}
+ .paper:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 16px 36px -22px rgba(191,90,62,.3)}
+ .paper .pg{flex:0 0 60px;height:80px;background:var(--warm);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);color:var(--mut)}
+ .paper .pg .n{font-size:21px;color:var(--accent);font-weight:500}
+ .paper .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+ .paper h3{font-family:var(--serif);font-weight:500;font-size:19px;line-height:1.25;margin-bottom:8px}
+ .paper p{color:var(--mut);font-size:13.5px;line-height:1.55;margin-bottom:12px}
+ .paper .acts{display:flex;gap:14px;font-size:13px;font-weight:600}
+ .paper .acts a,.paper .acts span{color:var(--accent)}.paper .acts .d{color:var(--faint);font-weight:400}
+ .miles{display:flex;flex-direction:column}
+ .mile{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--line)}
+ @media(max-width:600px){.mile{grid-template-columns:1fr;gap:4px}}
+ .mile .d{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+ .mile b{font-family:var(--serif);font-weight:500;font-size:18px}
+ .mile p{color:var(--mut);font-size:14.5px;margin-top:3px}
+ .ctaband{background:var(--accent);color:#fff;border-radius:24px;padding:60px 48px;text-align:center}
+ .ctaband h2{color:#fff;margin-bottom:14px}
+ .ctaband p{color:#ffe6dc;font-size:17px;max-width:520px;margin:0 auto 28px}
+ .ctaband .btn-white{background:#fff;color:var(--accent2)}.ctaband .btn-white:hover{background:#fff1ec}
+ .ctaband .btn-out{border:1px solid rgba(255,255,255,.5);color:#fff}.ctaband .btn-out:hover{border-color:#fff}
+ .domains{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+ @media(max-width:860px){.domains{grid-template-columns:repeat(2,1fr)}}
+ @media(max-width:480px){.domains{grid-template-columns:1fr}}
+ .dcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.16s}
+ .dcard:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 16px 36px -24px rgba(191,90,62,.35)}
+ .dcard img{width:54px;height:54px;display:block;margin-bottom:14px}
+ .dcard h3{font-family:var(--serif);font-weight:500;font-size:18px;margin-bottom:6px}
+ .dcard p{color:var(--mut);font-size:13.5px;line-height:1.55}
+ .dcard .st{font-family:var(--mono);font-size:11px;color:var(--accent);margin-top:12px;letter-spacing:.04em}
+ footer{border-top:1px solid var(--line);padding:64px 0 50px}
+ .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;margin-bottom:48px}
+ @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr;gap:32px 20px}}
+ .fcol h5{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+ .fcol a{display:block;color:var(--mut);font-size:14px;padding:5px 0}.fcol a:hover{color:var(--ink)}
+ .fbrand .quote{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.5;max-width:300px;margin-bottom:14px}
+ .fbar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:26px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--faint)}
+
+ .lang-select{position:relative}
+ .lang-btn{font-family:var(--mono);font-size:12.5px;color:var(--mut);background:none;border:1px solid var(--line);border-radius:100px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s}
+ .lang-btn:hover{border-color:var(--ink);color:var(--ink)}
+ .lang-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 40px -12px rgba(27,24,19,.22);padding:6px;min-width:160px;display:none;z-index:80}
+ .lang-menu.open{display:block}
+ .lang-menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:14px;color:var(--ink);cursor:pointer}
+ .lang-menu button:hover{background:var(--warm)}
+ .lang-menu button.active{color:var(--accent);font-weight:600}
+ .lang-menu button span{font-size:16px}
+</style></head><body>
+
+<nav><div class="wrap row">
+  <div class="brand"><img class="logo" src="assets/argus-mark.png" alt="Argus">Argus</div>
+  <div class="nav-links">
+    <a href="#what" data-en="System" data-ja="システム" data-ko="시스템" data-fr="Système" data-de="System" data-es="Sistema">系统</a><a href="#result" data-en="Invention" data-ja="発明" data-ko="발명" data-fr="Invention" data-de="Erfindung" data-es="Invención">发明实验</a><a href="#domains" data-en="Domains" data-ja="領域" data-ko="도메인" data-fr="Domaines" data-de="Domänen" data-es="Dominios">领域</a><a href="#research" data-en="Research" data-ja="研究" data-ko="연구" data-fr="Recherche" data-de="Forschung" data-es="Investigación">研究</a><a href="blog.html" data-en="Blog" data-ja="ブログ" data-ko="블로그" data-fr="Blog" data-de="Blog" data-es="Blog">博客</a><a href="how.html" data-en="How it works" data-ja="仕組み" data-ko="작동 방식" data-fr="Fonctionnement" data-de="Funktionsweise" data-es="Cómo funciona">原理</a>
+  </div>
+  <div class="nav-r">
+    <a class="si" href="start.html" data-en="Get started" data-ja="始める" data-ko="시작하기" data-fr="Commencer" data-de="Loslegen" data-es="Comenzar">开始使用</a>
+    <a class="si" href="https://dash.argusbot.cn" data-en="Live dashboard" data-ja="ライブダッシュボード" data-ko="실시간 대시보드" data-fr="Tableau de bord en direct" data-de="Live-Dashboard" data-es="Panel en vivo">实时看板</a>
+    <div class="lang-select" id="langSelect">
+    <button class="lang-btn" id="langBtn"><span id="langFlag">🇨🇳</span> <span id="langLabel">中文</span> <span style="opacity:.5">▾</span></button>
+    <div class="lang-menu" id="langMenu">
+      <button data-lang="cn"><span>🇨🇳</span> 简体中文</button>
+      <button data-lang="en"><span>🇺🇸</span> English</button>
+      <button data-lang="ja"><span>🇯🇵</span> 日本語</button>
+      <button data-lang="ko"><span>🇰🇷</span> 한국어</button>
+      <button data-lang="fr"><span>🇫🇷</span> Français</button>
+      <button data-lang="de"><span>🇩🇪</span> Deutsch</button>
+      <button data-lang="es"><span>🇪🇸</span> Español</button>
+    </div>
+  </div>
+    <a class="nav-cta" href="benchmark.html" data-en="Benchmark" data-ja="Benchmark" data-ko="Benchmark" data-fr="Benchmark" data-de="Benchmark" data-es="Benchmark">看 Benchmark</a>
+  </div>
+</div></nav>
+
+<header class="hero wrap">
+  <div>
+    <span class="eyebrow"><span class="live"></span><span data-en="Running autonomously 7×24 · three daemons" data-ja="自律稼働 7×24 ・ 3つのデーモン" data-ko="7×24 자율 실행 · 세 개의 데몬" data-fr="Fonctionnement autonome 7×24 · trois démons" data-de="Autonomer Betrieb rund um die Uhr 7×24 · drei Daemons" data-es="Funcionando de forma autónoma 7×24 · tres demonios">7×24 自治运行中 · 三个 daemon</span></span>
+    <h1 data-en="An autonomous AI researcher.<br>It <em>invents</em>, not just tunes." data-ja="自律型AI研究者。<br>それは単なる調整ではなく、<em>発明</em>する。" data-ko="자율적인 AI 연구자.<br>그것은 단순히 조정하는 것이 아니라 <em>발명합니다</em>." data-fr="Un chercheur IA autonome.<br>Il <em>invente</em>, il ne se contente pas d’ajuster." data-de="Ein autonomer KI-Forscher.<br>Er <em>erfindet</em>, nicht nur optimiert er." data-es="Un investigador de IA autónomo.<br><em>Inventa</em>, no solo ajusta.">自治的 AI 研究系统。<br>它<em>发明</em>，不只是调参。</h1>
+    <p class="lede" data-en="Argus picks its own problems, writes the code, runs the experiments, writes the paper. Forbidden from reading the answer, it started from a public baseline and invented <b>37 kernel-level mechanisms</b> on its own — the best one lands below the same-protocol fair floor." data-ja="Argusは自ら課題を選び、コードを書き、実験を走らせ、論文を書く。答えを読むことを禁じられたまま、公開ベースラインから出発し、<b>37個のカーネルレベル機構</b>を独力で発明した――最良のものは同一プロトコルの公正な下限を下回る。" data-ko="Argus는 스스로 문제를 선택하고, 코드를 작성하고, 실험을 실행하고, 논문을 씁니다. 정답을 읽는 것은 금지된 상태에서 공개 베이스라인으로 시작해 스스로 <b>37개의 커널 수준 메커니즘</b>을 발명했으며, 그중 최고 성과는 동일 프로토콜의 공정 하한선 아래에 도달합니다." data-fr="Argus choisit ses propres problèmes, écrit le code, exécute les expériences, rédige l’article. Interdit de lire la réponse, il est parti d’une base publique et a inventé <b>37 mécanismes au niveau kernel</b> par lui-même — le meilleur descend sous le plancher d’équité du même protocole." data-de="Argus wählt seine Probleme selbst, schreibt den Code, führt die Experimente aus und schreibt das Paper. Da es verboten war, die Antwort zu lesen, startete es von einer öffentlichen Baseline und erfand <b>37 Mechanismen auf Kernel-Ebene</b> eigenständig — der beste davon liegt unter derselben protokollkonformen Fair-Floor." data-es="Argus elige sus propios problemas, escribe el código, ejecuta los experimentos, redacta el artículo. Con prohibición de leer la respuesta, partió de una referencia pública e inventó <b>37 mecanismos a nivel de kernel</b> por su cuenta — el mejor queda por debajo del fair floor del mismo protocolo.">Argus 自己定题、写代码、跑实验、写论文。在<b>禁止读答案</b>的约束下，它从一个公开基线出发自创了 <b>37 个内核机制</b>——最好的一个，在同协议公平地板之下。</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="benchmark.html" data-en="See the nanochat invention run →" data-ja="nanochatの発明実行を見る →" data-ko="nanochat 발명 실행 보기 →" data-fr="Voir l’exécution de l’invention nanochat →" data-de="Den Lauf der nanochat-Erfindung ansehen →" data-es="Ver la ejecución de la invención de nanochat →">看 nanochat 发明实验 →</a>
+      <a class="btn btn-ghost" href="#research" data-en="Read the papers" data-ja="論文を読む" data-ko="논문 읽기" data-fr="Lire les articles" data-de="Die Papers lesen" data-es="Leer los artículos">读论文成品</a>
+    </div>
+  </div>
+  <div class="term">
+    <div class="bar"><i></i><i></i><i></i><span>argus-skill — nanochat-invent</span></div>
+    <div class="body">
+      <div><span class="pr">$</span> argus-skill --status</div>
+      <div class="di">daemon: <span class="ok">alive</span> · continuous · 60 missions</div>
+      <div class="pipe">
+        <span class="done">research ✓</span><span class="done">profile ✓</span><span class="done">invent ✓</span><span class="run">measure ●</span><span>report</span>
+      </div>
+      <div class="di">// 37 invented mechanisms · 6× 10-seed · no peeking</div>
+      <div><span class="pr">→</span> legalfloor_ropermsbackfused <span class="di">(q/k rotary→rmsnorm)</span></div>
+      <div class="big">val_bpb 0.9874 <span class="ok" style="font-size:14px">✓ PASS-A</span></div>
+      <div class="di">beats fair floor 0.9879 · 10-seed mean · no cherry-pick</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" style="padding-bottom:8px"><img src="assets/hero-visual.png" alt="Argus research pipeline" style="width:100%;border:1px solid var(--line);border-radius:18px;display:block;background:var(--card)"></div>
+
+<div class="trust"><div class="wrap in">
+  <div class="s"><div class="n">66k</div><div class="l" data-en="lines of Python" data-ja="Pythonの行数" data-ko="Python 코드 줄 수" data-fr="lignes de Python" data-de="Zeilen Python" data-es="líneas de Python">行 Python</div></div>
+  <div class="s"><div class="n">137</div><div class="l" data-en="tests · CI" data-ja="テスト ・ CI" data-ko="테스트 · CI" data-fr="tests · CI" data-de="Tests · CI" data-es="pruebas · CI">测试 · CI</div></div>
+  <div class="s"><div class="n">37</div><div class="l" data-en="invented mechanisms" data-ja="発明された機構" data-ko="발명된 메커니즘" data-fr="mécanismes inventés" data-de="erfundene Mechanismen" data-es="mecanismos inventados">自创机制</div></div>
+  <div class="s"><div class="n">2</div><div class="l" data-en="papers shipped" data-ja="公開済み論文" data-ko="출고된 논문" data-fr="articles publiés" data-de="veröffentlichte Papers" data-es="artículos publicados">自治产出论文</div></div>
+  <div class="s"><div class="n">5</div><div class="l" data-en="research domains" data-ja="研究領域" data-ko="연구 도메인" data-fr="domaines de recherche" data-de="Forschungsdomänen" data-es="dominios de investigación">研究领域</div></div>
+</div></div>
+
+<section id="what"><div class="wrap">
+  <div class="feature">
+    <div>
+      <div class="kicker" data-en="System · three-role agent" data-ja="システム ・ 3役エージェント" data-ko="시스템 · 세 역할 에이전트" data-fr="Système · agent à trois rôles" data-de="System · Agent mit drei Rollen" data-es="Sistema · agente de tres roles">系统 · 三角色 agent</div>
+      <h2 data-en="One dumb harness, three agents, the win defined outside." data-ja="愚直なハーネス1つ、エージェント3つ、勝敗の定義は外部にある。" data-ko="단순한 하네스 하나, 에이전트 셋, 승리는 외부에서 정의됩니다." data-fr="Un harnais simple, trois agents, la victoire définie à l’extérieur." data-de="Ein dummes Harness, drei Agenten, der Sieg wird extern definiert." data-es="Un arnés simple, tres agentes, la victoria definida fuera.">一个笨管道，三个 agent，胜负永远外置。</h2>
+      <p data-en="The harness does not think for the agents — it moves state, checks form, and leaves the verdict to an external judge. Planner sets direction, Engineer writes and runs, Reviewer plays the adversary. Three roles, three separate LLMs, none vouching for another." data-ja="ハーネスはエージェントの代わりに考えない――状態を動かし、形式を確認し、判定は外部の審判に委ねる。Plannerが方向を定め、Engineerが書いて実行し、Reviewerが敵対者を演じる。3つの役割、3つの別々のLLM、互いに誰も他者を保証しない。" data-ko="하네스는 에이전트를 대신해 생각하지 않습니다 — 상태를 이동시키고, 형식을 점검하며, 판정은 외부 심판에게 맡깁니다. Planner가 방향을 정하고, Engineer가 작성하고 실행하며, Reviewer가 적대자 역할을 합니다. 세 역할, 세 개의 분리된 LLM, 어느 것도 다른 하나를 보증하지 않습니다." data-fr="Le harnais ne pense pas à la place des agents — il déplace l’état, vérifie la forme et laisse le verdict à un juge externe. Planner fixe la direction, Engineer écrit et exécute, Reviewer joue l’adversaire. Trois rôles, trois LLM distincts, aucun ne se porte garant pour un autre." data-de="Das Harness denkt nicht für die Agenten — es bewegt Zustand, prüft die Form und überlässt das Urteil einem externen Richter. Planner gibt die Richtung vor, Engineer schreibt und führt aus, Reviewer spielt den Gegner. Drei Rollen, drei separate LLMs, keines bürgt für ein anderes." data-es="El arnés no piensa por los agentes — mueve el estado, verifica la forma y deja el veredicto a un juez externo. Planner marca la dirección, Engineer escribe y ejecuta, Reviewer hace de adversario. Tres roles, tres LLM separados, ninguno avala a otro.">管道不替 agent 思考——它搬运状态、判定形式、把胜负留给外部裁决。Planner 定方向，Engineer 写代码和跑实验，Reviewer 当对手审。三个角色各跑各的 LLM，谁也不替谁背书。</p>
+      <p data-en="The smart part is the agent. The honest part is the harness." data-ja="賢い部分はエージェント。誠実な部分はハーネス。" data-ko="영리한 부분은 에이전트입니다. 정직한 부분은 하네스입니다." data-fr="La partie intelligente est l’agent. La partie honnête est le harnais." data-de="Der smarte Teil ist der Agent. Der ehrliche Teil ist das Harness." data-es="La parte inteligente es el agente. La parte honesta es el arnés.">聪明的部分在 agent，诚实的部分在管道。</p>
+      <a class="lnk" href="benchmark.html" data-en="See how it runs →" data-ja="動作の仕組みを見る →" data-ko="작동 방식 보기 →" data-fr="Voir comment cela fonctionne →" data-de="Sehen Sie, wie es läuft →" data-es="Ver cómo funciona →">看它怎么运转 →</a>
+    </div>
+    <div class="vis"><div class="roles">
+      <div class="role"><span class="b" style="background:#3b6fd4">P</span><span class="t"><b>Planner</b><span data-en="sets direction, queues work, judges project_done" data-ja="方向を定め、作業をキューに入れ、project_doneを判定する" data-ko="방향을 설정하고, 작업을 대기열에 넣고, project_done을 판정합니다" data-fr="fixe la direction, met le travail en file, juge project_done" data-de="gibt die Richtung vor, reiht Arbeit ein, bewertet project_done" data-es="marca la dirección, pone trabajo en cola, juzga project_done">定方向、排任务、判 project_done</span></span></div>
+      <div class="arrow">↓</div>
+      <div class="role"><span class="b" style="background:var(--accent)">E</span><span class="t"><b>Engineer</b><span data-en="writes code, runs experiments, profiles, edits kernels" data-ja="コードを書き、実験を走らせ、プロファイルし、カーネルを編集する" data-ko="코드를 작성하고, 실험을 실행하고, 프로파일링하고, 커널을 수정합니다" data-fr="écrit du code, exécute des expériences, profile, édite les kernels" data-de="schreibt Code, führt Experimente aus, profiliert, bearbeitet Kernel" data-es="escribe código, ejecuta experimentos, perfila, edita kernels">写代码、跑实验、profile、改内核</span></span></div>
+      <div class="arrow">↓</div>
+      <div class="role"><span class="b" style="background:#1fae74">R</span><span class="t"><b>Reviewer</b><span data-en="plays adversary, finds holes, demands bolder moves" data-ja="敵対者を演じ、穴を見つけ、より大胆な一手を求める" data-ko="적대자 역할을 하며, 허점을 찾고, 더 대담한 시도를 요구합니다" data-fr="joue l’adversaire, trouve les failles, exige des mouvements plus audacieux" data-de="spielt den Gegner, findet Lücken, fordert mutigere Schritte" data-es="hace de adversario, encuentra fallos, exige movimientos más audaces">当对手审、挑刺、要更 bold 的方向</span></span></div>
+    </div></div>
+  </div>
+</div></section>
+
+<section id="result" style="background:var(--warm);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <div class="feature rev">
+    <div>
+      <div class="kicker" data-en="Results · nanochat 5-minute pretraining" data-ja="結果 ・ nanochat 5分事前学習" data-ko="결과 · nanochat 5분 프리트레이닝" data-fr="Résultats · préentraînement nanochat de 5 minutes" data-de="Ergebnisse · 5-minütiges Pretraining von nanochat" data-es="Resultados · preentrenamiento de 5 minutos de nanochat">成果 · nanochat 5 分钟预训练</div>
+      <h2 data-en="It invents — then tells you honestly how much it won by." data-ja="発明し――そのうえで、どれだけ勝ったかを正直に伝える。" data-ko="발명하고 — 그다음 얼마나 이겼는지 정직하게 말합니다." data-fr="Il invente — puis vous dit honnêtement de combien il a gagné." data-de="Es erfindet — und sagt Ihnen dann ehrlich, wie viel es gewonnen hat." data-es="Inventa — y luego te dice con honestidad cuánto ganó.">它发明，然后诚实地告诉你赢了多少。</h2>
+      <p data-en="3 days, 60 missions, from Karpathy's public baseline, never reading the answer. Argus wrote fused kernels, an FP8 precision path, custom Triton forward/backward — 37 mechanisms, a postmortem for each." data-ja="3日間、60ミッション、Karpathyの公開ベースラインから、答えを一切読まずに。Argusは融合カーネル、FP8精度パス、カスタムTriton forward/backwardを書いた――37の機構、それぞれに事後分析つき。" data-ko="3일, 60개 미션, Karpathy의 공개 베이스라인에서 시작해 정답은 한 번도 읽지 않았습니다. Argus는 fused kernel, FP8 정밀도 경로, 맞춤형 Triton forward/backward를 작성했습니다 — 37개 메커니즘, 각각에 대한 사후 분석까지." data-fr="3 jours, 60 missions, à partir de la base publique de Karpathy, sans jamais lire la réponse. Argus a écrit des kernels fusionnés, un chemin de précision FP8, un forward/backward Triton personnalisé — 37 mécanismes, avec un postmortem pour chacun." data-de="3 Tage, 60 Missionen, ausgehend von Karpathys öffentlicher Baseline, ohne je die Antwort zu lesen. Argus schrieb fusionierte Kernel, einen FP8-Präzisionspfad, benutzerdefinierte Triton-Forward/Backward-Pfade — 37 Mechanismen, für jeden eine Postmortem-Analyse." data-es="3 días, 60 misiones, desde la referencia pública de Karpathy, sin leer nunca la respuesta. Argus escribió kernels fusionados, una ruta de precisión FP8, Triton forward/backward personalizados — 37 mecanismos, con un análisis postmortem para cada uno.">3 天、60 个 mission，从 karpathy 的公开基线出发，全程禁读答案。Argus 自写了融合内核、FP8 精度路径、自定义 Triton 前后向——37 个机制，逐个写 postmortem。</p>
+      <p data-en="Honestly: the single-mechanism PASS-A −0.0005 is within the confidence interval; the convincing −0.0024 comes from stacking mechanisms. Both are real 10-seed measurements, no cherry-picking." data-ja="正直に言えば、単一機構のPASS-A −0.0005は信頼区間内にある。説得力のある−0.0024は機構を積み重ねることで得られる。どちらも実際の10シード測定であり、チェリーピッキングはない。" data-ko="정직하게 말하면: 단일 메커니즘 PASS-A −0.0005는 신뢰 구간 내에 있습니다. 설득력 있는 −0.0024는 메커니즘을 쌓아 올린 결과입니다. 둘 다 체리피킹 없는 실제 10-seed 측정값입니다." data-fr="Honnêtement : le PASS-A à mécanisme unique de −0.0005 se situe dans l’intervalle de confiance ; le −0.0024 convaincant vient de l’empilement de mécanismes. Les deux sont de vraies mesures à 10 seeds, sans sélection opportuniste." data-de="Ehrlich: Das Einzelmechanismus-PASS-A von −0.0005 liegt innerhalb des Konfidenzintervalls; das überzeugende −0.0024 kommt aus dem Stapeln von Mechanismen. Beides sind echte Messungen mit 10 Seeds, kein Cherry-Picking." data-es="Con honestidad: el PASS-A de mecanismo único de −0.0005 está dentro del intervalo de confianza; el convincente −0.0024 proviene de apilar mecanismos. Ambos son mediciones reales con 10 semillas, sin cherry-picking.">诚实地说：单机制 PASS-A 的 −0.0005 在置信区间内；真正有说服力的 −0.0024 来自堆叠多个机制。两个数都是真测量，没挑种子。</p>
+      <a class="lnk" href="benchmark.html" data-en="Read the full benchmark report →" data-ja="完全なベンチマークレポートを読む →" data-ko="전체 벤치마크 보고서 읽기 →" data-fr="Lire le rapport complet du benchmark →" data-de="Den vollständigen Benchmark-Bericht lesen →" data-es="Leer el informe completo del benchmark →">看完整 benchmark 报告 →</a>
+    </div>
+    <div class="vis"><div class="bars">
+      <div class="row win"><span class="lab" data-en="PASS-A invent" data-ja="PASS-A 発明" data-ko="PASS-A 발명" data-fr="PASS-A invention" data-de="PASS-A erfinden" data-es="PASS-A invent">PASS-A 发明</span><span class="track"><i style="width:78%"></i></span><span class="v">0.9874</span></div>
+      <div class="row"><span class="lab" data-en="stacked fastest" data-ja="積み上げ最速" data-ko="누적 시 가장 빠름" data-fr="empilé le plus rapide" data-de="gestapelt am schnellsten" data-es="apilado más rápido">堆叠最快</span><span class="track"><i style="width:100%"></i></span><span class="v">0.9855</span></div>
+      <div class="row floor"><span class="lab" data-en="fair floor" data-ja="公正な下限" data-ko="공정 하한선" data-fr="plancher d’équité" data-de="Fair-Floor" data-es="fair floor">公平地板</span><span class="track"><i style="width:62%"></i></span><span class="v">0.9879</span></div>
+      <div class="row floor"><span class="lab" data-en="faithful floor" data-ja="忠実な下限" data-ko="충실한 하한선" data-fr="plancher fidèle" data-de="Faithful-Floor" data-es="faithful floor">忠实地板</span><span class="track"><i style="width:14%"></i></span><span class="v">0.9942</span></div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;text-align:right">val_bpb · lower is better · 10-seed mean</div>
+    </div></div>
+  </div>
+</div></section>
+
+<section class="how"><div class="wrap">
+  <div class="kicker" style="color:var(--accent)" data-en="How it works" data-ja="仕組み" data-ko="작동 방식" data-fr="Comment ça marche" data-de="So funktioniert es" data-es="Cómo funciona">怎么运转</div>
+  <h2 data-en="From a one-line goal to a PDF." data-ja="1行の目標からPDFへ。" data-ko="한 줄 목표에서 PDF까지." data-fr="D’un objectif en une ligne à un PDF." data-de="Von einem einzeiligen Ziel zu einem PDF." data-es="De un objetivo de una línea a un PDF.">从一句话目标，到一篇 PDF。</h2>
+  <p class="sub" data-en="The full research pipeline — eight stages, each with gates and rollback. The harness keeps it flowing; the thinking is the agent's." data-ja="完全な研究パイプライン――8つの段階があり、それぞれにゲートとロールバックがある。流れを保つのはハーネスであり、考えるのはエージェントだ。" data-ko="전체 연구 파이프라인 — 8단계, 각 단계마다 게이트와 롤백이 있습니다. 흐름은 하네스가 유지하고, 사고는 에이전트의 몫입니다." data-fr="Le pipeline complet de recherche — huit étapes, chacune avec des portes et un rollback. Le harnais maintient le flux ; la réflexion appartient à l’agent." data-de="Die vollständige Forschungspipeline — acht Stufen, jede mit Gates und Rollback. Das Harness hält sie im Fluss; das Denken ist Sache des Agenten." data-es="La canalización completa de investigación — ocho etapas, cada una con compuertas y rollback. El arnés la mantiene fluyendo; el pensamiento es del agente.">research 领域的完整流水线，八个阶段，每一步都有门禁和回滚——管道跑顺，思考留给 agent。</p>
+  <div class="pipe-steps">
+    <div class="st"><div class="i">01</div><b>research</b><span data-en="topic, lit" data-ja="トピック、文献" data-ko="주제, 문헌" data-fr="sujet, littérature" data-de="Thema, Lit" data-es="tema, lit">定题、文献</span></div>
+    <div class="st"><div class="i">02</div><b>plan</b><span data-en="experiment plan" data-ja="実験計画" data-ko="실험 계획" data-fr="plan d’expérience" data-de="Experimentplan" data-es="plan de experimento">实验方案</span></div>
+    <div class="st"><div class="i">03</div><b>benchmark</b><span data-en="build eval" data-ja="評価を構築" data-ko="평가 구축" data-fr="construire l’éval" data-de="Eval bauen" data-es="construir eval">建评测</span></div>
+    <div class="st"><div class="i">04</div><b>run</b><span data-en="run it" data-ja="実行する" data-ko="실행" data-fr="l’exécuter" data-de="ausführen" data-es="ejecutarlo">跑实验</span></div>
+    <div class="st"><div class="i">05</div><b>analysis</b><span data-en="results" data-ja="結果" data-ko="결과" data-fr="résultats" data-de="Ergebnisse" data-es="resultados">出结果</span></div>
+    <div class="st"><div class="i">06</div><b>draft</b><span data-en="write LaTeX" data-ja="LaTeXを書く" data-ko="LaTeX 작성" data-fr="rédiger LaTeX" data-de="LaTeX schreiben" data-es="escribir LaTeX">写 LaTeX</span></div>
+    <div class="st"><div class="i">07</div><b>review</b><span data-en="adversarial" data-ja="敵対的検証" data-ko="적대적 검토" data-fr="adversarial" data-de="adversarial" data-es="adversarial">对手评审</span></div>
+    <div class="st"><div class="i">08</div><b>submission</b><span data-en="ship PDF" data-ja="PDFを出荷" data-ko="PDF 출고" data-fr="livrer le PDF" data-de="PDF ausliefern" data-es="publicar PDF">出 PDF</span></div>
+  </div>
+</div></section>
+
+<section id="research"><div class="wrap">
+  <div style="max-width:600px;margin-bottom:42px">
+    <div class="kicker" data-en="Research · shipped papers" data-ja="研究 ・ 公開済み論文" data-ko="연구 · 출고된 논문" data-fr="Recherche · articles publiés" data-de="Forschung · veröffentlichte Papers" data-es="Investigación · artículos publicados">研究 · 论文成品</div>
+    <h2 data-en="Topic to PDF, the whole pipeline runs itself." data-ja="トピックからPDFまで、パイプライン全体が自走する。" data-ko="주제에서 PDF까지, 전체 파이프라인이 스스로 실행됩니다." data-fr="Du sujet au PDF, tout le pipeline s’exécute tout seul." data-de="Von Thema zu PDF, die gesamte Pipeline läuft von selbst." data-es="De tema a PDF, toda la canalización funciona sola.">从定题到 PDF，整条流水线自己跑完。</h2>
+    <p style="color:var(--mut);font-size:16.5px;margin-top:14px" data-en="The two below were produced end-to-end by Argus: it designed the benchmark, ran the eval, drew the figures, wrote the LaTeX, passed the structural gates, shipped the PDF. The structure is complete — whether the contribution is strong is for you and the reviewers to judge." data-ja="以下の2本はArgusによってエンドツーエンドで生成された。ベンチマークを設計し、評価を実行し、図を描き、LaTeXを書き、構造ゲートを通過し、PDFを出荷した。構成は完全であり、貢献の強さが十分かどうかは、あなたと査読者が判断することだ。" data-ko="아래 두 편은 Argus가 엔드투엔드로 제작했습니다: 벤치마크를 설계하고, eval을 실행하고, 그림을 그리고, LaTeX를 작성하고, 구조적 게이트를 통과하고, PDF를 출고했습니다. 구조는 완전합니다 — 기여가 강한지는 여러분과 리뷰어가 판단할 일입니다." data-fr="Les deux ci-dessous ont été produits de bout en bout par Argus : il a conçu le benchmark, exécuté l’éval, tracé les figures, rédigé le LaTeX, franchi les portes structurelles, livré le PDF. La structure est complète — à vous et aux reviewers de juger si la contribution est forte." data-de="Die beiden unten wurden Ende-zu-Ende von Argus erstellt: Es entwarf den Benchmark, führte die Eval aus, zeichnete die Abbildungen, schrieb das LaTeX, bestand die strukturellen Gates und lieferte das PDF aus. Die Struktur ist vollständig — ob der Beitrag stark ist, müssen Sie und die Reviewer beurteilen." data-es="Los dos de abajo fueron producidos de extremo a extremo por Argus: diseñó el benchmark, ejecutó la eval, dibujó las figuras, escribió el LaTeX, pasó las compuertas estructurales, publicó el PDF. La estructura está completa — si la contribución es fuerte, les corresponde a usted y a los reviewers juzgarlo.">下面两篇是 Argus 端到端产出的：自己设计 benchmark、跑评测、画图、写 LaTeX、过结构门、出 PDF。结构是完整的——贡献够不够硬，留给你和 reviewer 判断。</p>
+  </div>
+  <div class="grid2">
+    <a class="paper" href="papers/mmr-trap-v2.pdf" target="_blank">
+      <div class="pg"><span class="n">11</span><span style="font-size:10px" data-en="pp" data-ja="pp" data-ko="쪽" data-fr="pp" data-de="S." data-es="pp">页</span></div>
+      <div><div class="tag">Benchmark · mechanism</div>
+        <h3>MMR-Trap v2: Dual-Prompt Evaluation for Misleading Visuals</h3>
+        <p data-en="Misleading-visual questions force a choice, blending lure-following with the uncertainty a model should be allowed to express. v2 splits the two with a paired forced-choice / abstain-allowed prompt." data-ja="誤誘導的な視覚質問は、選択を強いながら、誘因追従と、本来モデルに許されるべき不確実性表明を混ぜ合わせてしまう。v2は、強制選択と棄権許可の対になったプロンプトでこの2つを分離する。" data-ko="오해를 유도하는 시각적 질문은 선택을 강요하며, 유인 추종과 모델이 표현할 수 있어야 하는 불확실성을 뒤섞습니다. v2는 강제 선택 / 기권 허용 프롬프트 한 쌍으로 이 둘을 분리합니다." data-fr="Les questions à visuel trompeur forcent un choix, mêlant le suivi du leurre à l’incertitude qu’un modèle devrait pouvoir exprimer. La v2 sépare les deux avec un prompt apparié choix forcé / abstention autorisée." data-de="Fragen mit irreführenden Visualisierungen erzwingen eine Entscheidung und verbinden dem Köder zu folgen mit der Unsicherheit, die ein Modell ausdrücken dürfen sollte. v2 trennt beides mit einem gepaarten Forced-Choice-/Abstain-Allowed-Prompt." data-es="Las preguntas visualmente engañosas fuerzan una elección, mezclando seguir el señuelo con la incertidumbre que a un modelo se le debería permitir expresar. v2 separa ambas con un prompt emparejado de elección forzada / abstención permitida.">误导性视觉题强迫模型选答案，把"跟着诱饵走"和"该弃权的不确定"混进一个分。v2 用配对的"强制选 / 允许弃权"双提示，把这两件事拆开。</p>
+        <div class="acts"><span data-en="Read PDF ↗" data-ja="PDFを読む ↗" data-ko="PDF 읽기 ↗" data-fr="Lire le PDF ↗" data-de="PDF lesen ↗" data-es="Leer PDF ↗">读 PDF ↗</span><span class="d">9 figs · 18 cites · 35 bib</span></div>
+      </div></a>
+    <a class="paper" href="papers/mmr-trap-v1.pdf" target="_blank">
+      <div class="pg"><span class="n">15</span><span style="font-size:10px" data-en="pp" data-ja="pp" data-ko="쪽" data-fr="pp" data-de="S." data-es="pp">页</span></div>
+      <div><div class="tag">Benchmark · long</div>
+        <h3>MMR-Trap: A Verifier-Backed Benchmark for Visual Misdirection</h3>
+        <p data-en="Multimodal benchmarks blend perception errors, world knowledge, and contradiction-checking into one score. MMR-Trap isolates one question: can a model reject a salient but wrong cue when everything else is correct." data-ja="マルチモーダルベンチマークは、知覚誤り、世界知識、矛盾検査を1つのスコアに混ぜ込んでしまう。MMR-Trapは1つの問いを切り出す。ほかがすべて正しいとき、モデルは目立つが誤った手がかりを退けられるか。" data-ko="멀티모달 벤치마크는 지각 오류, 세계 지식, 모순 검사를 하나의 점수로 뒤섞습니다. MMR-Trap은 하나의 질문을 분리해 냅니다: 다른 모든 것이 맞을 때, 모델은 눈에 띄지만 틀린 단서를 거부할 수 있는가." data-fr="Les benchmarks multimodaux mélangent les erreurs de perception, les connaissances du monde et la vérification des contradictions en un seul score. MMR-Trap isole une seule question : un modèle peut-il rejeter un indice saillant mais faux lorsque tout le reste est correct." data-de="Multimodale Benchmarks vermischen Wahrnehmungsfehler, Weltwissen und Widerspruchsprüfung zu einem einzigen Wert. MMR-Trap isoliert eine Frage: Kann ein Modell einen auffälligen, aber falschen Hinweis zurückweisen, wenn alles andere korrekt ist." data-es="Los benchmarks multimodales mezclan errores de percepción, conocimiento del mundo y comprobación de contradicciones en una sola puntuación. MMR-Trap aísla una pregunta: si un modelo puede rechazar una señal llamativa pero incorrecta cuando todo lo demás es correcto.">多模态 benchmark 把感知错误、世界知识、矛盾检查搅成一个分。MMR-Trap 单独问：模型能不能在其余信息都对时，拒绝一个显眼但错误的诱饵。</p>
+        <div class="acts"><span data-en="Read PDF ↗" data-ja="PDFを読む ↗" data-ko="PDF 읽기 ↗" data-fr="Lire le PDF ↗" data-de="PDF lesen ↗" data-es="Leer PDF ↗">读 PDF ↗</span><span class="d">7 figs · 37 bib · 13 models</span></div>
+      </div></a>
+  </div>
+</div></section>
+
+<section id="domains"><div class="wrap">
+  <div style="max-width:600px;margin-bottom:40px">
+    <div class="kicker" data-en="Research domains" data-ja="研究領域" data-ko="연구 도메인" data-fr="Domaines de recherche" data-de="Forschungsdomänen" data-es="Dominios de investigación">研究领域</div>
+    <h2 data-en="One system, many battlegrounds." data-ja="1つのシステム、多くの戦場。" data-ko="하나의 시스템, 많은 전장." data-fr="Un système, de nombreux champs de bataille." data-de="Ein System, viele Schlachtfelder." data-es="Un sistema, muchos campos de batalla.">一套系统，多个战场。</h2>
+    <p style="color:var(--mut);font-size:16.5px;margin-top:14px" data-en="The same dumb harness and three roles; swap a vertical plugin to swap the domain. The win is defined separately for each, never cross-contaminated." data-ja="同じ愚直なハーネスと3つの役割。垂直プラグインを差し替えれば領域も切り替わる。勝ちの定義は各領域ごとに別々で、決して相互汚染しない。" data-ko="같은 단순한 하네스와 세 역할; 도메인을 바꾸려면 수직 플러그인만 바꾸면 됩니다. 승리는 각각에 대해 별도로 정의되며, 서로 오염되지 않습니다." data-fr="Le même harnais simple et les trois mêmes rôles ; remplacez un plugin vertical pour changer de domaine. La victoire est définie séparément pour chacun, sans jamais se contaminer entre eux." data-de="Dasselbe dumme Harness und dieselben drei Rollen; tauschen Sie ein vertikales Plugin aus, um die Domäne zu wechseln. Der Sieg wird für jede separat definiert, niemals gegenseitig verunreinigt." data-es="El mismo arnés simple y tres roles; cambia un plugin vertical para cambiar el dominio. La victoria se define por separado para cada uno, nunca se contamina entre ellos.">同一个笨管道 + 三角色，换一个 vertical 插件就换一个领域。胜负定义各自外置，互不污染。</p>
+  </div>
+  <div class="domains">
+    <div class="dcard"><img src="assets/icon-research.png" alt=""><h3 data-en="Paper research" data-ja="論文研究" data-ko="논문 연구" data-fr="Recherche d’articles" data-de="Paper-Forschung" data-es="Investigación de artículos">论文研究</h3><p data-en="Design the benchmark, run the eval, write the LaTeX, ship the PDF. Eight-stage pipeline, 2 papers out." data-ja="ベンチマークを設計し、評価を実行し、LaTeXを書き、PDFを出荷する。8段階のパイプラインで、すでに2本の論文を公開。" data-ko="벤치마크를 설계하고, eval을 실행하고, LaTeX를 작성하고, PDF를 출고합니다. 8단계 파이프라인, 논문 2편 출고." data-fr="Concevoir le benchmark, exécuter l’éval, rédiger le LaTeX, livrer le PDF. Pipeline en huit étapes, 2 articles produits." data-de="Den Benchmark entwerfen, die Eval ausführen, das LaTeX schreiben, das PDF ausliefern. Achtstufige Pipeline, 2 Papers fertig." data-es="Diseña el benchmark, ejecuta la eval, escribe el LaTeX, publica el PDF. Canalización de ocho etapas, 2 artículos fuera.">自己设计 benchmark、跑评测、写 LaTeX、出 PDF。八阶段流水线，已产出 2 篇。</p><div class="st">research</div></div>
+    <div class="dcard"><img src="assets/icon-nanochat.png" alt=""><h3>nanochat · 5min</h3><p data-en="Single-GPU 5-minute pretraining, lower val BPB. Invents kernel mechanisms — already a PASS-A." data-ja="単一GPUで5分の事前学習、より低いval BPB。カーネル機構を発明する――すでにPASS-A。" data-ko="단일 GPU 5분 프리트레이닝, 더 낮은 val BPB. 커널 메커니즘을 발명합니다 — 이미 PASS-A입니다." data-fr="Préentraînement de 5 minutes sur un seul GPU, val BPB plus bas. Invente des mécanismes kernel — déjà un PASS-A." data-de="5-minütiges Pretraining auf einer einzelnen GPU, niedrigeres val BPB. Erfindet Kernel-Mechanismen — bereits ein PASS-A." data-es="Preentrenamiento de 5 minutos en una sola GPU, menor val BPB. Inventa mecanismos de kernel — ya un PASS-A.">单卡 5 分钟预训练，val BPB 比低。自创内核机制，已拿下 PASS-A。</p><div class="st">nanochat</div></div>
+    <div class="dcard"><img src="assets/icon-speedrun.png" alt=""><h3 data-en="Training speedrun" data-ja="学習スピードラン" data-ko="훈련 스피드런" data-fr="Speedrun d’entraînement" data-de="Trainings-Speedrun" data-es="Speedrun de entrenamiento">训练加速</h3><p data-en="Train a model to a target loss, race the wall clock. Invents optimizers and precision paths." data-ja="モデルを目標損失まで学習させ、実時間を競う。オプティマイザと精度パスを発明する。" data-ko="목표 손실까지 모델을 훈련시키고, 실제 경과 시간을 경쟁합니다. 옵티마이저와 정밀도 경로를 발명합니다." data-fr="Entraîner un modèle jusqu’à une loss cible, en course contre le temps mur. Invente des optimiseurs et des chemins de précision." data-de="Ein Modell auf einen Ziel-Loss trainieren, gegen die Uhr antreten. Erfindet Optimizer und Präzisionspfade." data-es="Entrena un modelo hasta una pérdida objetivo, compite contra el reloj de pared. Inventa optimizadores y rutas de precisión.">把模型训到目标 loss，比谁快。锁 wall-clock，发明优化器与精度路径。</p><div class="st">speedrun · nanogpt</div></div>
+    <div class="dcard"><img src="assets/icon-kernel.png" alt=""><h3 data-en="Kernel optimization" data-ja="カーネル最適化" data-ko="커널 최적화" data-fr="Optimisation de kernel" data-de="Kernel-Optimierung" data-es="Optimización de kernels">内核优化</h3><p data-en="GPU kernel optimization toward the roofline. Profile-driven, writes custom Triton / CUDA." data-ja="rooflineに向けたGPUカーネル最適化。プロファイル駆動で、カスタムTriton / CUDAを書く。" data-ko="roofline을 향한 GPU 커널 최적화. 프로파일 기반으로, 맞춤형 Triton / CUDA를 작성합니다." data-fr="Optimisation de kernel GPU vers la roofline. Guidée par le profiling, écrit du Triton / CUDA personnalisé." data-de="GPU-Kernel-Optimierung in Richtung Roofline. Profilgesteuert, schreibt benutzerdefiniertes Triton / CUDA." data-es="Optimización de kernels de GPU hacia la roofline. Guiada por profiling, escribe Triton / CUDA personalizados.">GPU 算子优化，逼近 roofline。profile 驱动，写自定义 Triton / CUDA。</p><div class="st">kernelbench</div></div>
+  </div>
+</div></section>
+
+<section id="miles" style="background:var(--warm);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <div class="kicker" data-en="Milestones" data-ja="マイルストーン" data-ko="마일스톤" data-fr="Étapes marquantes" data-de="Meilensteine" data-es="Hitos">里程碑</div>
+  <h2 style="margin-bottom:34px" data-en="What happened recently" data-ja="最近起きたこと" data-ko="최근에 있었던 일" data-fr="Ce qui s’est passé récemment" data-de="Was kürzlich passiert ist" data-es="Qué ocurrió recientemente">最近发生了什么</h2>
+  <div class="miles">
+    <div class="mile"><div class="d">2026-06</div><div><b data-en="PASS-A: from tuning to inventing" data-ja="PASS-A：調整から発明へ" data-ko="PASS-A: 튜닝에서 발명으로" data-fr="PASS-A : du réglage à l’invention" data-de="PASS-A: vom Tuning zum Erfinden" data-es="PASS-A: de ajustar a inventar">PASS-A：从调参到发明</b><p data-en="The nanochat run invented 37 mechanisms; a single-mechanism invention lands below the fair floor — first proof Argus invents, not just tunes." data-ja="nanochat実行は37の機構を発明した。単一機構の発明が公正な下限を下回り、Argusが単なる調整ではなく発明することの最初の証明となった。" data-ko="nanochat 실행은 37개 메커니즘을 발명했으며; 단일 메커니즘 발명이 공정 하한선 아래에 도달합니다 — Argus가 단순히 튜닝하는 것이 아니라 발명한다는 첫 증거입니다." data-fr="L’exécution nanochat a inventé 37 mécanismes ; une invention à mécanisme unique descend sous le plancher d’équité — première preuve qu’Argus invente, et ne se contente pas d’ajuster." data-de="Der nanochat-Lauf erfand 37 Mechanismen; eine Einzelmechanismus-Erfindung landet unter dem Fair-Floor — erster Beweis, dass Argus erfindet, nicht nur optimiert." data-es="La ejecución de nanochat inventó 37 mecanismos; una invención de mecanismo único queda por debajo del fair floor — primera prueba de que Argus inventa, no solo ajusta.">nanochat 实验自创 37 个机制，单机制发明在公平地板之下——首次证明 Argus 会发明，不只是调参。</p></div></div>
+    <div class="mile"><div class="d">2026-06</div><div><b data-en="Two papers, end to end" data-ja="2本の論文、エンドツーエンド" data-ko="논문 두 편, 엔드투엔드" data-fr="Deux articles, de bout en bout" data-de="Zwei Papers, Ende zu Ende" data-es="Dos artículos, de extremo a extremo">两篇论文端到端产出</b><p data-en="The research pipeline ran all 8 stages autonomously, shipping an 11-page and a 15-page paper PDF with figures and citations." data-ja="研究パイプラインは全8段階を自律的に走り切り、図表と引用を備えた11ページと15ページの論文PDFを出荷した。" data-ko="연구 파이프라인이 8단계 전부를 자율적으로 실행해, 그림과 인용을 포함한 11페이지 및 15페이지 논문 PDF를 출고했습니다." data-fr="Le pipeline de recherche a exécuté les 8 étapes de façon autonome, livrant un article PDF de 11 pages et un autre de 15 pages avec figures et citations." data-de="Die Forschungspipeline durchlief alle 8 Stufen autonom und lieferte ein 11-seitiges und ein 15-seitiges Paper-PDF mit Abbildungen und Zitaten aus." data-es="La canalización de investigación ejecutó las 8 etapas de forma autónoma, publicando un PDF de artículo de 11 páginas y otro de 15 páginas con figuras y citas.">research 流水线自治跑完 8 阶段，产出 11 页 + 15 页两篇带图带引用的论文 PDF。</p></div></div>
+    <div class="mile"><div class="d">2026-06</div><div><b data-en="Self-evolution meta-loop" data-ja="自己進化メタループ" data-ko="자기 진화 메타 루프" data-fr="Boucle méta d’auto-évolution" data-de="Meta-Schleife zur Selbstweiterentwicklung" data-es="Meta-bucle de autoevolución">自进化元循环上线</b><p data-en="Three signals (missing tool / misconfig / process distillation) plus a frozen-verdict shadow auditor let the system improve its own process without touching the definition of winning." data-ja="3つのシグナル（ツール欠如 / 誤設定 / プロセス蒸留）に加え、凍結判定のシャドー監査者により、勝利の定義に手を触れずにシステムが自らのプロセスを改善できる。" data-ko="세 가지 신호(누락된 도구 / 잘못된 설정 / 프로세스 증류)와 고정 판정 shadow auditor를 통해, 시스템은 승리의 정의를 건드리지 않고도 자체 프로세스를 개선할 수 있습니다." data-fr="Trois signaux (outil manquant / mauvaise configuration / distillation de processus) plus un auditeur fantôme à verdict figé permettent au système d’améliorer son propre processus sans toucher à la définition de la victoire." data-de="Drei Signale (fehlendes Tool / Fehlkonfiguration / Prozessdestillation) plus ein Schatten-Auditor mit eingefrorenem Urteil ermöglichen es dem System, seinen eigenen Prozess zu verbessern, ohne die Definition des Gewinnens zu verändern." data-es="Tres señales (herramienta faltante / misconfig / destilación de proceso) más un auditor en sombra de veredicto congelado permiten que el sistema mejore su propio proceso sin tocar la definición de victoria.">三路信号（缺工具 / 误配 / 过程蒸馏）+ 冻结裁决的影子审计，让系统在不动胜负定义的前提下改进自己的过程。</p></div></div>
+    <div class="mile"><div class="d">2026-06</div><div><b data-en="Deployed to argusbot.cn" data-ja="argusbot.cnにデプロイ" data-ko="argusbot.cn에 배포됨" data-fr="Déployé sur argusbot.cn" data-de="Bereitgestellt auf argusbot.cn" data-es="Desplegado en argusbot.cn">部署到 argusbot.cn</b><p data-en="Report, dashboard, and shipped papers went live — Cloudflare named tunnel plus systemd for persistence." data-ja="レポート、ダッシュボード、公開済み論文を公開――Cloudflare named tunnel と systemd による永続化。" data-ko="보고서, 대시보드, 출고된 논문이 라이브로 공개되었습니다 — 지속성을 위해 Cloudflare named tunnel과 systemd를 사용했습니다." data-fr="Le rapport, le tableau de bord et les articles publiés ont été mis en ligne — tunnel nommé Cloudflare plus systemd pour la persistance." data-de="Bericht, Dashboard und veröffentlichte Papers gingen live — benannter Cloudflare-Tunnel plus systemd für Persistenz." data-es="El informe, el panel y los artículos publicados se pusieron en línea — túnel con nombre de Cloudflare más systemd para persistencia.">报告、看板、论文成品上线，Cloudflare 命名隧道 + systemd 永久化。</p></div></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="ctaband">
+    <div class="kicker" style="color:#ffd9cc" data-en="Live" data-ja="ライブ" data-ko="라이브" data-fr="En direct" data-de="Live" data-es="En vivo">实时</div>
+    <h2 data-en="See what Argus is doing right now." data-ja="Argusが今まさに何をしているかを見る。" data-ko="Argus가 지금 무엇을 하고 있는지 확인하세요." data-fr="Voyez ce qu’Argus fait en ce moment." data-de="Sehen Sie, was Argus gerade tut." data-es="Vea lo que Argus está haciendo ahora mismo.">看 Argus 此刻在做什么。</h2>
+    <p data-en="Three daemons are running. The live dashboard shows each agent's progress, every step's artifacts, and the mechanism being invented." data-ja="3つのデーモンが稼働中。ライブダッシュボードには、各エージェントの進捗、各ステップの生成物、そして発明されている機構が表示される。" data-ko="세 개의 데몬이 실행 중입니다. 실시간 대시보드는 각 에이전트의 진행 상황, 모든 단계의 산출물, 그리고 발명되고 있는 메커니즘을 보여줍니다." data-fr="Trois démons sont en cours d’exécution. Le tableau de bord en direct montre la progression de chaque agent, les artefacts de chaque étape et le mécanisme en cours d’invention." data-de="Drei Daemons laufen. Das Live-Dashboard zeigt den Fortschritt jedes Agenten, die Artefakte jedes Schritts und den Mechanismus, der erfunden wird." data-es="Tres demonios están en ejecución. El panel en vivo muestra el progreso de cada agente, los artefactos de cada paso y el mecanismo que se está inventando.">三个 daemon 正在跑。实时看板里能看到每个 agent 的进度、每一步的产物、和正在发明的机制。</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-white" href="https://dash.argusbot.cn" data-en="Open the live dashboard →" data-ja="ライブダッシュボードを開く →" data-ko="실시간 대시보드 열기 →" data-fr="Ouvrir le tableau de bord en direct →" data-de="Das Live-Dashboard öffnen →" data-es="Abrir el panel en vivo →">打开实时看板 →</a>
+      <a class="btn btn-out" href="benchmark.html" data-en="Read the benchmark report" data-ja="ベンチマークレポートを読む" data-ko="벤치마크 보고서 읽기" data-fr="Lire le rapport du benchmark" data-de="Den Benchmark-Bericht lesen" data-es="Leer el informe del benchmark">读 Benchmark 报告</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div class="fcol fbrand">
+      <div class="brand" style="margin-bottom:16px"><img class="logo" src="assets/argus-mark.png" alt="Argus">Argus</div>
+      <div class="quote" data-en="&ldquo;The harness is never smarter than the agent; the win is always defined outside.&rdquo;" data-ja="&amp;ldquo;ハーネスがエージェントより賢くなることは決してない。勝ちは常に外部で定義される。&amp;rdquo;" data-ko="&amp;ldquo;하네스는 결코 에이전트보다 더 영리하지 않으며; 승리는 언제나 외부에서 정의된다.&amp;rdquo;" data-fr="&amp;ldquo;Le harnais n’est jamais plus intelligent que l’agent ; la victoire est toujours définie à l’extérieur.&amp;rdquo;" data-de="&amp;ldquo;Das Harness ist niemals klüger als der Agent; der Sieg wird immer extern definiert.&amp;rdquo;" data-es="&amp;ldquo;El arnés nunca es más inteligente que el agente; la victoria siempre se define fuera.&amp;rdquo;">"Harness 没有 agent 聪明；胜负的定义永远外置。"</div>
+    </div>
+    <div class="fcol"><h5 data-en="Product" data-ja="プロダクト" data-ko="제품" data-fr="Produit" data-de="Produkt" data-es="Producto">产品</h5>
+      <a href="benchmark.html" data-en="Benchmark report" data-ja="ベンチマークレポート" data-ko="벤치마크 보고서" data-fr="Rapport de benchmark" data-de="Benchmark-Bericht" data-es="Informe del benchmark">Benchmark 报告</a><a href="https://dash.argusbot.cn" data-en="Live dashboard" data-ja="ライブダッシュボード" data-ko="실시간 대시보드" data-fr="Tableau de bord en direct" data-de="Live-Dashboard" data-es="Panel en vivo">实时看板</a><a href="#what" data-en="Architecture" data-ja="アーキテクチャ" data-ko="아키텍처" data-fr="Architecture" data-de="Architektur" data-es="Arquitectura">系统架构</a><a href="#how" data-en="Pipeline" data-ja="パイプライン" data-ko="파이프라인" data-fr="Pipeline" data-de="Pipeline" data-es="Canalización">研究流水线</a></div>
+    <div class="fcol"><h5 data-en="Research" data-ja="研究" data-ko="연구" data-fr="Recherche" data-de="Forschung" data-es="Investigación">研究</h5>
+      <a href="papers/mmr-trap-v2.pdf">MMR-Trap v2</a><a href="papers/mmr-trap-v1.pdf">MMR-Trap v1</a><a href="#result" data-en="Invention run" data-ja="発明実行" data-ko="발명 실행" data-fr="Exécution d’invention" data-de="Erfindungslauf" data-es="Ejecución de invención">发明实验</a><a href="#miles" data-en="Milestones" data-ja="マイルストーン" data-ko="마일스톤" data-fr="Étapes marquantes" data-de="Meilensteine" data-es="Hitos">里程碑</a></div>
+    <div class="fcol"><h5 data-en="Domains" data-ja="領域" data-ko="도메인" data-fr="Domaines" data-de="Domänen" data-es="Dominios">领域</h5>
+      <a href="#research">research</a><a href="#domains">nanochat · 5min</a><a href="#domains">speedrun</a><a href="#domains">kernelbench</a></div>
+  </div>
+  <div class="fbar"><span>argusbot.cn · Argus</span><span data-en="7×24 · autonomous · honesty outside" data-ja="7×24 ・ 自律 ・ 誠実さは外部に" data-ko="7×24 · 자율 · 정직성은 외부에" data-fr="7×24 · autonome · honnêteté extérieure" data-de="7×24 · autonom · Ehrlichkeit von außen" data-es="7×24 · autónomo · honestidad fuera">7×24 · 自治 · 诚实外置</span></div>
+</div></footer>
+
+<script>
+(function(){
+  var NAMES={cn:["🇨🇳","中文"],en:["🇺🇸","English"],ja:["🇯🇵","日本語"],ko:["🇰🇷","한국어"],fr:["🇫🇷","Français"],de:["🇩🇪","Deutsch"],es:["🇪🇸","Español"]};
+  var LOC={cn:"zh-CN",en:"en",ja:"ja",ko:"ko",fr:"fr",de:"de",es:"es"};
+  var els=document.querySelectorAll("[data-en]");
+  var sel=document.getElementById("langSelect"),btn=document.getElementById("langBtn"),menu=document.getElementById("langMenu");
+  var flag=document.getElementById("langFlag"),label=document.getElementById("langLabel");
+  function apply(lang){
+    els.forEach(function(el){
+      if(el.dataset.cn===undefined) el.dataset.cn=el.innerHTML;
+      var t = (lang==="cn") ? el.dataset.cn : el.dataset[lang];
+      if(t!==undefined && t!==null) el.innerHTML=t;
+    });
+    document.documentElement.lang=LOC[lang]||"en";
+    if(NAMES[lang]){flag.textContent=NAMES[lang][0];label.textContent=NAMES[lang][1];}
+    menu.querySelectorAll("button").forEach(function(b){b.classList.toggle("active",b.dataset.lang===lang);});
+    try{localStorage.setItem("argus-lang",lang);}catch(e){}
+  }
+  btn.addEventListener("click",function(e){e.stopPropagation();menu.classList.toggle("open");});
+  menu.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){apply(b.dataset.lang);menu.classList.remove("open");});});
+  document.addEventListener("click",function(e){if(!sel.contains(e.target))menu.classList.remove("open");});
+  var init="cn"; try{var s=localStorage.getItem("argus-lang"); if(s&&NAMES[s]) init=s;}catch(e){}
+  apply(init);
+})();
+</script>
+</body></html>
