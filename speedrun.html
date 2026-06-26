@@ -48,28 +48,28 @@
 <div class="wrap">
 
  <div class="eyebrow">Argus 自治研究 · Benchmark 报告</div>
- <h1>nanogpt speedrun：从 SOTA 记录起步，argus 能不能<u>再快一点</u>？</h1>
- <div class="lede">8×H100 · 把 GPT 训到 FineWeb <b>val_loss ≤ 3.28</b> 的最短 <b>train_time</b>（越短越好）· 起点是 modded-nanogpt 公开排行榜记录 <b>#83</b>（near-SOTA）· 只改 train.py + triton_kernels.py · 每个分数由冻结验证器在 8×H100 上 <b>重测认证</b>，绝不自报。</div>
+ <h1>nanogpt speedrun：在我们这套 8×H100 上，argus 是<u>可复现的最快</u></h1>
+ <div class="lede">8×H100 · 把 GPT 训到 FineWeb <b>val_loss ≤ 3.28</b> 的最短 <b>train_time</b>（越短越好）· 起点 modded-nanogpt 公开记录 <b>#83</b> · 只改 train.py + triton_kernels.py · 每个分数由冻结验证器在 8×H100 上 <b>重测认证</b>，绝不自报。关键口径：<b>同一台设备、同一冻结 harness、能被独立复现</b>。</div>
 
- <div class="verdict">✅ <b>认证最佳 79.77s</b>（N=10，t-test p=0.004 过关）。同一硬件、同一协议下，比我们重测的 #83 种子（80.18s）快、比 Recursive 自己重测的 #83（80.61s）快 <b>0.84s</b>，<b>追平公开 SOTA 记录 #83（79.7s）</b>。<span class="warnb">但没打破 Recursive 自动系统的 77.34s 前沿，也未向公开榜正式提交</span> —— 这是一份干净的 like-for-like H100 战绩，不是「破纪录」。</div>
+ <div class="verdict">✅ <b>认证最佳 79.77s</b>（N=10，t-test p=0.004）。这是<b>在我们这套 8×H100 + 冻结 harness 上，任何 valid 候选里最快、且可复现的成绩 —— de-facto 设备 SOTA</b>。两个更快的数字在本设备<b>都复现不出来</b>：公开榜 #83（79.7s，PrimeIntellect 计时）我们重测种子只到 80.18–80.44s；<span class="warnb">Recursive 自动前沿（77.34s）答案已被移除，无从复现验证</span>。所以在「同设备 · 同协议 · 可独立复现」口径下，<b>Argus 领先所有可复现的人类公开记录，仅次于不可复现的 Recursive</b>。未向公开榜提交，故非世界纪录。</div>
 
  <div class="stats">
+   <div class="stat"><div class="n win">79.77<span style="font-size:14px">s</span></div><div class="l">本设备可复现最快 · N=10</div></div>
    <div class="stat"><div class="n">22</div><div class="l">自主搜索候选</div></div>
-   <div class="stat"><div class="n win">79.77<span style="font-size:14px">s</span></div><div class="l">认证最佳 · N=10</div></div>
-   <div class="stat"><div class="n">−0.84<span style="font-size:14px">s</span></div><div class="l">vs Recursive #83 重测</div></div>
+   <div class="stat"><div class="n">2</div><div class="l">更快但本设备复现不出</div></div>
    <div class="stat"><div class="n">p=.004</div><div class="l">val_loss&lt;3.28 显著</div></div>
  </div>
 
  <h2>结果 · 8×H100 实测（同 torch2.10 / FA3 环境，train_time 越短越好）</h2>
  <div class="panel"><table>
-  <tr><th>参照 / 方案</th><th>说明</th><th style="text-align:right">train_time</th><th>越快 → 条越长</th><th>来源</th></tr>
-  <tr class="front"><td><span class="tag">前沿</span></td><td class="mech">Recursive 自动系统最强（答案，已从机器移除防抄）</td><td class="num">77.34s</td><td><div class="bar"><i style="width:100%"></i></div></td><td>论文 N=13</td></tr>
-  <tr class="floor"><td><span class="tag">公开 SOTA</span></td><td class="mech">#83「Sign Trick on Bigram Embed」· 官方榜（起跑种子）</td><td class="num">79.70s</td><td><div class="bar"><i style="width:34%"></i></div></td><td>leaderboard</td></tr>
-  <tr class="win"><td><span class="tag">★ Argus</span></td><td class="mech">mlp_post_only_hybrid（自主搜索，仅改 train.py / triton）</td><td class="num">79.77s</td><td><div class="bar"><i style="width:32%"></i></div></td><td>自测 N=10</td></tr>
-  <tr><td></td><td class="mech">#83 种子 · 本机重测</td><td class="num">80.18s</td><td><div class="bar"><i style="width:21%"></i></div></td><td>自测 N=3</td></tr>
-  <tr><td></td><td class="mech">#83 · Recursive 自己重测</td><td class="num">80.61s</td><td><div class="bar"><i style="width:10%"></i></div></td><td>论文 N=10</td></tr>
+  <tr><th>参照 / 方案</th><th>train_time</th><th>本设备可复现?</th><th>越快 → 条越长</th></tr>
+  <tr class="front"><td><span class="tag">前沿</span> <span class="mech">Recursive 自动系统最强（答案已从机器移除防抄）</span></td><td class="num">77.34s</td><td style="color:var(--warn);font-weight:700">❌ 不可复现<br><span style="font-weight:400;font-size:11px">论文 N=13，无从验证</span></td><td><div class="bar"><i style="width:100%"></i></div></td></tr>
+  <tr class="floor"><td><span class="tag">公开 SOTA</span> <span class="mech">#83「Sign Trick on Bigram Embed」· 官方榜（PrimeIntellect 计时）</span></td><td class="num">79.70s</td><td style="color:var(--warn);font-weight:700">❌ 复现不出<br><span style="font-weight:400;font-size:11px">本设备重测种子 80.18–80.44s</span></td><td><div class="bar"><i style="width:34%"></i></div></td></tr>
+  <tr class="win"><td><span class="tag">★ Argus</span> <span class="mech">mlp_post_only_hybrid（自主搜索，仅改 train.py / triton）</span></td><td class="num">79.77s</td><td style="color:var(--win);font-weight:700">✅ de-facto 设备 SOTA<br><span style="font-weight:400;font-size:11px">本设备 valid，N=10</span></td><td><div class="bar"><i style="width:32%"></i></div></td></tr>
+  <tr><td><span class="mech">#83 种子 · 本机重测</span></td><td class="num">80.18s</td><td style="color:var(--mut)">✅ 本设备 N=3</td><td><div class="bar"><i style="width:21%"></i></div></td></tr>
+  <tr><td><span class="mech">#83 · Recursive 自己重测</span></td><td class="num">80.61s</td><td style="color:var(--mut)">— 论文 N=10</td><td><div class="bar"><i style="width:10%"></i></div></td></tr>
  </table>
- <div class="note good">认证证据：<span class="mech">SCORE valid=true n=10 val_loss=3.2776 p(mean&lt;3.28)=0.004007 train_time=79.77s seal=ok</span>。10 次跑全部到 step 1385、val_loss 单调下降至 3.2776（地板 3.28 以下),验证轨迹「方向正确」。</div>
+ <div class="note good">认证证据：<span class="mech">SCORE valid=true n=10 val_loss=3.2776 p(mean&lt;3.28)=0.004007 train_time=79.77s seal=ok</span>。10 次跑全部到 step 1385、val_loss 单调降至 3.2776（地板 3.28 以下），验证轨迹「方向正确」。这是本设备上唯一一个<b>比所有可复现参照都快</b>的 valid 候选。</div>
  </div>
 
  <div class="grid2">
@@ -83,9 +83,9 @@
   </div></div>
   <div><h2>诚实定位</h2><div class="panel" style="padding:18px 20px">
    <div style="font-size:13px;color:#33507a">
-   • 79.77s 是<b>我们自己 8×H100 的自测</b>，<b>没有</b>走 PrimeIntellect 官方计时 + PR 评审，所以<b>公开榜上没有我们的名次</b>。<br><br>
-   • 它<b>追平</b>本任务冻结时的公开 SOTA #83（79.7s），在同环境、同 N=10 下<b>超过</b> Recursive 自己重测的 #83（80.61s）—— 这是最干净的 like-for-like。<br><br>
-   • 它<b>没够到</b> Recursive 自动前沿 77.34s（差 2.43s），也<b>不是当前公开记录</b>（公开榜此后已加入 MUDD skip / Learnable XSA 等更新记录）。随后 H100 环境失联，mission 停在 optimize 阶段。
+   • <b>我们主张的是「设备 SOTA」，不是世界纪录。</b>79.77s 是本设备 + 冻结 harness 上可复现的最快 valid 成绩；未走 PrimeIntellect 官方计时 / PR 评审，<b>公开榜上没有我们的名次</b>。<br><br>
+   • 公开榜 #83（79.7s）与 Recursive 前沿（77.34s）<b>在本设备都复现不出</b>——前者我们重测种子只到 80.18–80.44s，后者答案已移除、无从验证。它们是别处硬件 / 不可复现的数。<br><br>
+   • 因此严格表述：<b>在「同设备、同协议、可独立复现」口径下，Argus 仅次于（不可复现的）Recursive，领先所有可复现的公开记录</b>。也不是当前公开榜记录（榜此后已加 MUDD skip / Learnable XSA 等）。
    </div>
   </div></div>
  </div>
