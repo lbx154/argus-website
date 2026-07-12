@@ -110,6 +110,16 @@
     "categoryDescription": "视觉语言与多模态感知 · 诊断、缓解与效率"
   },
   {
+    "id": "compositional-image-text-matching",
+    "title": "When Structure Does Not Help: A Diagnostic Study of Training-Free Gates for Compositional Image–Text Matching",
+    "href": "/papers/multimodal-mllm/compositional-image-text-matching.pdf",
+    "pages": 11,
+    "status": "Manuscript",
+    "category": "multimodal",
+    "categoryLabel": "Multimodal & Vision-Language Models",
+    "categoryDescription": "视觉语言与多模态感知 · 诊断、缓解与效率"
+  },
+  {
     "id": "contrast-before-answering-vlm-spatial",
     "title": "Contrast Before Answering: Train-Free Visual Pairing and Region Self-Verification for VLM Spatial Failures",
     "href": "/papers/multimodal-mllm/contrast-before-answering-vlm-spatial.pdf",
@@ -123,6 +133,26 @@
     "id": "diagnostic-benchmark",
     "title": "ChartOCR-SourceDiag: Diagnosing Source-Channel Failures in Chart and OCR-Centric Multimodal Reasoning",
     "href": "/papers/multimodal-mllm/diagnostic-benchmark.pdf",
+    "pages": 11,
+    "status": "Manuscript",
+    "category": "multimodal",
+    "categoryLabel": "Multimodal & Vision-Language Models",
+    "categoryDescription": "视觉语言与多模态感知 · 诊断、缓解与效率"
+  },
+  {
+    "id": "frozen-hallucination-wrappers",
+    "title": "When Frozen Multimodal Hallucination Wrappers Fail",
+    "href": "/papers/multimodal-mllm/frozen-hallucination-wrappers.pdf",
+    "pages": 10,
+    "status": "Manuscript",
+    "category": "multimodal",
+    "categoryLabel": "Multimodal & Vision-Language Models",
+    "categoryDescription": "视觉语言与多模态感知 · 诊断、缓解与效率"
+  },
+  {
+    "id": "gui-reliability-surface-prior",
+    "title": "Surface-Prior Selection for Training-Free GUI Reliability at Matched Coverage",
+    "href": "/papers/multimodal-mllm/gui-reliability-surface-prior.pdf",
     "pages": 11,
     "status": "Manuscript",
     "category": "multimodal",
@@ -330,6 +360,16 @@
     "categoryDescription": "模型压缩、推测解码、RAG decoding、量化与 KV Cache"
   },
   {
+    "id": "vocab-row-quantization",
+    "title": "When Vocabulary-Row Proxies Fail: A Negative Result for Calibration-Free Vocabulary Quantization",
+    "href": "/papers/efficiency-quant-kvcache/vocab-row-quantization.pdf",
+    "pages": 10,
+    "status": "Manuscript",
+    "category": "efficiency",
+    "categoryLabel": "Efficiency, Compression & Decoding",
+    "categoryDescription": "模型压缩、推测解码、RAG decoding、量化与 KV Cache"
+  },
+  {
     "id": "world-sim",
     "title": "Direct-Best Reversals in Train-Free Structured Counterfactual Reasoning",
     "href": "/papers/world-model/world-sim.pdf",
@@ -348,6 +388,16 @@
     "category": "world",
     "categoryLabel": "World Models",
     "categoryDescription": "世界状态追踪与结构化反事实模拟"
+  },
+  {
+    "id": "leaderboard-audit-evaluation-uncertainty",
+    "title": "From Leaderboard Ranks to Audited Decisions: A Controlled-Panel Study of Evaluation-Format Uncertainty",
+    "href": "/papers/misc/leaderboard-audit-evaluation-uncertainty.pdf",
+    "pages": 13,
+    "status": "Manuscript",
+    "category": "trace",
+    "categoryLabel": "State Trace & Auditability",
+    "categoryDescription": "可审计的状态轨迹协议"
   },
   {
     "id": "trace-width-state-trace",
