@@ -492,6 +492,14 @@ main {
   max-width: 1100px;
 }
 
+.demo-source {
+  margin: 18px 0 0;
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
 .runtime-flow {
   border-block: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.62);

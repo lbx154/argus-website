@@ -18,6 +18,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         <a class="button primary" href="#cli">看完整 CLI 流程 →</a>
         <a class="button" href="#webui">看 Web 研究轨迹 ↓</a>
       </div>
+      <p class="demo-source">录制版本：boxiu/main · 699dc2c · Codex gpt-5.5 xhigh</p>
     </div>
   </section>
 
@@ -40,7 +41,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         <div class="section-head">
           <p class="eyebrow">01 · Terminal cockpit</p>
           <h2>从输入任务那一刻开始，看四个角色真正接力。</h2>
-          <p>用户输入《秋江赋》后，Manager 路由任务，Planner 生成五阶段计划，Engineer 开始创作；运行中再直接询问 Manager 当前状态，直到 Reviewer 打回、修正并终审通过。</p>
+          <p>用户输入《秋江赋》后，Manager 建立六阶段流程，Planner 生成七步计划，Engineer 开始创作；运行中再直接询问 Manager 当前状态，直到 Reviewer 打回、修正并逐阶段验收。</p>
         </div>
         <div class="launch-command" aria-label="CLI 启动命令">
           <span>启动</span>
@@ -52,19 +53,19 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         <div class="demo-frame__bar">
           <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <strong>Argus CLI</strong>
-          <span>REAL RUN</span>
+          <span>BOXIU MAIN · 699DC2C</span>
         </div>
         <CliRecording />
       </div>
 
       <p class="demo-caption">
-        <strong>74 秒真实回放</strong>
-        完整保留任务输入、Manager 监控问答、Planner 规划、两轮 Engineer 执行，以及 Reviewer 从打回到验收的全过程。
+        <strong>83 秒真实回放</strong>
+        完整保留任务输入、Manager 监控问答、Planner 规划、Reviewer 首轮打回，以及六个阶段逐一推进到最终完成。
       </p>
       <div class="demo-points" aria-label="CLI 功能">
         <span>从任务输入开始</span>
         <span>Manager 监视器</span>
-        <span>Planner 五阶段计划</span>
+        <span>Planner 七步计划</span>
         <span>Reviewer 打回 → 验收</span>
       </div>
     </div>
@@ -75,8 +76,8 @@ import SiteLayout from "../layouts/SiteLayout.astro";
       <div class="demo-intro">
         <div class="section-head">
           <p class="eyebrow">02 · Web cockpit</p>
-          <h2>不是任务列表，是一条可以钻取的研究轨迹。</h2>
-          <p>搜索进入真实数学任务，先读 Argus 的进度回复，再展开 Engineer 的验证输出与 Reviewer 的裁决；Mission 视图保留全过程回放与证据预览。</p>
+          <h2>同一个 boxiu/main session，在 WebUI 逐层展开。</h2>
+          <p>直接阅读 Manager 的监控回答，再展开 Planner 计划、Engineer 命令流与 Reviewer 裁决；Mission 视图保留六阶段推进、完整 replay 和审定成果。</p>
         </div>
         <div class="launch-command" aria-label="WebUI 启动命令">
           <span>启动</span>
@@ -88,7 +89,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         <div class="demo-frame__bar">
           <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <strong>Argus WebUI</strong>
-          <span>REAL RUN</span>
+          <span>BOXIU MAIN · 699DC2C</span>
         </div>
         <video
           data-web-demo
@@ -97,17 +98,17 @@ import SiteLayout from "../layouts/SiteLayout.astro";
           muted
           playsinline
           preload="metadata"
-          poster="/assets/demos/argus-web-e8839e10-poster.webp"
+          poster="/assets/demos/argus-web-boxiu-86b683ba-poster.webp"
           aria-label="Argus WebUI 真实操作演示"
         >
-          <source src="/assets/demos/argus-web-e8839e10.webm" type="video/webm" />
-          <a href="/assets/demos/argus-web-e8839e10.webm">下载 WebUI 演示视频</a>
+          <source src="/assets/demos/argus-web-boxiu-86b683ba.webm" type="video/webm" />
+          <a href="/assets/demos/argus-web-boxiu-86b683ba.webm">下载 WebUI 演示视频</a>
         </video>
       </div>
 
       <p class="demo-caption">
-        <strong>28 秒真实回放</strong>
-        Erdős–Straus 研究中，两种算法完成 N≤10000 验证后仍被 Reviewer 打回；随后查看 Mission replay、冻结范围证据与已完成成果。
+        <strong>26 秒同任务回放</strong>
+        展示监控问答、角色日志、六阶段 Mission replay，以及 Reviewer 审定稿在右侧工作台和大图预览中的交付。
       </p>
       <div class="demo-points" aria-label="WebUI 功能">
         <span>会话搜索</span>
