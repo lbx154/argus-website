@@ -99,7 +99,7 @@ LifeSupervisor ──► 写 journal;backlog 空时调用 Planner 继续排活
 <div class="step"><div class="n">③</div><div><h4>MEASURE 冻结裁判测</h4><p>在冻结的评分器上跑 <b>10 个 seed</b>,取均值:0.98738,压过公平地板 0.98788。</p></div></div>
 <div class="step"><div class="n">④</div><div><h4>判定 + 归档</h4><p>Reviewer 判:单机制、过了地板 → <b>PASS-A</b>(真发明)。没过就写 <b>PASS-B</b>(诚实负结果),归档失败原因。</p></div></div>
 <div class="step"><div class="n">⑤</div><div><h4>成熟期 + 不毙太早</h4><p>大胆的结构改动第一轮常常更差;给它 2-4 轮"养"再判死。连续没进展才换一条全新方向(basin-hop)。</p></div></div>
-<figure><img src="assets/results.png" alt="nanochat 37 个发明的实测"><figcaption>这样迭代了 3 天 / 60 轮,自创 37 个机制,6 个做完整 10-seed。绿色那个就是上面走完一遍赢出来的。</figcaption></figure>
+<figure><img src="assets/nanochat-b200-trajectory.svg" alt="nanochat B200 426 次自治搜索的 val BPB 进化曲线"><figcaption>B200 上的完整搜索轨迹：426 次自治尝试，把 val BPB 从 1.0587 推到 0.9636，超过 human SOTA 0.9646。</figcaption></figure>
 
 <hr>
 <p style="font-size:14px;color:var(--mut)">看成绩 → <a href="results.html">Results</a>；看论文 → <a href="research.html">Research</a>；看客户场景 → <a href="use-cases.html">Use Cases</a>；开始使用 → <a href="start.html">Get Started</a>。</p>
