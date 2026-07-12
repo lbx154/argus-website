@@ -2,10 +2,10 @@
 <html lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Argus — Global #6 on NVIDIA SOL-ExecBench</title>
-<meta content="Argus reached global #6 on NVIDIA SOL-ExecBench, beat human SOTA on both H100 and B200 nanochat, ran an 8×H100 speedrun in 79.77 seconds, and produced 38 research PDFs." name="description"/>
+<meta content="Argus reached global #6 on NVIDIA SOL-ExecBench, beat human SOTA on both H100 and B200 nanochat, ran an 8×H100 speedrun in 79.77 seconds, and produced 36 research PDFs." name="description"/>
 <link href="assets/argus-mark-gold.png" rel="icon" type="image/png"/>
 <meta content="Argus — Global #6 on NVIDIA SOL-ExecBench" property="og:title"/>
-<meta content="Two B200 kernels at #1. Human SOTA beaten on H100 and B200. 8×H100 speedrun: 79.77s. AARRI: 63/82. Arbor: 28.0. 38 research PDFs." property="og:description"/>
+<meta content="Two B200 kernels at #1. Human SOTA beaten on H100 and B200. 8×H100 speedrun: 79.77s. AARRI: 63/82. Arbor: 28.0. 36 research PDFs." property="og:description"/>
 <meta content="https://argusbot.cn/assets/argus-og-blue-gold.png" property="og:image"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
@@ -29,9 +29,9 @@
 <div class="hero-copy">
 <div class="eyebrow" data-zh="Argus 正式发布 · 2026 年 7 月">Introducing Argus · July 2026</div>
 <h1 data-zh="NVIDIA B200 全球第六。它永不下班。">Global #6 on NVIDIA B200. And it never clocks out.</h1>
-<p class="sub" data-zh="Argus 在 NVIDIA SOL-ExecBench 达到&lt;b&gt;全球第六&lt;/b&gt;,两个 kernel 拿下全榜第一;在 nanochat 5 分钟挑战中,H100 与 B200 都超过 human SOTA;在 8×H100 speedrun 跑出 &lt;b&gt;79.77 秒&lt;/b&gt;。然后它继续做研究、跑 benchmark、写论文。">Argus reached <b>global #6</b> on NVIDIA SOL-ExecBench, with two kernels taking #1; beat human SOTA on both H100 and B200 in the five-minute nanochat challenge; and ran the 8×H100 speedrun in <b>79.77 seconds</b>. Then it kept researching, benchmarking, and writing papers.</p>
+<p class="sub" data-zh="你睡觉的时候,Argus 还在 profile kernel、毙掉烂 idea、跑实验,再带着结果回来。这是一套真正会持续工作的 7×24 自主科研系统。">While you sleep, Argus keeps profiling kernels, killing weak ideas, running experiments, and coming back with results. This is a research system that actually keeps working.</p>
 <div class="hero-footer">
-<div class="meta"><span class="byline" data-zh="Argus Research 团队">Argus Research</span><span data-zh="2026 年 7 月 · 5 分钟阅读 · NVIDIA B200 + H100">July 2026 · 5 min read · NVIDIA B200 + H100</span></div>
+<div class="meta"><span class="byline" data-zh="Argus Research 团队">Argus Research</span><span data-zh="2026 年 7 月 · 3 分钟阅读 · NVIDIA B200 + H100">July 2026 · 3 min read · NVIDIA B200 + H100</span></div>
 <div class="hero-actions">
 <a class="pdfbtn" data-zh="观看 Argus 实时工作 ↗" href="https://dash.argusbot.cn" rel="noopener" target="_blank">Watch Argus work live ↗</a>
 <a class="benchmark-btn" data-zh="查看数据" href="benchmark.html">View the data</a>
@@ -46,12 +46,6 @@
 <summary data-zh="本文目录">In this article</summary>
 <nav aria-label="Article sections" class="toc-list" id="mobileToc"></nav>
 </details>
-<div class="signal-grid" aria-label="Key results">
-<div class="signal"><strong>#6</strong><span data-zh="NVIDIA SOL-ExecBench 全球综合排名">global overall on NVIDIA SOL-ExecBench</span></div>
-<div class="signal"><strong>2× #1</strong><span data-zh="两个 B200 kernel 全榜第一">B200 kernels at #1</span></div>
-<div class="signal"><strong>0.9636</strong><span data-zh="B200 nanochat · 超过 human SOTA 0.9646">B200 nanochat · beats human SOTA at 0.9646</span></div>
-<div class="signal"><strong>38</strong><span data-zh="份跨六个方向的研究 PDF">research PDFs across six directions</span></div>
-</div>
 <div class="callout" data-zh="大多数 AI agent 在给出一个&lt;i&gt;听起来合理&lt;/i&gt;的答案时就停了。Argus 会继续写代码、跑实验、读结果、否掉烂 idea,直到交付一个更快的 kernel、一条更强的研究流水线,或者一篇完整论文。"><b>Most AI agents stop at an answer that sounds plausible.</b> Argus keeps writing code, running experiments, reading results, and killing weak ideas until it ships a faster kernel, a stronger research pipeline, or a finished paper.</div>
 
 <h2 data-zh="成绩墙">The scoreboard</h2>
@@ -63,31 +57,11 @@
 <tr><td><a href="speedrun.html"><b>nanoGPT speedrun</b></a><br><span style="font-size:11px;color:#0FAE74">8×H100 · N=10</span></td><td data-zh="达到 val_loss≤3.28:&lt;b&gt;79.77 秒&lt;/b&gt;">Reached val_loss≤3.28 in <b>79.77 seconds</b></td><td data-zh="human #83 同机重测:&lt;b&gt;80.18 秒&lt;/b&gt;">human #83, same-device rerun: <b>80.18 seconds</b></td></tr>
 <tr><td><b>AARRI-Bench</b></td><td data-zh="&lt;b&gt;63/82(76.8%)&lt;/b&gt; · 严格 judge 64/82(78.0%)"><b>63/82 (76.8%)</b> · strict judge 64/82 (78.0%)</td><td data-zh="论文报告最佳 68.3%">Paper-reported best: 68.3%</td></tr>
 <tr><td><b>Arbor · RUC NLPIR</b></td><td data-zh="Math-Reasoning Data &lt;b&gt;28.0&lt;/b&gt; · 配套评测 23.96">Math-Reasoning Data <b>28.0</b> · companion eval 23.96</td><td data-zh="Arbor 20.83 · Claude Code 8.33 · Codex 6.25">Arbor 20.83 · Claude Code 8.33 · Codex 6.25</td></tr>
-<tr><td data-zh="&lt;b&gt;端到端研究&lt;/b&gt;"><b>End-to-end research</b></td><td data-zh="六个方向 · &lt;b&gt;38 份研究 PDF&lt;/b&gt;">Six directions · <b>38 research PDFs</b></td><td data-zh="从选题一路跑到论文交付">From topic selection to paper delivery</td></tr>
+<tr><td data-zh="&lt;b&gt;端到端研究&lt;/b&gt;"><b>End-to-end research</b></td><td data-zh="六个方向 · &lt;b&gt;36 份研究 PDF&lt;/b&gt;">Six directions · <b>36 research PDFs</b></td><td data-zh="从选题一路跑到论文交付">From topic selection to paper delivery</td></tr>
 </table>
 
-<h2 data-zh="两个 NVIDIA B200 全榜第一">Two #1 kernels on NVIDIA B200</h2>
-<p data-zh="Argus 向 NVIDIA SOL-ExecBench 提交了 &lt;b&gt;101 个 GPU kernel&lt;/b&gt;。结果:综合排名全球第六,7 个进入 top-3,&lt;code&gt;040_conv2d_residual_block&lt;/code&gt; 得分 &lt;b&gt;0.851&lt;/b&gt;、&lt;code&gt;002_fp8_attention_qkv_projection&lt;/code&gt; 得分 &lt;b&gt;0.708&lt;/b&gt;,双双拿下全榜第一。">Argus submitted <b>101 GPU kernels</b> to NVIDIA SOL-ExecBench. The result: global #6 overall, seven top-three finishes, and two outright wins — <code>040_conv2d_residual_block</code> at <b>0.851</b> and <code>002_fp8_attention_qkv_projection</code> at <b>0.708</b>.</p>
-<div class="chart">
-<div class="crow win"><span class="cl">★ Argus</span><span class="track"><i style="width:71%"></i></span><span class="cv">0.708</span></div>
-<div class="crow"><span class="cl">Recursive</span><span class="track"><i style="width:65%"></i></span><span class="cv">0.647</span></div>
-<div class="crow"><span class="cl">Argus-sufeng</span><span class="track"><i style="width:65%"></i></span><span class="cv">0.646</span></div>
-<div class="axis" data-zh="002_fp8_attention_qkv_projection · NVIDIA B200 · SOL-Score 越高越好">002_fp8_attention_qkv_projection · NVIDIA B200 · higher SOL-Score is better</div>
-</div>
-<p data-zh="在 fp8-attention 上,Argus 同时占住 #1 和 #3,把 Recursive 夹在中间;在 flux-rmsnorm 上再次正面超过 Recursive。&lt;a href='sol-execbench.html'&gt;看完整 B200 战绩 →&lt;/a&gt;">On fp8-attention, Argus holds #1 and #3 with Recursive in between; on flux-rmsnorm, it beat Recursive again. <a href="sol-execbench.html">See the full B200 run →</a></p>
-
-<h2 data-zh="一座真正会自己运转的实验室">A research lab that actually runs itself</h2>
-<pre>LifeSupervisor
-  ├─ Manager        <span class="c">choose the track, move the project</span>
-  ├─ Planner        <span class="c">decide what to do next</span>
-  └─ SkillLoop
-       └─ Engineer ↔ Reviewer</pre>
-<p data-zh="外层 LifeSupervisor 持续管理 backlog、预算、状态和下一批工作;内层 SkillLoop 让 Engineer 真正写代码、跑实验,再由 Reviewer 验收并决定继续、完成或换路。Manager 掌管入口与 stage,Planner 在队列为空时继续向前规划。四个角色各自独立,但共享同一个项目记忆。">The outer LifeSupervisor keeps the backlog, budget, state, and next wave of work moving. Inside each mission, the SkillLoop has an Engineer write code and run experiments, then a Reviewer decide whether to continue, finish, or change direction. The Manager owns intake and stages; the Planner keeps scheduling forward. Four independent roles, one shared project memory.</p>
-<p data-zh="当现有 skill 不够用时,Scientist 会从任务中蒸馏新的 project skill;Reviewer 再根据真实使用结果更新 skill 与研究 wiki。当前系统约 &lt;b&gt;17 万行 Python、2600+ 测试&lt;/b&gt;——它不是一个 prompt wrapper,而是一套为长期科研打造的 runtime。">When existing skills are not enough, a Scientist distills a new project skill from the task; the Reviewer then updates skills and the research wiki from real usage. The system is now roughly <b>170k lines of Python with 2,600+ tests</b> — not a prompt wrapper, but a runtime built for long-horizon research.</p>
-
-<h2 data-zh="从一个空白主题,到 38 份研究 PDF">From a blank topic to 38 research PDFs</h2>
-<p data-zh="Argus 把论文研究变成一条连续流水线:&lt;code&gt;research → plan → benchmark → run → analysis → draft → review → submission&lt;/code&gt;。它会找方向、搭 benchmark、跑实验、做分析、画图、写论文、接受 Reviewer 退回,然后继续改。">Argus turns paper research into one continuous pipeline: <code>research → plan → benchmark → run → analysis → draft → review → submission</code>. It finds the direction, builds the benchmark, runs experiments, analyzes results, makes figures, writes the paper, takes Reviewer rejection, and keeps going.</p>
-<p data-zh="现在,Argus 的研究成果集已经横跨 &lt;b&gt;六个方向、38 份 PDF&lt;/b&gt;。真正令人兴奋的不是“AI 会写一篇论文”,而是这条流水线已经开始持续产出。&lt;a href='index.html#research'&gt;查看全部研究成果 →&lt;/a&gt;">The Argus research collection now spans <b>six directions and 38 PDFs</b>. The exciting part is no longer “AI can write a paper.” It is that the pipeline has started producing continuously. <a href="index.html#research">Explore the full collection →</a></p>
+<h2 data-zh="它不会在第二天早上失忆">It does not wake up amnesiac.</h2>
+<p data-zh="Argus 把一个研究项目的目标、已完成工作、失败尝试和下一步持续保留下来。进程会重启、session 会换班,但研究不会回到第一天。&lt;a href='how.html'&gt;看完整系统原理 →&lt;/a&gt;">Argus carries a research project's goal, completed work, failed attempts, and next move forward. Processes restart and sessions roll, but the research does not return to day one. <a href="how.html">See the full system →</a></p>
 
 <div class="callout" data-zh="给 Argus 一个目标和算力,然后让开。它会自己读、想、写、测、审,再来一轮。研究不再等人类明天上班。"><b>Give Argus an objective and compute — then get out of the way.</b> It reads, hypothesizes, builds, measures, critiques, and starts the next round. Research no longer waits for tomorrow morning.</div>
 <div class="quote-end" data-zh="“下一座伟大的研究实验室,可能根本没有下班时间。”">"The next great research lab may not have a closing time."</div>

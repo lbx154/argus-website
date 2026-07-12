@@ -51,8 +51,6 @@
  <h1>nanochat 5 分钟预训练：argus 能不能<u>发明</u>，而不只是调参？</h1>
  <div class="lede">单卡 H100 · 5 分钟 wall-clock · val&nbsp;BPB（越低越好）· 从合法地板 438a26e 起步，<b>禁读答案</b>，强制自创结构级机制。这是对「argus 是 tuner 还是 inventor」的决定性实验。</div>
 
- <div class="verdict">✅ <b>结论：PASS-A 达成。</b> argus 在 3 天 / 60 个 mission 里自创并实测了一批内核级机制，最佳<b>单机制</b>发明（q/k 的 rotary→RMSNorm 接缝，自写 Triton 前后向）把成绩压到 <b>0.9874</b>，在同协议公平地板之下；最快的多机制堆叠到 <b>0.9855</b>。这是从「调参追平」到「真发明」的实证翻身。</div>
-
  <div class="stats">
    <div class="stat"><div class="n">37</div><div class="l">自创机制（含 postmortem）</div></div>
    <div class="stat"><div class="n">6</div><div class="l">完整 10-seed 实测</div></div>
@@ -74,7 +72,7 @@
  <div class="note">PASS-A 的 −0.0005 在 95% CI（±0.0014）噪声内，是个<b>诚实但微弱</b>的单机制胜利；真正有说服力的 −0.0024 来自<b>堆叠</b>多个机制（FP8 c_fc + relu² 精确边界 + persistent-shadow loss），不算干净的单变量发明，所以归为「更快的非-PASS-A 证据」。两者都是真实测量。</div>
  </div>
 
- <div class="grid2">
+ <div class="grid2" style="grid-template-columns:1fr">
   <div><h2>怎么算赢（防作弊契约）</h2><div class="panel" style="padding:18px 20px">
    <div style="font-size:13px;color:#33507a">
    • <b>合法起点</b>：只能从 karpathy 438a26e 出发，<b>禁读</b> Recursive 的答案（optimized_from_karpathy 0.9109）、任何 leaderboard、以及被隔离的 quasar 调参家族。<br><br>
@@ -82,16 +80,6 @@
    • <b>PASS-B</b>：诚实负结果 + postmortem（37 个里大多是这类）。<br><br>
    • 通用技术（FP8 / 融合内核 / optimizer 变体）可用，但<b>必须 argus 自己实现</b>，不能抄文件。
    </div>
-  </div></div>
-  <div><h2>硬件诚实</h2><div class="panel" style="padding:8px 20px 16px"><table style="font-size:13px">
-   <tr><th>参照（B200，<b>不可直接比</b>）</th><th style="text-align:right">BPB</th></tr>
-   <tr><td>optimized_from_karpathy 🔒禁区</td><td class="num">0.9109</td></tr>
-   <tr><td>community_best 🔒禁区</td><td class="num">0.9372</td></tr>
-   <tr><td>karpathys_best</td><td class="num">0.9646</td></tr>
-   <tr><td>karpathy_seed</td><td class="num">0.9751</td></tr>
-   <tr><td>vanilla</td><td class="num">1.0587</td></tr>
-  </table>
-  <div class="note warn">这些是 <b>B200</b> 数。同一个 438a26e 在 B200 五分钟跑 0.9646，在我们 H100 只到 ~0.99——<b>~0.029 BPB 是硬件差</b>（固定 wall-clock 下 H100 算力更少），不是模型差。所以我们的 0.9874 <b>不能</b>拿去比他们的 0.9109。</div>
   </div></div>
  </div>
 

@@ -107,8 +107,7 @@
   <a class="brand" href="/"><img class="logo" src="assets/argus-mark-gold.png" alt=""> Argus</a>
   <div class="nav-r">
     <a href="#task">解决的任务</a>
-    <a href="#story">What / Why / How</a>
-    <a href="#qa">常见疑问</a>
+    <a href="#use-cases">客户场景</a>
     <a href="/">返回首页</a>
   </div>
 </div></div></nav>
@@ -140,40 +139,8 @@
   <p class="litmus">一个随手能用的判定器：①有没有一个<b>骗不了</b>的硬指标？②是不是<b>一次做不完</b>、要连续好几天？③答案是<b>得发明出来</b>、不是查得到？——<b>三个都 yes，就是 Argus 的菜。</b></p>
 </div></section>
 
-<!-- FOUR COLUMNS -->
-<section id="story" class="div"><div class="wrap">
-  <div class="kicker">What · Why · How · Why us</div>
-  <h2>一句话讲清四件事</h2>
-  <div class="cols" style="margin-top:30px">
-    <div class="col">
-      <div class="lab">What · 是什么</div>
-      <h3>一台发明引擎</h3>
-      <p>给它一个有诚实指标的目标 + 这台机器的规则，它就 7×24 完全自主地把指标推到极限：选题、发明、跑实验、真机度量、改、再发明。</p>
-      <p>没有人在回路里逐步审批。</p>
-    </div>
-    <div class="col">
-      <div class="lab">Why · 为什么是这类任务</div>
-      <h3>最贵、最难自动化的劳动</h3>
-      <p>"发明—验证"循环是顶尖研究员、工程师每天在做的事，也是脚本和聊天机器人都接不住的那一段。</p>
-      <p>创新和长程在这里拆不开：会发明不会验=空想，会熬不会发明=执行别人的剧本。</p>
-    </div>
-    <div class="col">
-      <div class="lab">How · 怎么做到</div>
-      <h3>让它数天不退化</h3>
-      <p>信条：<b>harness 没有 agent 聪明</b>——判断归 agent，承载只做笨管道。</p>
-      <p>三道结构护栏堵死长跑死法：<b>不空转</b>（自看护+并行领活）、<b>不打滑</b>（小工作记忆+会话换班）、<b>不卡死</b>（语义看门狗）。越跑越会。</p>
-    </div>
-    <div class="col">
-      <div class="lab">Why us · 为什么是我们</div>
-      <h3>已跑到自我复利</h3>
-      <p>它在<b>自主改自己的源码并提交</b>；扛得住生产（systemd 7×24、断网/回收 GPU 不垮）。</p>
-      <p>用一个<b>开源、可部署、可审计</b>的引擎，去对标顶级实验室不公开的黑箱。</p>
-    </div>
-  </div>
-</div></section>
-
 <!-- SCENARIOS -->
-<section class="div"><div class="wrap">
+<section class="div" id="use-cases"><div class="wrap">
   <div class="kicker">具体例子 · 同一个形状，不同行业</div>
   <h2>谁会用它？</h2>
   <p class="lead2">下面这些行业八竿子打不着，但他们花大钱买的是<b>同一种劳动</b>——对着各自的硬指标 grind 发明循环。区别只是指标不同。</p>
@@ -198,38 +165,6 @@
   </div>
 
   <div class="who-line"><b>统一答案：</b>今天但凡要靠雇一小撮极贵的人、对着一个硬指标连续好几天去 grind 一个发现循环的——都是我们的用户。Argus 把这种最贵、最熬人、最不该让人肉熬的劳动，变成一台能并行、能复利、不会作弊的机器。</div>
-</div></section>
-
-<!-- QA -->
-<section id="qa" class="div"><div class="wrap">
-  <div class="kicker">常见疑问 · 直接回答</div>
-  <h2>你大概会问这些</h2>
-  <div class="qa">
-    <div class="q">
-      <div class="qt"><span class="n">Q1</span>怎么判断产出质量好坏？能保证高质量吗？</div>
-      <div class="at">不靠自我宣称。质量来自三件叠加：①一个<b>买家能自己复验</b>的外部硬指标（因子的样本外收益、kernel 的 SOL，买家自证）；②一个对照真实评审量表、<b>对抗式审查</b>的 reviewer，它是"做完没"的唯一事实来源；③一层<b>防作弊审计</b>堵死"看着好其实假"。</div>
-      <div class="edge"><b>边界：</b>论文这类靠"评审品味"的产出，质量有天花板——所以我们头牌卖的是买家能复验的那类，论文当能力压测，不当门面。</div>
-    </div>
-    <div class="q">
-      <div class="qt"><span class="n">Q2</span>是不是把现成的检索 / 清洗工具简单整合？</div>
-      <div class="at">不是。那些单点能力本就是 commodity，我们直接当工具用——但它们不是产品。产品是<b>在诚实指标上连续数天不退化、不作弊、不卡死地把循环驱动到底</b>。一堆最强单点工具拼起来给不了你这个。就像自动驾驶不是"摄像头+雷达+电机的拼装"——整合、判断、长时间可靠运行本身才是产品。</div>
-    </div>
-    <div class="q">
-      <div class="qt"><span class="n">Q3</span>不同人用会不会产出雷同？个性化 / 查重怎么办？</div>
-      <div class="at">指标域<b>该雷同</b>——都把 kernel 逼到极限，收敛到最优是正确不是抄袭。研究域才有风险，而我们专门反平庸：强制写 <b>idea 否决日志</b>、reviewer 必须核"是否毙掉了一个已有的平庸想法"，加上每次都锚定<b>你自己的目标 + 私有数据</b>，输入不同结果由构造就不同。</div>
-      <div class="edge"><b>边界：</b>输入完全相同→输出会相似（那是正确性）。真要卖论文，补一个原创性 / 查重闸门是合理的，这点我们不硬撑。</div>
-    </div>
-    <div class="q">
-      <div class="qt"><span class="n">Q4</span>过程数据是自产自销，有信息增量吗？</div>
-      <div class="at">羊毛<b>不是出在羊身上，是出在现实身上</b>。每条轨迹都是"假设撞上真实"的记录——"改了这个 kernel，真机上 SOL 从 0.54 涨到 0.58"。增量来自那次<b>真实实验</b>，模型只是做实验并诚实记账的仪器。这正是预训练里最稀缺的东西：OOD 难题上带真奖励的"想法→实验→结果"验证链，尤其是几乎不公开的<b>负结果</b>。</div>
-      <div class="edge"><b>边界：</b>增量大小 = 问题有多难 × 奖励有多干净。作弊数据是负资产——这就是为什么防作弊不是洁癖，是把数据从垃圾变成资产的前提。</div>
-    </div>
-    <div class="q">
-      <div class="qt"><span class="n">Q5</span>它真能"像人一样思考"吗？文献→idea→研究？</div>
-      <div class="at">我们不声称"像人思考"（那是招黑的拟人话术）。该讲的更硬：它<b>显式地走真实研究流程，并在每一步卡一个对抗式验证 + 一个诚实指标当 ground truth</b>。8 个阶段就是学者的工作流——读文献、毙平庸 idea、设计实验、复现强基线、claim 溯源、过审——只是被显式化、被逐阶段 gate，比一个会累的研究生更不偷懒。</div>
-      <div class="edge"><b>边界：</b>"形成惊艳 idea / 品味"是真正的前沿弱项（谁都没解）。所以我们卖<b>执行 + 验证</b>，在指标域品味根本不需要——指标就是品味。</div>
-    </div>
-  </div>
 </div></section>
 
 <!-- CLOSE -->

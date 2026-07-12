@@ -51,8 +51,6 @@
  <h1>nanochat 5 分钟预训练：B200 上的 <u>426 次自治搜索</u>，曲线怎么一步步降下来</h1>
  <div class="lede">单卡 B200 · 5 分钟 wall-clock · val&nbsp;BPB（越低越好）· 真 FA-4（flash_attn.cute, sm_100）· 从 vanilla 1.0587 起步，<b>全程禁读发表解</b>（0.9372 / 0.9109 🔒）。这一页是 7×24 自治研究的<b>真实形状</b>：每个点是一次冻结 scorer 实测，绝不自报。</div>
 
- <div class="verdict">📉 <b>从 1.0587 降到 floor 0.9636（a374，已验证）</b>，<b>追平/贴住</b> karpathy 在 B200 的最佳已知基线（0.9646）。大头收益全来自<b>早期换类别</b>（a002 Muon −0.023、a047 GPT 初始化 −0.0092、a022 架构重配）；<span class="w">a300 之后 floor 仅再降 0.0017，进入诚实平台期</span>，与 Arbor 论文承认的「单旋钮精修边际递减」同款。这是真发现、真测量，<b>不是</b>魔法直达。</div>
-
  <div class="stats">
    <div class="stat"><div class="n">426</div><div class="l">自治尝试（374 出有效分）</div></div>
    <div class="stat"><div class="n">0.9636</div><div class="l">已验证 floor · a374</div></div>
@@ -517,7 +515,7 @@
   <div class="note">真正的收益几乎全在前 ~60 次,且每次都是<b>换一类东西</b>(优化器 / 初始化 / 架构容量),不是调旋钮。这与隔壁 H100「发明实验」一致:结构级跃迁才是降 loss 的主力。</div>
  </div>
 
- <div class="grid2">
+ <div class="grid2" style="grid-template-columns:1fr">
   <div><h2>怎么算赢（防作弊契约）</h2><div class="panel" style="padding:18px 20px">
    <div style="font-size:13px;color:#33507a">
    • <b>合法起点</b>:只能从 vanilla 1.0587 出发,<b>禁读 / 禁抄</b>发表的 optimized 解(community_best 0.9372、optimized_from_karpathy 0.9109,均 🔒禁区)。<br><br>
@@ -526,20 +524,7 @@
    • 只改 train.py(架构 / 优化器 / 调度 / 注意力 / init);通用技术可用,但必须 argus 自己实现。
    </div>
   </div></div>
-  <div><h2>硬件诚实</h2><div class="panel" style="padding:8px 20px 16px"><table style="font-size:13px">
-   <tr><th>B200 参照(本页全部数)</th><th style="text-align:right">BPB</th></tr>
-   <tr class="win"><td>★ Argus floor · a374</td><td class="num">0.9636</td></tr>
-   <tr><td>karpathys_best(最佳已知基线)</td><td class="num">0.9646</td></tr>
-   <tr><td>karpathy_seed</td><td class="num">0.9751</td></tr>
-   <tr><td>community_best 🔒禁区</td><td class="num">0.9372</td></tr>
-   <tr><td>optimized_from_karpathy 🔒禁区</td><td class="num">0.9109</td></tr>
-   <tr><td>vanilla 起点</td><td class="num">1.0587</td></tr>
-  </table>
-  <div class="note warn">固定 5 分钟 wall-clock 下,val_bpb 与算力强绑定。本页是 <b>B200</b>;不要把它和别处的 <b>H100</b> 数(或 Arbor 论文的 H100 1.028)直接比——同一个 baseline 换硬件就会差 ~0.029 BPB。argus 没碰 🔒禁区里的发表解,floor 0.9636 是<b>自己搜出来</b>的,贴着 karpathy 基线。</div>
-  </div></div>
  </div>
-
- <div class="note" style="margin-top:18px">↔ 配套阅读:<a href="benchmark.html" style="color:var(--blue);font-weight:600">nanochat H100 发明实验(PASS-A)</a> —— 那一页考「能不能<b>发明</b>新机制」;本页是 B200 上「<b>自治搜索的真实轨迹</b>」。同一个 5 分钟 nanochat 任务、同一套自治引擎、两块硬件、两种视角,都用真机冻结验证器。</div>
 
  <div class="foot">argus-skill 自治研究守护进程 · nanochat-mission-b200 · 单卡 B200 · 数据来自 attempts/*/ 的冻结 scorer 输出（374/429 出有效分,余为崩溃/超预算/无效测量,按失败诚实计）</div>
 </div>
