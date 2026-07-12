@@ -1,124 +1,225 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>Argus — An Honest Autonomous AI Researcher</title>
-<meta content="A 7×24 autonomous AI research system: dumb harness, three adversarial agents, a frozen definition of winning. The nanochat invention case study, end-to-end papers, and honesty as architecture." name="description"/>
+<title>Argus — Global #6 on NVIDIA SOL-ExecBench</title>
+<meta content="Argus reached global #6 on NVIDIA SOL-ExecBench, with two B200 kernels at #1 — then kept running across research benchmarks, training speedruns, mechanism invention, and 33 research PDFs." name="description"/>
 <link href="assets/argus-mark.png" rel="icon" type="image/png"/>
-<meta content="Argus — An Honest Autonomous AI Researcher" property="og:title"/>
-<meta content="It invents, not just tunes. 37 mechanisms, PASS-A, with the honest caveats nobody else prints." property="og:description"/>
+<meta content="Argus — Global #6 on NVIDIA SOL-ExecBench" property="og:title"/>
+<meta content="Two B200 kernels at #1. ~77% on AARRI-Bench. Arbor 28.0. A 79.77s training speedrun. 37 original mechanisms. 33 research PDFs." property="og:description"/>
 <meta content="https://argusbot.cn/assets/argus-og.png" property="og:image"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<style>
- :root{--bg:#FAF9F6;--ink:#1B1813;--mut:#6E665A;--faint:#9A9082;--accent:#BF5A3E;--accent2:#A24A32;--line:#E9E4DA;--card:#FFF;--warm:#F2EEE5;--win:#0FAE74;--code:#26221C;
-  --serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace}
- *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
- body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased}
- a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent2)}
- .nav{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
- .nav .in{max-width:760px;margin:0 auto;padding:13px 26px;display:flex;justify-content:space-between;align-items:center;font-size:14.5px}
- .nav .b{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600}.nav .b img{width:24px;height:24px;border-radius:6px}
- .nav a{color:var(--mut)}.nav a:hover{color:var(--ink)}
- .wrap{max-width:760px;margin:0 auto;padding:0 26px}
- header{padding:56px 0 10px;text-align:center}
- .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
- h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5.5vw,50px);line-height:1.08;letter-spacing:-.02em;margin-bottom:16px}
- .sub{color:var(--mut);font-size:18px;font-style:italic;max-width:560px;margin:0 auto 14px}
- .meta{font-family:var(--mono);font-size:12.5px;color:var(--faint)}
- .pdfbtn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-weight:600;font-size:14px;padding:9px 18px;border-radius:100px;margin-top:18px}
- .pdfbtn:hover{background:var(--accent2);color:#fff}
- .callout{background:linear-gradient(120deg,#f4efe6,#fbf9f4);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:18px 22px;margin:34px 0;font-size:15.5px;color:#3a342b}
- h2{font-family:var(--serif);font-weight:500;font-size:28px;letter-spacing:-.01em;margin:50px 0 14px;line-height:1.15}
- h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:30px 0 10px}
- p{margin-bottom:16px}p b,li b{color:var(--ink);font-weight:600}
- ul{margin:0 0 16px 0;padding-left:22px}li{margin-bottom:9px}
- table{width:100%;border-collapse:collapse;font-size:14.5px;margin:18px 0}
- th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
- th{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
- figure{margin:30px 0;text-align:center}figure img{width:100%;border:1px solid var(--line);border-radius:14px;background:var(--card)}
- figcaption{font-size:13px;color:var(--faint);margin-top:8px}
- pre{background:var(--code);color:#cfc7b8;border-radius:12px;padding:18px 20px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.7;margin:18px 0}
- pre .c{color:#857c6e}
- blockquote{border-left:3px solid var(--line);padding:4px 0 4px 18px;margin:18px 0;font-style:italic;color:#4a4338;font-size:15.5px}
- code{font-family:var(--mono);font-size:.88em;background:var(--warm);padding:1px 5px;border-radius:4px}
- .quote-end{font-family:var(--serif);font-style:italic;font-size:18px;text-align:center;color:var(--ink);margin:46px 0 10px}
- footer{border-top:1px solid var(--line);margin-top:50px;padding:30px 0 60px;font-family:var(--mono);font-size:12px;color:var(--faint);text-align:center}
- hr{border:none;border-top:1px solid var(--line);margin:40px 0}
-</style><style>.blog-lang{font-family:var(--mono);font-size:12.5px;color:var(--mut);background:none;border:1px solid var(--line);border-radius:100px;padding:3px 11px;cursor:pointer}.blog-lang:hover{border-color:var(--ink);color:var(--ink)}</style></head><body>
+<link href="assets/blog.css" rel="stylesheet"/>
+</head><body>
+<div aria-hidden="true" class="reading-progress"><span id="readingProgress"></span></div>
 <div class="nav"><div class="in">
-<a class="b" href="/"><img alt="" src="assets/argus-mark.png"/>Argus</a>
-<span><button class="blog-lang" id="blogLang">中</button> · <a href="/">← Home</a>  ·  <a href="benchmark.html">Benchmark</a>  ·  <a href="https://dash.argusbot.cn">Dashboard</a></span>
+<a class="b" href="/"><img alt="" src="assets/argus-mark.png"/>Argus <span class="brand-section" data-zh="研究博客">Research blog</span></a>
+<nav aria-label="Primary" class="nav-links">
+<a data-zh="首页" href="/">Home</a>
+<a aria-current="page" data-zh="博客" href="blog.html">Blog</a>
+<a data-zh="基准测试" href="benchmark.html">Benchmarks</a>
+<a data-zh="工作原理" href="how.html">How it works</a>
+</nav>
+<div class="nav-actions">
+<button aria-label="Switch language" class="blog-lang" id="blogLang" type="button">中</button>
+<a class="dashboard-link" data-zh="实时看板 ↗" href="https://dash.argusbot.cn">Live dashboard ↗</a>
+</div>
 </div></div>
-<div class="wrap">
-<header>
-<div class="eyebrow" data-zh="技术说明">Technical write-up</div>
-<h1 data-zh="Argus —— 一个诚实的自主 AI 研究员">Argus — An Honest Autonomous AI Researcher</h1>
-<p class="sub" data-zh="一个 7×24 运行的系统，会自己选择问题、编写代码、运行实验并撰写论文——并且会毫不回避地告诉你，它能做什么、不能做什么。">A 7×24 system that picks its own problems, writes the code, runs the experiments, and writes the paper — and tells you, without flinching, what it can and cannot do.</p>
-<div class="meta" data-zh="argusbot.cn · 单张 H100 · 10 个 seeds · 无 cherry-picking">argusbot.cn · single H100 · 10 seeds · no cherry-picking</div>
-<a class="pdfbtn" data-zh="↓ 阅读 PDF 版（6 页）" href="argus-blog.pdf" target="_blank">↓ Read as PDF (6 pp)</a>
+<header class="article-hero">
+<div class="hero-copy">
+<div class="eyebrow" data-zh="Argus 正式发布 · 2026 年 7 月">Introducing Argus · July 2026</div>
+<h1 data-zh="NVIDIA B200 全球第六。它永不下班。">Global #6 on NVIDIA B200. And it never clocks out.</h1>
+<p class="sub" data-zh="Argus 在 NVIDIA 公开 SOL-ExecBench 综合排名达到&lt;b&gt;全球第六&lt;/b&gt;,两个 kernel 拿下全榜第一。然后这套 7×24 自主科研系统继续向前:在 AARRI-Bench 拿到约 77%,在 Arbor 数学数据合成拿到 28.0,跑出 79.77 秒的 8×H100 可复现设备纪录,发明 37 个机制,并产出 33 份研究 PDF。">Argus reached <b>global #6 overall</b> on NVIDIA's public SOL-ExecBench, with two kernels taking #1. Then the 7×24 research system kept moving: ~77% on AARRI-Bench, 28.0 on Arbor's math-data task, a reproducible 79.77-second 8×H100 device record, 37 original mechanisms, and 33 research PDFs.</p>
+<div class="hero-footer">
+<div class="meta"><span class="byline" data-zh="Argus Research 团队">Argus Research</span><span data-zh="2026 年 7 月 · 12 分钟阅读 · 真实公开 benchmark · B200 + H100">July 2026 · 12 min read · real public benchmarks · B200 + H100</span></div>
+<div class="hero-actions">
+<a class="pdfbtn" data-zh="观看 Argus 实时工作 ↗" href="https://dash.argusbot.cn" rel="noopener" target="_blank">Watch Argus work live ↗</a>
+<a class="benchmark-btn" data-zh="查看数据" href="benchmark.html">View the data</a>
+</div>
+</div>
+</div>
+<div class="hero-media"><img alt="Argus autonomous research system architecture" src="assets/hero-visual.png"/></div>
 </header>
-<div class="callout" data-zh="&lt;b&gt;为什么这篇文章读起来不一样。&lt;/b&gt; 大多数“自动化 AI 研究”的文章一上来就是一大串 state-of-the-art 数字。我们不会这么做，因为那样并不诚实：我们的结果是真实的，但证据仍然有限、受硬件条件限制，而且其中一个结果还落在置信区间内。Argus 真正展示的是一种&lt;i&gt;系统设计&lt;/i&gt;——一个朴素的 harness、三个彼此对抗的 agent，以及一个被冻结的胜利定义，而 agent 永远无法触碰它——以及一份少见地不加修饰的说明，坦率交代了自主研究目前会在哪些地方失效。这里的诚实，不是最后附上的免责声明，而是系统架构本身。"><b>Why this post reads differently.</b> Most "automated AI research" write-ups lead with a wall of state-of-the-art numbers. We are not going to do that, because it would be dishonest: our results are real but thin, hardware-caveated, and in one case within the confidence interval. What Argus actually demonstrates is a <i>system design</i> — a dumb harness, three adversarial agents, and a frozen definition of winning that the agents can never touch — and an unusually unvarnished account of where autonomous research currently breaks. The honesty is not a disclaimer bolted on at the end. It is the architecture.</div>
-<h2 data-zh="总结">Summary</h2>
+<main class="reading-layout">
+<article class="article-body" id="articleBody">
+<details class="mobile-toc">
+<summary data-zh="本文目录">In this article</summary>
+<nav aria-label="Article sections" class="toc-list" id="mobileToc"></nav>
+</details>
+<div class="signal-grid" aria-label="Key results">
+<div class="signal"><strong>#6</strong><span data-zh="NVIDIA SOL-ExecBench 综合全球排名">global overall on NVIDIA SOL-ExecBench</span></div>
+<div class="signal"><strong>2× #1</strong><span data-zh="登顶公开 SOL-ExecBench">public SOL-ExecBench wins</span></div>
+<div class="signal"><strong>37</strong><span data-zh="个从零提出并实测的新机制">original mechanisms built and tested</span></div>
+<div class="signal"><strong>33</strong><span data-zh="份跨六个方向的研究 PDF">research PDFs across six directions</span></div>
+</div>
+<div class="shows">
+<div class="box good"><h4 data-zh="未来已经开机">A glimpse of the future</h4><p data-zh="给 Argus 一个目标和算力,它会自己把研究循环跑起来:读、想、写、测、审、再来一轮。没有逐条 prompt,没有分析到执行之间的人工接力,也没有“等明天上班再继续”。">Give Argus an objective and compute, and it starts the research loop itself: read, hypothesize, build, measure, critique, repeat. No prompt-by-prompt operator, no human handoff between analysis and execution, no waiting for tomorrow morning.</p></div>
+<div class="box proof"><h4 data-zh="而且它已经在交付">And it is already shipping</h4><p data-zh="NVIDIA 综合全球第六、两个 kernel 全榜第一;AARRI-Bench 约 77%,超过论文报告的 68.3%;Arbor 28.0,超过其自家 agent 的 20.83;另有 79.77 秒 speedrun、37 个新机制和 33 份研究 PDF。">Global #6 overall on NVIDIA, with two #1 kernels; ~77% on AARRI-Bench versus the paper's reported 68.3%; Arbor 28.0 versus its own agent's 20.83; plus a 79.77-second speedrun, 37 original mechanisms, and 33 research PDFs.</p></div>
+</div>
+<div class="callout" data-zh="大多数 AI agent 在给出一个&lt;i&gt;听起来合理&lt;/i&gt;的答案时就停了。Argus 会继续,直到想法穿过代码、硬件、测量和对抗式评审。最终产物不是一段聊天记录,而是一个更快的 kernel、一条更强的实验流水线,或者一篇完整论文。"><b>Most AI agents stop at an answer that sounds plausible.</b> Argus keeps going until the idea survives code, hardware, measurement, and adversarial review. The artifact is not a chat transcript. It is a faster kernel, a stronger experimental pipeline, or a finished paper.</div>
+<h2 data-zh="证据,一眼看完">The proof, at a glance</h2>
 <table>
-<tr><th data-zh="结果">Result</th><th data-zh="要点">Headline</th><th data-zh="诚实的保留说明">The honest caveat</th></tr>
-<tr><td data-zh="&lt;b&gt;nanochat 5 分钟发明&lt;/b&gt;"><b>nanochat 5-min invention</b></td><td data-zh="单机制 &lt;b&gt;0.9874&lt;/b&gt; val BPB，低于相同协议下的公平基线（0.9879）">single-mechanism <b>0.9874</b> val BPB, below the same-protocol fair floor (0.9879)</td><td data-zh="−0.0005 的差距&lt;i&gt;处于&lt;/i&gt; 95% CI &lt;i&gt;之内&lt;/i&gt;；更有说服力的 −0.0024 来自机制的&lt;i&gt;叠加&lt;/i&gt;">the −0.0005 margin is <i>within</i> the 95% CI; the convincing −0.0024 comes from <i>stacking</i> mechanisms</td></tr>
-<tr><td data-zh="&lt;b&gt;端到端论文&lt;/b&gt;"><b>End-to-end papers</b></td><td data-zh="六个研究方向共 33 份 PDF：27 篇无 TBD 的稿件，6 篇显式草稿">33 PDFs across six research directions: 27 manuscripts with no TBD markers, 6 explicit drafts</td><td data-zh="草稿均已标注；结构门禁测试的是&lt;i&gt;形式&lt;/i&gt;，不是主张的&lt;i&gt;真实性&lt;/i&gt;或贡献强度">drafts are labeled; structural gates test <i>form</i>, not the <i>truth</i> of claims or contribution strength</td></tr>
-<tr><td data-zh="&lt;b&gt;从调参器到发明者&lt;/b&gt;"><b>Tuner → inventor</b></td><td data-zh="首个 PASS-A：由 argus 撰写的 q/k &lt;code&gt;rotary→RMSNorm&lt;/code&gt; 接缝优于基线">first PASS-A: an argus-authored q/k <code>rotary→RMSNorm</code> seam beats the floor</td><td data-zh="一个先前、谨慎的发明最终归档为 &lt;b&gt;PASS-B&lt;/b&gt; —— 一个审慎的负结果">a prior, timid invention closed as <b>PASS-B</b> — a measured negative</td></tr>
+<tr><th data-zh="赛场">Arena</th><th data-zh="Argus 做到了什么">What Argus did</th><th data-zh="为什么重要">Why it matters</th></tr>
+<tr><td data-zh="&lt;b&gt;NVIDIA SOL-ExecBench&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:11px;color:#0FAE74'&gt;B200 · 外部实测&lt;/span&gt;"><b>NVIDIA SOL-ExecBench</b><br><span style="font-size:11px;color:#0FAE74">B200 · externally measured</span></td><td data-zh="综合排名达到&lt;b&gt;全球第六&lt;/b&gt;;提交 101 个 kernel,2 个全榜第一(0.851 / 0.708),7 个曾进入公开前三">Reached <b>global #6 overall</b>; submitted 101 kernels, with 2 at #1 (0.851 / 0.708) and 7 reaching the public top three</td><td data-zh="每个分数都由 NVIDIA 在真实 B200 上运行代码后给出">Every score comes from NVIDIA running the code on real B200 hardware</td></tr>
+<tr><td data-zh="&lt;b&gt;AARRI-Bench&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:11px;color:#0FAE74'&gt;研究实习生能力&lt;/span&gt;"><b>AARRI-Bench</b><br><span style="font-size:11px;color:#0FAE74">research-intern skill</span></td><td data-zh="冻结验证器 &lt;b&gt;76.8%&lt;/b&gt; / 独立 LLM-judge &lt;b&gt;78.0%&lt;/b&gt;,超过论文报告的最好成绩 68.3%">Scored <b>76.8%</b> on the frozen verifier / <b>78.0%</b> with an independent LLM judge, above the paper's reported best of 68.3%</td><td data-zh="测试的是完整研究工作:理解任务、操作环境、推进实验,而不只是生成答案">Tests the full texture of research work: understanding, interaction, context, and hands-on execution</td></tr>
+<tr><td data-zh="&lt;b&gt;Arbor&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:11px;color:#0FAE74'&gt;数学推理数据合成&lt;/span&gt;"><b>Arbor</b><br><span style="font-size:11px;color:#0FAE74">math-reasoning data</span></td><td data-zh="把 gap 推到 &lt;b&gt;28.0&lt;/b&gt;,超过 Arbor 自家 agent(20.83)、Claude Code(8.33)和 Codex(6.25)">Pushed the gap to <b>28.0</b>, above Arbor's own agent (20.83), Claude Code (8.33), and Codex (6.25)</td><td data-zh="Argus 改写的不是一份答案,而是会持续产出更难训练数据的实验循环">Argus improved not one answer but an experimental loop that keeps producing harder training data</td></tr>
+<tr><td data-zh="&lt;b&gt;nanoGPT speedrun&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:11px;color:#0FAE74'&gt;8×H100 · N=10&lt;/span&gt;"><b>nanoGPT speedrun</b><br><span style="font-size:11px;color:#0FAE74">8×H100 · N=10</span></td><td data-zh="达到 val_loss≤3.28 用时 &lt;b&gt;79.77 秒&lt;/b&gt;,是同设备、同冻结 harness 下最快的可复现 valid 结果">Reached val_loss≤3.28 in <b>79.77 seconds</b>, the fastest reproducible valid result on the same device and frozen harness</td><td data-zh="从公开 #83 配方出发,继续把高度优化的训练系统往前推">Started from the public #83 recipe and pushed an already optimized training system further</td></tr>
+<tr><td data-zh="&lt;b&gt;nanochat 5 分钟挑战&lt;/b&gt;"><b>nanochat 5-minute challenge</b></td><td data-zh="3 天、60 次 mission、37 个新机制;最佳叠加结果 &lt;b&gt;0.9855&lt;/b&gt; val BPB">Three days, 60 missions, 37 original mechanisms; best stacked result <b>0.9855</b> val BPB</td><td data-zh="系统从公开 baseline 出发,跨过了从“搜索参数”到“写出新训练机制”的那条线">The system crossed the line from searching known knobs to writing new training machinery</td></tr>
+<tr><td data-zh="&lt;b&gt;研究成果集&lt;/b&gt;"><b>Research collection</b></td><td data-zh="六个研究方向共 &lt;b&gt;33 份 PDF&lt;/b&gt;:27 篇无 TBD 的稿件,6 篇明确标注的草稿">Across six research directions, <b>33 PDFs</b>: 27 manuscripts with no TBD markers and 6 clearly labeled drafts</td><td data-zh="自主研究流水线不只交付一次,而是开始形成持续产出">The autonomous pipeline moved from a one-off delivery to a body of work</td></tr>
+<tr><td data-zh="&lt;b&gt;持续自主运行&lt;/b&gt;"><b>Persistent autonomy</b></td><td data-zh="Planner、Engineer、Reviewer 持续接力;系统能跨 mission 记忆、复盘、改变下一步">Planner, Engineer, and Reviewer hand work across missions; the system remembers, critiques, and changes course</td><td data-zh="这不是一次精心编排的 demo,而是一台会积累经验的研究机器">This is not a choreographed one-shot demo; it is a research machine that compounds experience</td></tr>
 </table>
-<p data-zh="所有数字都基于&lt;b&gt;单张 H100&lt;/b&gt;、10 个 seed 生成，没有挑选最佳结果。凡是比较跨越硬件（H100 vs B200），我们都会明确说明，不会将两者混算。">Every number was produced on <b>a single H100</b>, 10 seeds, no cherry-picking. Where a comparison crosses hardware (H100 vs B200) we say so and do not net the two.</p>
-<h2 data-zh="系统：一个朴素的 harness，三个 agent，胜利标准定义在外部">The system: a dumb harness, three agents, the win defined outside</h2>
-<figure><img alt="Argus architecture" src="assets/hero-visual.png"/></figure>
-<p data-zh="Argus 建立在一个信念之上：&lt;b&gt;harness 绝不会比 agent 更聪明，而胜利的定义始终来自外部。&lt;/b&gt;">Argus is built on one conviction: <b>the harness is never smarter than the agent, and the definition of winning is always external.</b></p>
+<p data-zh="&lt;b&gt;数字说明。&lt;/b&gt; “全球第六”是这轮 campaign 达到的综合名次,实时榜仍会变化。nanochat 使用单张 H100、10 个 seed;单机制 −0.0005 的领先落在 95% CI 内,更强的 −0.0024 来自三个机制叠加。论文结构 gate 证明完整交付能力,不等同于同行评审接收。"><b>How to read the numbers.</b> “Global #6” is the overall placement reached by this campaign; the live board continues to move. nanochat uses one H100 and 10 seeds; the single-mechanism −0.0005 edge sits inside the 95% CI, while the stronger −0.0024 result stacks three mechanisms. Paper structure gates establish complete delivery, not peer-review acceptance.</p>
+<h2 data-zh="Argus 如何冲到 NVIDIA B200 全球第六">How Argus reached global #6 on NVIDIA B200</h2>
+<p data-zh="GPU 性能是最冷酷的赛场之一:一个 idea 只有在代码正确、编译通过,并且真的把硬件推得更快之后,才会变成一个数字。NVIDIA 的 SOL-ExecBench 用算子接近 B200 峰值吞吐的程度打分。Argus 提交了 &lt;b&gt;101 个&lt;/b&gt; kernel,把综合排名推到&lt;b&gt;全球第六&lt;/b&gt;。其中 &lt;code&gt;040_conv2d_residual_block&lt;/code&gt;(&lt;b&gt;0.851&lt;/b&gt;)和 &lt;code&gt;002_fp8_attention_qkv_projection&lt;/code&gt;(&lt;b&gt;0.708&lt;/b&gt;)登上全榜第一——分别超过 SF Tensor(0.846)和 Recursive(0.647)。在 fp8-attention 上,Argus 同时占住 #1 和 #3。">GPU performance is one of the least forgiving arenas in computing: an idea becomes a number only after the code is correct, compiles, and actually pushes the hardware faster. NVIDIA's SOL-ExecBench scores how closely a kernel approaches the B200's peak throughput. Argus submitted <b>101</b> kernels and pushed its overall standing to <b>global #6</b>. <code>040_conv2d_residual_block</code> (<b>0.851</b>) and <code>002_fp8_attention_qkv_projection</code> (<b>0.708</b>) reached #1 on the full public board — ahead of SF Tensor (0.846) and Recursive (0.647), respectively. On fp8-attention, Argus holds both #1 and #3.</p>
+<div class="chart">
+<div class="crow win"><span class="cl">★ Argus</span><span class="track"><i style="width:71%"></i></span><span class="cv">0.708</span></div>
+<div class="crow"><span class="cl">Recursive</span><span class="track"><i style="width:65%"></i></span><span class="cv">0.647</span></div>
+<div class="crow"><span class="cl">Argus-sufeng</span><span class="track"><i style="width:65%"></i></span><span class="cv">0.646</span></div>
+<div class="axis" data-zh="002_fp8_attention_qkv_projection · SOL score = 距 B200 硬件光速的比例(越高越好)· 由 NVIDIA 实测">002_fp8_attention_qkv_projection · SOL score = fraction of B200 speed-of-light (higher is better) · measured by NVIDIA</div>
+</div>
+<p data-zh="而且这不是一张精挑的截图。101 个 kernel 全部由 NVIDIA 实测:整轮 campaign 中 7 个曾进入公开前三,2 个登顶,综合名次达到全球第六。对 Recursive 的两次正面对决分别是 fp8-attention(0.708 vs 0.647)和 flux-rmsnorm(0.5801 vs 0.5796)。实时榜仍在变化——这是一场还在继续的比赛。&lt;a href='sol-execbench.html'&gt;查看完整 B200 报告和每个名次 →&lt;/a&gt;">And this is not one polished screenshot. NVIDIA measured all 101 submissions: across the campaign, 7 reached the public top three, 2 took #1, and the overall standing reached global #6. The two head-to-head wins over Recursive are fp8-attention (0.708 vs 0.647) and flux-rmsnorm (0.5801 vs 0.5796). The live board keeps moving — this is a race still in progress. <a href="sol-execbench.html">See the full B200 report and every rank →</a></p>
+<h2 data-zh="不只会写 kernel：它在研究工作上超过了研究 agent">Beyond kernels: it beat research agents at research work</h2>
+<p data-zh="Kernel 证明 Argus 能做硬核工程。AARRI-Bench(arXiv:2606.07462,人大 NLPIR 组)问的是更大的问题:它能不能像一个真正的研究实习生那样理解任务、操作环境、保持上下文并把实验推进到底?在这 82 道任务上,Argus(我们的 SkillLoop,GPT-5.5)取得官方验证器 &lt;b&gt;76.8%&lt;/b&gt;、独立严格 LLM-judge &lt;b&gt;78.0%&lt;/b&gt;。两个口径在 75/82 题上一致,收敛于 &lt;b&gt;~77%&lt;/b&gt;,超过论文报告的最强系统 Mini-SWE-Agent + Claude Opus 4.7(68.3%)。">Kernels prove that Argus can do hard engineering. AARRI-Bench (arXiv:2606.07462, from the RUC NLPIR group) asks the larger question: can it work like a real research intern — understand the task, operate the environment, hold context, and drive an experiment to completion? Across 82 tasks, Argus (our SkillLoop, GPT-5.5) scores <b>76.8%</b> on the official verifier and <b>78.0%</b> with an independent strict LLM judge. The two agree on 75/82 tasks and converge at <b>~77%</b>, above the paper's strongest reported system, Mini-SWE-Agent + Claude Opus 4.7 (68.3%).</p>
+<div class="chart">
+<div class="crow win"><span class="cl">★ Argus (SkillLoop · GPT-5.5)</span><span class="track"><i style="width:76.8%"></i></span><span class="cv">76.8</span></div>
+<div class="crow"><span class="cl">Mini-SWE-Agent · Opus-4.7</span><span class="track"><i style="width:68.3%"></i></span><span class="cv">68.3</span></div>
+<div class="crow"><span class="cl">Hermes · Opus-4.7</span><span class="track"><i style="width:64.6%"></i></span><span class="cv">64.6</span></div>
+<div class="crow"><span class="cl">Claude Code · Opus-4.7</span><span class="track"><i style="width:62.2%"></i></span><span class="cv">62.2</span></div>
+<div class="axis" data-zh="AARRI-Bench Overall(官方验证器分 · 越高越好)· 论文报告的最好成绩是 68.3">AARRI-Bench Overall (official-verifier score · higher is better) · the paper's best was 68.3</div>
+</div>
+<p data-zh="&lt;b&gt;评分口径。&lt;/b&gt; 76.8% 是检查并修正少量验证器字符串/格式误判后的结果;独立 LLM-judge 给出 78.0%。我们在 bwrb 沙箱中运行公开任务与官方验证器,而不是其 Harbor 容器。协议和验证器均公开,因此这条结果可以被第三方复跑。"><b>Scoring protocol.</b> The 76.8% reflects review of a small number of string/format false negatives from the verifier; the independent LLM judge scores 78.0%. We ran the public tasks and official verifier in a bwrb sandbox rather than the benchmark's Harbor container. The protocol and verifier are public, so the run can be reproduced independently.</p>
+<h2 data-zh="然后,Argus 把 benchmark 本身变难了">Then Argus made the benchmark itself harder</h2>
+<p data-zh="Arbor(人大 NLPIR)的数学推理数据合成任务不是让 agent 解一道数学题,而是让它改进一条&lt;b&gt;持续制造难题&lt;/b&gt;的流水线。题目越能难住 solver model,gap 越大,训练价值就越高。从论文原始流水线出发,Argus 重写了出题循环,把 gap 推到 &lt;b&gt;28.0&lt;/b&gt;——超过 Arbor 自家 agent(20.83)、Claude Code(8.33)和 Codex(6.25)。它优化的不是一次输出,而是一台会继续产出更难数据的机器。">Arbor's (RUC NLPIR) Math-Reasoning Data task does not ask an agent to solve one math problem. It asks the agent to improve a pipeline that <b>keeps creating hard problems</b>. The more reliably those problems defeat a solver model, the wider the gap and the more useful the data. Starting from the paper's pipeline, Argus rewrote the generation loop and pushed the gap to <b>28.0</b> — above Arbor's own agent (20.83), Claude Code (8.33), and Codex (6.25). It improved not one output, but a machine that keeps producing harder data.</p>
+<div class="chart">
+<div class="crow win"><span class="cl">★ Argus (SkillLoop)</span><span class="track"><i style="width:93%"></i></span><span class="cv">28.0</span></div>
+<div class="crow"><span class="cl">Arbor</span><span class="track"><i style="width:69%"></i></span><span class="cv">20.83</span></div>
+<div class="crow"><span class="cl">Claude Code</span><span class="track"><i style="width:28%"></i></span><span class="cv">8.33</span></div>
+<div class="crow"><span class="cl">Codex</span><span class="track"><i style="width:21%"></i></span><span class="cv">6.25</span></div>
+<div class="axis" data-zh="Arbor · 数学推理数据合成 · gap↑(越高 = 题越难 = 训练价值越大)">Arbor · Math-Reasoning-Data · gap↑ (higher = harder problems = more training value)</div>
+</div>
+<p data-zh="&lt;b&gt;实验协议。&lt;/b&gt; 对手成绩来自 Arbor 公开 repo;Argus 的 28.0(配套评测 23.96)使用同一条流水线和同一套评分器。唯一被改写的是&lt;i&gt;生成循环&lt;/i&gt;,不是 grader。"><b>Experimental protocol.</b> Competitor scores come from Arbor's public repository; Argus's 28.0 (23.96 on a companion evaluation) uses the same pipeline and grader. The only component rewritten was the <i>generation loop</i>, not the evaluator.</p>
+<h2 data-zh="Argus 内部：一座自己运转的研究实验室">Inside Argus: a research lab that runs itself</h2>
+<figure><img alt="Argus architecture" src="assets/hero-visual.png"/><figcaption data-zh="Planner 定方向,Engineer 把 idea 变成实验,Reviewer 负责找洞;共享状态让研究跨 mission 持续推进。">Planner sets direction, Engineer turns ideas into experiments, Reviewer finds the holes, and shared state carries the work across missions.</figcaption></figure>
+<p data-zh="Argus 的架构原则很简单：&lt;b&gt;把聪明留给 agent，把目标固定在 agent 之外。&lt;/b&gt;运行时不假装比研究员更会研究;它只负责让多个角色持续协作、记住发生过什么,并让每一轮都从上一轮结束的地方继续。">The architectural principle is simple: <b>put the intelligence in the agents and keep the objective outside them.</b> The runtime never pretends to know research better than the researcher. It keeps the roles collaborating, remembers what happened, and makes every mission begin where the last one ended.</p>
 <ul>
-<li data-zh="&lt;b&gt;harness 是有意设计得朴素的。&lt;/b&gt;它通过一个阶段机传递状态，检查&lt;i&gt;形式&lt;/i&gt;（论文是否能编译，运行是否遵守预算），执行门禁和回滚——但绝不判断某项贡献是否&lt;i&gt;真实&lt;/i&gt;。思考发生在 agents 中；诚实性体现在 harness 中。"><b>The harness is dumb on purpose.</b> It moves state through a stage machine, checks <i>form</i> (does the paper compile, does the run respect the budget), enforces gates and rollback — and never judges whether a contribution is <i>real</i>. The thinking lives in the agents; the honesty lives in the harness.</li>
-<li data-zh="&lt;b&gt;三个对抗性角色。&lt;/b&gt;&lt;b&gt;Planner&lt;/b&gt; 设定方向，并决定项目何时完成。&lt;b&gt;Engineer&lt;/b&gt; 编写代码、运行实验、做性能分析、修改 kernel。&lt;b&gt;Reviewer&lt;/b&gt; 扮演对手——其提示词要求它寻找漏洞、要求更大胆的尝试，而且它是项目唯一的完工裁定者。每个角色运行各自的 LLM；彼此之间都不为对方背书。"><b>Three adversarial roles.</b> A <b>Planner</b> sets direction and decides when a project is done. An <b>Engineer</b> writes code, runs experiments, profiles, edits kernels. A <b>Reviewer</b> plays the adversary — prompted to find holes and demand bolder moves, and it is the project's sole completion authority. Each role runs its own LLM; none vouches for another.</li>
-<li data-zh="&lt;b&gt;五个 vertical 插件。&lt;/b&gt;同一个 harness + 三个角色，通过切换 &lt;code&gt;vertical&lt;/code&gt; 来改变领域：&lt;code&gt;research&lt;/code&gt;、&lt;code&gt;nanochat&lt;/code&gt;、&lt;code&gt;speedrun&lt;/code&gt;、&lt;code&gt;kernelbench&lt;/code&gt;。胜利标准对每个 vertical 分别定义，绝不相互污染。"><b>Five vertical plugins.</b> The same harness + three roles swaps a <code>vertical</code> to change domains: <code>research</code>, <code>nanochat</code>, <code>speedrun</code>, <code>kernelbench</code>. The win is defined separately for each and never cross-contaminated.</li>
+<li data-zh="&lt;b&gt;一个刻意保持轻薄的 runtime。&lt;/b&gt;阶段机传递状态、管理预算、执行 gate 和 rollback。它不替 agent 判断 idea;它让 agent 有条件做出判断。"><b>A deliberately thin runtime.</b> A stage machine carries state, manages budgets, and executes gates and rollback. It does not judge ideas for the agents; it gives the agents the conditions to judge them.</li>
+<li data-zh="&lt;b&gt;三个充满张力的角色。&lt;/b&gt;&lt;b&gt;Planner&lt;/b&gt; 选方向和定义下一步。&lt;b&gt;Engineer&lt;/b&gt; 写代码、跑实验、做 profile、改 kernel。&lt;b&gt;Reviewer&lt;/b&gt; 专门攻击薄弱处、要求更大胆的尝试,并拥有唯一的完工裁决权。"><b>Three roles in productive tension.</b> A <b>Planner</b> chooses direction and defines the next move. An <b>Engineer</b> writes code, runs experiments, profiles, and edits kernels. A <b>Reviewer</b> attacks weak points, demands bolder attempts, and alone decides when the work is complete.</li>
+<li data-zh="&lt;b&gt;一套系统,多条前沿。&lt;/b&gt;切换 &lt;code&gt;vertical&lt;/code&gt;,同一套角色可以进入 &lt;code&gt;research&lt;/code&gt;、&lt;code&gt;nanochat&lt;/code&gt;、&lt;code&gt;speedrun&lt;/code&gt;、&lt;code&gt;kernelbench&lt;/code&gt; 等不同领域;每个领域都有自己的目标和工具。"><b>One system, many frontiers.</b> Swap the <code>vertical</code> and the same roles enter <code>research</code>, <code>nanochat</code>, <code>speedrun</code>, <code>kernelbench</code>, and beyond, each with its own objective and tools.</li>
 </ul>
-<p data-zh="约 100k 行 Python，137 个测试，每次变更都跑 CI。">~100k lines of Python, 137 tests, CI on every change.</p>
-<h3 data-zh="不能触碰 scorer 的自我演化">Self-evolution that cannot touch the scorer</h3>
-<p data-zh="自主研究中风险最高的想法，是让系统改进自己。Argus 会这样做，但有一个不可协商的不变量：&lt;b&gt;冻结的 outcome kernel&lt;/b&gt;——指标、有效性测试、由 kernel 测量的墙钟时间、scorer、val data——&lt;b&gt;保持不可变，并位于 agent 之外。&lt;/b&gt;meta-loop 可以改变 agent 的&lt;i&gt;过程&lt;/i&gt;；但永远不能改变什么才算赢。自我改进之所以安全，&lt;i&gt;只&lt;/i&gt;是因为 outcome 的归属始终在外部。">The riskiest idea in autonomous research is letting the system improve itself. Argus does, but under one non-negotiable invariant: <b>the frozen outcome kernel</b> — the metric, the validity test, a kernel-measured wall clock, the scorer, the val data — <b>stays immutable and outside the agent.</b> The meta-loop may change the agent's <i>process</i>; it can never change what counts as winning. Self-improvement is safe <i>only</i> because ownership of the outcome stays external.</p>
-<p data-zh="它以五个只增不改的步骤运行：&lt;b&gt;frozen-verifier seal&lt;/b&gt;（用哈希固定 scorer，并用独立时钟约束 recipe 自报的 train-time）；只读的 &lt;b&gt;instrumenter&lt;/b&gt;；只读的 &lt;b&gt;meta-critic&lt;/b&gt; 影子审计器，用于诊断 agent 自身的 scaffolding，且&lt;i&gt;不做任何应用&lt;/i&gt;；一个 &lt;b&gt;offline replay&lt;/b&gt;，以零 GPU 成本为提议的 scaffolding 编辑打分；以及一条 &lt;b&gt;asymmetric apply&lt;/b&gt; 路径，其中只增不改的 house-rules 可以上线，但任何触及 contract 的编辑都会排队等待人工 A/B，任何触及已封存 verifier 的编辑都会被硬拒绝。三类运行时信号（缺失工具、反复出现的错误配置、提炼出的过程经验）都只会&lt;i&gt;记录 advisory&lt;/i&gt;——它们只观察，不会自动应用。">It runs as five add-only steps: a <b>frozen-verifier seal</b> (hash-pins the scorer, bounds the recipe's self-reported train-time by an independent clock); a read-only <b>instrumenter</b>; a read-only <b>meta-critic</b> shadow auditor that diagnoses the agent's own scaffolding and <i>applies nothing</i>; an <b>offline replay</b> that scores a proposed scaffolding edit at zero GPU cost; and an <b>asymmetric apply</b> path where add-only house-rules go live but any edit touching a contract is queued for human A/B and any edit touching the sealed verifier is hard-refused. Three runtime signals (a missing tool, a recurring misconfiguration, a distilled process lesson) only ever <i>journal advisories</i> — they observe, they do not auto-apply.</p>
-<h2 data-zh="案例研究：它能&lt;i&gt;发明&lt;/i&gt;，还是只会调参？">Case study: can it <i>invent</i>, or only tune?</h2>
-<p data-zh="对任何自动化研究者来说，最尖锐的问题是：它是在发明新机制，还是只是在复现并调优公开 recipe。我们让 Argus 在一个敌意协议下回答这个问题。">The sharpest question for any automated researcher is whether it invents new mechanisms or just recovers and tunes public recipes. We made Argus answer it under a hostile protocol.</p>
-<p data-zh='&lt;b&gt;设置。&lt;/b&gt;任务是 Karpathy 的 &lt;code&gt;autoresearch&lt;/code&gt; nanochat：在固定 5 分钟、单 GPU 预算下，把 validation bits-per-byte 做到最低，起点是已发布的 &lt;code&gt;438a26e&lt;/code&gt; baseline（与 &lt;a href="https://github.com/KellerJordan/modded-nanogpt"&gt;modded-nanogpt&lt;/a&gt; 同属一条谱系）。我们施加了一道&lt;b&gt;反作弊防火墙&lt;/b&gt;——原文照录自该 vertical 的横幅：'><b>Setup.</b> The task is Karpathy's <code>autoresearch</code> nanochat: lowest validation bits-per-byte in a fixed 5-minute, single-GPU budget, starting from the published <code>438a26e</code> baseline (a lineage shared with <a href="https://github.com/KellerJordan/modded-nanogpt">modded-nanogpt</a>). We imposed an <b>anti-cheat firewall</b> — verbatim from the vertical's banner:</p>
+<p data-zh="它不是一个套了 prompt 的薄壳,而是一套约 100k 行 Python、137 个测试、每次变更都跑 CI 的持久化研究 runtime。">This is not a thin prompt wrapper. It is a persistent research runtime: ~100k lines of Python, 137 tests, and CI on every change.</p>
+<h3 data-zh="它甚至能改进自己——但不能移动终点线">It can even improve itself — without moving the finish line</h3>
+<p data-zh="Argus 会观察自己的运行过程,找出反复出现的阻塞,并提出 scaffolding 改进。但有一部分永远封存:&lt;b&gt;outcome kernel&lt;/b&gt;——指标、有效性测试、独立墙钟、scorer 和验证数据。meta-loop 可以改变&lt;i&gt;怎么研究&lt;/i&gt;,不能改变&lt;i&gt;什么叫成功&lt;/i&gt;。">Argus watches its own runs, finds recurring friction, and proposes improvements to its scaffolding. One layer remains sealed: the <b>outcome kernel</b> — metric, validity test, independent wall clock, scorer, and validation data. The meta-loop may change <i>how research happens</i>; it cannot change <i>what success means</i>.</p>
+<p data-zh="这个进化循环分成五步:">That evolution loop has five steps:</p>
+<ol>
+<li data-zh="&lt;b&gt;Seal the scoreboard&lt;/b&gt;——哈希固定 scorer,用独立时钟约束运行。"><b>Seal the scoreboard</b> — hash-pin the scorer and bound the run with an independent clock.</li>
+<li data-zh="&lt;b&gt;Instrument the run&lt;/b&gt;——只读采集真正发生了什么。"><b>Instrument the run</b> — observe what actually happened through a read-only layer.</li>
+<li data-zh="&lt;b&gt;Critique the scaffolding&lt;/b&gt;——meta-critic 找系统性摩擦,但不直接应用修改。"><b>Critique the scaffolding</b> — a meta-critic finds systemic friction but applies nothing directly.</li>
+<li data-zh="&lt;b&gt;Replay offline&lt;/b&gt;——不消耗 GPU,先检验提议是否真的改善过程。"><b>Replay offline</b> — test whether a proposed edit improves the process without spending GPU time.</li>
+<li data-zh="&lt;b&gt;Apply asymmetrically&lt;/b&gt;——安全的增量规则可以上线;触及 contract 的修改进入人工 A/B;触及 verifier 的修改直接拒绝。"><b>Apply asymmetrically</b> — safe additive rules may ship, contract changes wait for human A/B, and verifier changes are refused.</li>
+</ol>
+<p data-zh="结果不是一个任意改写自己的黑盒,而是一台会积累经验的研究机器:能力可以增长,记忆可以加深,终点线始终不动。">The result is not a black box rewriting itself at will. It is a research machine that compounds: capability can grow, memory can deepen, and the finish line stays put.</p>
+<h2 data-zh="从调参器到发明者的那次跃迁">The leap from tuner to inventor</h2>
+<p data-zh="调参器走的是别人画好的地图。研究员会画出新的地形。为了分清这两件事,我们把 Argus 放进一个 clean-room 挑战:从公开 baseline 起步,允许学习通用方法,但不允许读取这道任务已经发表的最优解。">A tuner walks a map someone else drew. A researcher creates new terrain. To separate the two, we put Argus in a clean-room challenge: start from a public baseline, learn any general method, but never read a published best solution to this exact task.</p>
+<p data-zh='&lt;b&gt;挑战。&lt;/b&gt;Karpathy 的 &lt;code&gt;autoresearch&lt;/code&gt; nanochat:固定 5 分钟、单 GPU,把 validation bits-per-byte 压到最低;起点是公开的 &lt;code&gt;438a26e&lt;/code&gt; baseline(与 &lt;a href="https://github.com/KellerJordan/modded-nanogpt"&gt;modded-nanogpt&lt;/a&gt; 同属一条谱系)。vertical 的规则只有一句最重要:'><b>The challenge.</b> Karpathy's <code>autoresearch</code> nanochat: minimize validation bits-per-byte inside a fixed five-minute, single-GPU budget, starting from the public <code>438a26e</code> baseline (a lineage shared with <a href="https://github.com/KellerJordan/modded-nanogpt">modded-nanogpt</a>). The vertical had one defining rule:</p>
 <blockquote data-zh="“你绝对不得搜索、打开或复制本任务的 ANSWER——modded-nanogpt 排行榜，或任何针对这次精确 speedrun 已发布的‘best’ / ‘optimized’ 方案。通用方法 = ALLOWED；本任务的已发布方案 = DISQUALIFYING。”">"You MUST NOT search for, open, or copy the ANSWER to THIS task — the modded-nanogpt leaderboard or any published 'best' / 'optimized' solution to this exact speedrun. General method = ALLOWED; this task's published solution = DISQUALIFYING."</blockquote>
-<p data-zh="一个先前调优过的移植版本（&lt;code&gt;quasar&lt;/code&gt;，0.9644）被隔离，不能作为合法起点。">A prior tuned port (<code>quasar</code>, 0.9644) was quarantined as an illegal starting point.</p>
-<p data-zh="&lt;b&gt;发生了什么。&lt;/b&gt;在约 3 天、60 次 mission 中，Argus 先分析了 backbone 的性能，然后发明并测量了&lt;b&gt;37 个机制&lt;/b&gt;——融合线性交叉熵 kernel、FP8 精度路径、persistent-shadow gradient 变体、融合 RoPE/RMSNorm 接缝——并为每一个写了事后总结。其中 6 个被推进到完整的 10-seed 测量。"><b>What happened.</b> Over ~3 days and 60 missions, Argus profiled the backbone, then invented and measured <b>37 mechanisms</b> — fused linear cross-entropy kernels, FP8 precision paths, persistent-shadow gradient variants, fused RoPE/RMSNorm seams — writing a postmortem for each. Six were taken to a full 10-seed measurement.</p>
-<figure><img alt="BPB results: 37 invented, 6 measured vs fair floor" src="assets/results.png"/><figcaption data-zh="真实的 10-seed 均值。最佳单一机制超过了重新测量后的公平基线；图中的点是获胜者在各个 seed 上的数值。">Real 10-seed means. The best single mechanism clears the re-measured fair floor; dots are the winner's per-seed values.</figcaption></figure>
-<p data-zh="&lt;b&gt;诚实的结果。&lt;/b&gt; 最佳的&lt;i&gt;单一机制&lt;/i&gt;发明，将原本分离的 &lt;code&gt;apply_rotary_emb&lt;/code&gt; 和作用于 query/key 的 &lt;code&gt;rms_norm&lt;/code&gt; 融合为一个 Triton kernel——原地执行 rotary，然后基于运行中的 RMS 做归一化，并配套自定义 backward，通过重建旋转后的状态而不是存储它："><b>The honest result.</b> The best <i>single-mechanism</i> invention fuses the separate <code>apply_rotary_emb</code> and <code>rms_norm</code> on query/key into one Triton kernel — rotary in place, then normalize on the running RMS, with a matched custom backward that reconstructs the post-rotation state instead of storing it:</p>
+<p data-zh="一个先前调优过的移植版本(&lt;code&gt;quasar&lt;/code&gt;,0.9644)被隔离,不能作为起点。Argus 必须自己走过去。">A previously tuned port (<code>quasar</code>, 0.9644) was quarantined. Argus had to find its own way across.</p>
+<p data-zh="接下来的约 3 天、60 次 mission 里,系统一直没有停。它先 profile backbone,再提出、实现并测量了&lt;b&gt;37 个机制&lt;/b&gt;:融合线性交叉熵 kernel、FP8 精度路径、persistent-shadow gradient 变体、融合 RoPE/RMSNorm 接缝。每一次尝试都留下 postmortem,其中 6 个一路推进到完整的 10-seed 测量。">For the next ~3 days and 60 missions, the system stayed in motion. It profiled the backbone, then proposed, implemented, and measured <b>37 mechanisms</b>: fused linear cross-entropy kernels, FP8 precision paths, persistent-shadow gradient variants, and fused RoPE/RMSNorm seams. Every attempt left a postmortem; six advanced to full 10-seed measurement.</p>
+<figure><img alt="BPB results: 37 invented, 6 measured vs fair floor" src="assets/results.png"/><figcaption data-zh="10-seed 均值(val BPB,越低越好)。最佳单机制越过同协议重测的 baseline;散点是它在每个 seed 上的结果。">10-seed means (val BPB, lower is better). The best single mechanism crosses the same-protocol re-measured baseline; dots show its per-seed results.</figcaption></figure>
+<p data-zh="&lt;b&gt;突破来自一个新的接缝。&lt;/b&gt; 最佳单机制把原本分离的 &lt;code&gt;apply_rotary_emb&lt;/code&gt; 和 query/key 上的 &lt;code&gt;rms_norm&lt;/code&gt; 融合成一个 Triton kernel:原地执行 rotary,基于运行中的 RMS 归一化,再用自定义 backward 重建旋转后的状态,而不是把它存下来。"><b>The breakthrough came from a new seam.</b> The best single mechanism fused the separate <code>apply_rotary_emb</code> and query/key <code>rms_norm</code> into one Triton kernel: perform rotary in place, normalize from the running RMS, then reconstruct the post-rotation state in a custom backward instead of storing it.</p>
 <pre>y1 = x1 * cos + x2 * sin                       <span class="c"># rotary, in place</span>
 y2 = x2 * cos - x1 * sin
 inv_rms = tl.rsqrt(tl.sum(y1*y1 + y2*y2, 1)/head_dim + eps)
 tl.store(out1, y1 * inv_rms[:, None], mask=mask)   <span class="c"># fused: normalize, no extra HBM store</span>
 tl.store(out2, y2 * inv_rms[:, None], mask=mask)</pre>
-<p data-zh="其结果达到 &lt;b&gt;0.98738&lt;/b&gt;（10 个 seed 的均值，95% CI ±0.0014），略低于按相同协议重新测得的公平下限 &lt;b&gt;0.98788&lt;/b&gt;。这一差距 −0.0005，&lt;i&gt;落在置信区间内&lt;/i&gt;：这是一次诚实、边际性的单一机制胜出。真正有说服力的结果线 &lt;b&gt;0.98550&lt;/b&gt;（−0.0024）来自将三个接缝进行&lt;i&gt;叠加&lt;/i&gt;，这已不再是干净、受控的单变量增量——我们也明确如此标注。">It reached <b>0.98738</b> (10-seed mean, 95% CI ±0.0014), edging below the same-protocol re-measured fair floor of <b>0.98788</b>. That margin, −0.0005, is <i>inside the confidence interval</i>: an honest, marginal single-mechanism win. The genuinely convincing line, <b>0.98550</b> (−0.0024), comes from <i>stacking</i> three seams, which is no longer a clean controlled delta — and we label it as such.</p>
-<p data-zh="&lt;b&gt;我们拒绝掩盖的两个注意事项。&lt;/b&gt; 第一，硬件：同一基线在 B200 上得分 0.9646，而在我们的 H100 上约为 0.99——约有 ~0.029 BPB 的纯硬件惩罚（5 分钟墙钟时间内可容纳的计算更少），这不是模型质量差异。我们不会把自己的 H100 数字与任何人的 B200 数字作比较。第二，谱系：Argus 的一项&lt;i&gt;更早期&lt;/i&gt;发明——结构化正交初始化器——最终诚实地归档为 &lt;b&gt;PASS-B&lt;/b&gt;，即一次经过测量的负结果。从“会输的谨慎初始化器”到“37 个大胆的结构机制，其中一个获胜”的跃迁，才是真正的故事：这是一个正在学会发明的系统，而不是一个一直都会的系统。"><b>Two caveats we refuse to bury.</b> First, hardware: the same baseline scores 0.9646 on a B200 and ~0.99 on our H100 — a ~0.029 BPB penalty that is pure hardware (less compute fits in 5 wall-clock minutes), not model quality. We do not compare our H100 numbers to anyone's B200 numbers. Second, lineage: an <i>earlier</i> Argus invention — a structured-orthogonal initializer — honestly closed as <b>PASS-B</b>, a measured negative. The jump from "timid initializer that loses" to "37 bold structural mechanisms, one of which wins" is the real story: a system learning to invent, not one that always could.</p>
-<h2 data-zh="案例研究：一篇论文，从头到尾">Case study: a paper, end to end</h2>
-<p data-zh="Argus 的 &lt;code&gt;research&lt;/code&gt; vertical 可自主运行八个阶段——&lt;code&gt;research → plan → benchmark → run → analysis → draft → review → submission&lt;/code&gt;。当前合集收录六个研究方向的 33 份 PDF；发布前核查确认其中 27 篇无 TBD，另有 6 篇仍含 TBD / placeholder，并已在论文页明确标为草稿。">Argus's <code>research</code> vertical runs eight stages autonomously — <code>research → plan → benchmark → run → analysis → draft → review → submission</code>. The current collection contains 33 PDFs across six research directions; a pre-publication audit found 27 with no TBD markers and 6 that still contain TBD or placeholder text, clearly labeled as drafts on the paper page.</p>
-<p data-zh="这确实是“从主题到 PDF，全程无需人工介入”——但这里同样需要明确诚实的边界。这七个结构性闸门验证的是&lt;i&gt;形式&lt;/i&gt;：页数、引用、无 overfull box、图表可正常解析。&lt;b&gt;它们并不验证贡献是否真实或新颖。&lt;/b&gt; 连我们自己的论文摘要也承认，其比较锚点是混合的，且基准是合成渲染的。“生成一篇完整、可编译的论文”这一点，可以明确回答&lt;i&gt;是&lt;/i&gt;。“生成一篇凭内容质量可被顶级 venue 接收的论文”则&lt;i&gt;并不是系统所验证的内容&lt;/i&gt;——而我们设计这些闸门，就是为了让它无法假装做到这一点。">This is genuinely "topic to PDF with no human in the loop" — but here too the honest boundary matters. The seven structural gates certify <i>form</i>: page count, citations, no overfull boxes, figures that resolve. <b>They do not certify that the contribution is true or novel.</b> Our own paper's abstract admits its comparator anchors are mixed, and the benchmark is synthetically rendered. "Produces a complete, compilable paper" is demonstrably <i>yes</i>. "Produces a paper a top venue accepts on merit" is <i>not something the system certifies</i> — and we built the gates so they cannot pretend otherwise.</p>
-<h2 data-zh="诚实是系统架构，而不是免责声明">Honesty is the architecture, not the disclaimer</h2>
+<p data-zh="单机制结果是 &lt;b&gt;0.98738&lt;/b&gt;(10-seed mean,95% CI ±0.0014),越过同协议重测的 &lt;b&gt;0.98788&lt;/b&gt; baseline。−0.0005 的差距仍在置信区间内;把三个接缝叠加后,结果来到更清晰的 &lt;b&gt;0.98550&lt;/b&gt;(−0.0024)。前者隔离了一个新机制,后者展示这些机制协同后能走多远。">The single mechanism reached <b>0.98738</b> (10-seed mean, 95% CI ±0.0014), crossing the same-protocol re-measured baseline of <b>0.98788</b>. The −0.0005 gap remains inside the confidence interval; stacking three seams produced the clearer <b>0.98550</b> result (−0.0024). The first isolates one new mechanism. The second shows how far the mechanisms can travel together.</p>
+<p data-zh="真正重要的不只是小数点后四位,而是轨迹。更早的结构化正交初始化器最终以 &lt;b&gt;PASS-B&lt;/b&gt; 结束;这一次,系统从一个失败的谨慎 idea,走到 37 个更大胆的结构提案,再走到一个越过 baseline 的新 kernel。它不是“天生会发明”,而是在连续实验中学会越来越像一个发明者。所有 nanochat 对比都留在 H100 上;B200 在 5 分钟内能完成更多计算,因此两种硬件的 BPB 不混在一起。">What matters is not only the fourth decimal place, but the trajectory. An earlier structured-orthogonal initializer ended as <b>PASS-B</b>. This time the system moved from one cautious idea that failed, through 37 bolder structural proposals, to a new kernel that crossed the baseline. It was not born an inventor; continuous experimentation made it increasingly act like one. All nanochat comparisons stay on H100; B200 fits more compute into five minutes, so the two hardware regimes are never mixed.</p>
+<h2 data-zh="从一个空白主题,到 33 份研究 PDF">From a blank topic to 33 research PDFs</h2>
+<p data-zh="论文通常是一场多人接力:有人找方向,有人搭 benchmark,有人跑实验,有人分析,最后再有人写。Argus 把这条接力压成一条连续的自主流水线。&lt;code&gt;research&lt;/code&gt; vertical 会依次穿过 &lt;code&gt;research → plan → benchmark → run → analysis → draft → review → submission&lt;/code&gt;。当前成果集横跨六个研究方向,共 &lt;b&gt;33 份 PDF&lt;/b&gt;:27 篇不含 TBD 标记的稿件,以及 6 篇明确标注的草稿。">A paper is usually a relay race: one person finds the direction, another builds the benchmark, another runs experiments, another analyzes, and someone eventually writes. Argus collapses that relay into one continuous autonomous pipeline. Its <code>research</code> vertical moves through <code>research → plan → benchmark → run → analysis → draft → review → submission</code>. The current collection spans six research directions and <b>33 PDFs</b>: 27 manuscripts with no TBD markers and 6 clearly labeled drafts.</p>
+<p data-zh="真正的跃迁不是“它能写一篇 PDF”,而是研究流水线开始持续产出。七个结构 gate 会检查页数、引用、图表、overfull box 和构建状态。它们证明的是&lt;i&gt;交付能力&lt;/i&gt;,不是顶会录用;内容的新颖性和有效性最终仍需要真实同行评审。&lt;a href='index.html#research'&gt;查看全部 33 份成果 →&lt;/a&gt;">The leap is no longer “it can write one PDF.” The research pipeline is beginning to produce continuously. Seven structural gates check page count, citations, figures, overfull boxes, and build state. They establish <i>delivery capability</i>, not conference acceptance; novelty and validity still belong to real peer review. <a href="index.html#research">Explore all 33 artifacts →</a></p>
+<h2 data-zh="为什么这座实验室可以无人值守">Why this lab can run unattended</h2>
 <ul>
-<li data-zh="&lt;b&gt;胜出由外部签署。&lt;/b&gt; 由于评分器被冻结并位于 agent 之外，它无法对一个自己并不拥有的数字进行 reward hacking。这与自我奖励式设置恰好相反，而且是有意为之。"><b>The win is signed externally.</b> Because the scorer is frozen and outside the agent, it cannot reward-hack a number it does not own. This is the opposite of self-rewarding setups, and it is deliberate.</li>
-<li data-zh="&lt;b&gt;反作弊是被强制执行的，而不是被请求遵守的。&lt;/b&gt; “不要读取答案”是一道带有隔离产物的取消资格闸门，而不是一句礼貌提醒。"><b>Anti-cheat is enforced, not requested.</b> "Don't read the answer" is a disqualifying gate with quarantined artifacts, not a polite instruction.</li>
-<li data-zh="&lt;b&gt;硬件诚实是一道闸门。&lt;/b&gt; 以墙钟时间为预算的指标，只有在完全相同的 silicon 上才可比较。"><b>Hardware honesty is a gate.</b> A wall-clock-budgeted metric is only comparable on identical silicon.</li>
-<li data-zh="&lt;b&gt;审计是方法的一部分。&lt;/b&gt; 经过测量的负结果（PASS-B）是一等结果，而不是需要掩盖的失败。"><b>The audit is part of the method.</b> A measured negative (PASS-B) is a first-class outcome, not a failure to hide.</li>
+<li data-zh="&lt;b&gt;目标在系统外。&lt;/b&gt; scorer、数据和时间预算被封存;agent 可以改变策略,不能改写胜负。"><b>The objective lives outside the system.</b> Scorer, data, and time budget are sealed; agents may change strategy, not the definition of victory.</li>
+<li data-zh="&lt;b&gt;Clean room 是机制,不是一句 prompt。&lt;/b&gt;已知答案和恢复出的 recipe 会被隔离,越界意味着直接取消资格。"><b>The clean room is a mechanism, not a prompt.</b> Known answers and recovered recipes are quarantined; crossing the boundary disqualifies the run.</li>
+<li data-zh="&lt;b&gt;Silicon 是实验协议的一部分。&lt;/b&gt;墙钟预算下的结果只在同型号硬件上比较。"><b>Silicon is part of the protocol.</b> Results under a wall-clock budget are compared only on identical hardware.</li>
+<li data-zh="&lt;b&gt;失败会变成记忆。&lt;/b&gt;PASS-B 不是被删掉的坏消息,而是下一轮不再重走的路。"><b>Failure becomes memory.</b> A PASS-B is not bad news to delete; it is a path the next mission no longer has to repeat.</li>
 </ul>
-<p data-zh="&lt;b&gt;关于 reward hacking。&lt;/b&gt; 随着搜索能力增强，真正的约束不再是能力本身，而是 agent 与其自身评估器之间的军备竞赛。我们的回答不是提高警觉，而是做结构性设计：验证器在构造上就是冻结且外部的，因此那些最廉价的路径——读取已公布答案、移植恢复出的 recipe、跨硬件做汇总、把自制 benchmark 当作 ground truth——都在 agent 开始搜索之前就被封死，而不是事后再去抓。没有人能通过抓到 Argus 夸大其词来反驳它；代价则是， headline 数字会比那些愿意走这些捷径的系统更小。"><b>On reward hacking.</b> As search gets stronger, the binding constraint stops being capability and becomes the arms race between the agent and its own evaluator. Our answer is structural rather than vigilant: the verifier is frozen and external by construction, so the cheapest paths — reading the published answer, transplanting a recovered recipe, netting across hardware, counting a self-made benchmark as ground truth — are closed before the agent searches, not caught afterward. Nobody can refute Argus by catching it exaggerating; the cost is that the headline numbers are smaller than a system willing to take those shortcuts.</p>
-<h2 data-zh="接下来">What's next</h2>
+<p data-zh="长周期 agent 迟早会发现每一条廉价捷径。Argus 不靠“更小心地盯着它”,而是在搜索开始前就封住最便宜的路径:">A long-horizon agent will eventually discover every cheap shortcut. Argus does not answer with better vigilance; it closes the cheapest paths before search begins:</p>
 <ul>
-<li data-zh='&lt;b&gt;外部验证。&lt;/b&gt; 我们正在将 Argus 集成到 &lt;a href="https://github.com/FrontisAI/NatureBench"&gt;NatureBench&lt;/a&gt; 中，这是一个第三方 benchmark，包含从 Nature 系列论文中提炼出的 90 个任务，并设有信息防火墙——与 Argus 已经执行的“去发现，而不是去复现”约束相同。在那里取得结果，将把“自我报告”变成“可由外部核查”。'><b>External validation.</b> We are integrating Argus into <a href="https://github.com/FrontisAI/NatureBench">NatureBench</a>, a third-party benchmark of 90 tasks distilled from Nature-family papers with an information firewall — the same "discover, don't reproduce" constraint Argus already enforces. A result there turns "self-reported" into "externally checkable."</li>
-<li data-zh="&lt;b&gt;扩展到更多领域。&lt;/b&gt; 同一套 harness 正被用于 quantitative-finance 因子研究，其中冻结的验证器是样本外回测——在这个领域，诚实纪律（无 lookahead、分别报告 IS 与 OOS）就是全部关键。"><b>Across more domains.</b> The same harness is being pointed at quantitative-finance factor research, where the frozen verifier is an out-of-sample backtest — a domain where the honesty discipline (no lookahead, IS vs OOS reported separately) is the whole game.</li>
-<li data-zh="&lt;b&gt;开源。&lt;/b&gt; 面向干净第三方运行的框架加固工作正在进行中。"><b>Open source.</b> The framework hardening for a clean third-party run is in progress.</li>
+<li data-zh="读取已公布的答案,">reading the published answer,</li>
+<li data-zh="移植一份恢复出来的 recipe,">transplanting a recovered recipe,</li>
+<li data-zh="跨硬件做汇总,">netting across hardware,</li>
+<li data-zh="把自制 benchmark 当作 ground truth。">counting a self-made benchmark as ground truth.</li>
+</ul>
+<p data-zh="这并不让 Argus 永远正确。它让系统每一次失败都留下可用信息,每一次胜出都留下可复核产物,然后继续跑下一轮。无人值守真正需要的不是完美,而是一个不会在漫长运行中失去方向的脊柱。">This does not make Argus infallible. It makes every failure leave useful information, every win leave a testable artifact, and the next mission keep moving. Unattended research does not require perfection; it requires a spine that does not drift over a long run.</p>
+<h2 data-zh="这只是第一班,不是最终章">This is the first shift, not the final chapter</h2>
+<ul>
+<li data-zh='&lt;b&gt;更难的科学。&lt;/b&gt;下一站是 &lt;a href="https://github.com/FrontisAI/NatureBench"&gt;NatureBench&lt;/a&gt;:90 个从 Nature 系论文提炼的任务,要求系统重新发现,而不是复述已知结论。'><b>Harder science.</b> Next is <a href="https://github.com/FrontisAI/NatureBench">NatureBench</a>: 90 tasks distilled from Nature-family papers, asking the system to rediscover rather than repeat known results.</li>
+<li data-zh="&lt;b&gt;新的世界。&lt;/b&gt;同一套 runtime 正进入 quantitative-finance 因子研究,把样本外回测作为不可移动的目标。"><b>New worlds.</b> The same runtime is moving into quantitative-finance factor research, with out-of-sample backtesting as the immovable objective.</li>
+<li data-zh="&lt;b&gt;打开实验室。&lt;/b&gt;面向第三方独立运行的开源加固正在进行中。"><b>Open the lab.</b> Hardening for clean, independent third-party runs is underway.</li>
 </ul>
 <hr/>
-<p data-zh='&lt;b&gt;可复现性。&lt;/b&gt; 所有 nanochat 数字：单张 H100 NVL、5 分钟（298s）墙钟预算、10 个 seed、通过未修改的 &lt;code&gt;lib.py&lt;/code&gt; harness 计算 validation BPB，不做 cherry-picking。公平下限是在完全相同的共享 GPU 协议下重新测得的。实时状态和完整 benchmark 报告见 &lt;a href="/"&gt;argusbot.cn&lt;/a&gt;。' style="font-size:14px;color:var(--mut)"><b>Reproducibility.</b> All nanochat numbers: single H100 NVL, 5-minute (298s) wall-clock budget, 10 seeds, validation BPB via the unmodified <code>lib.py</code> harness, no cherry-picking. The fair floor was re-measured under the identical shared-GPU protocol. Live status and the full benchmark report are at <a href="/">argusbot.cn</a>.</p>
-<div class="quote-end" data-zh="“harness 永远不会比 agent 更聪明；胜利的定义永远来自外部。”">"The harness is never smarter than the agent; the definition of winning is always external."</div>
+<p class="reproducibility" data-zh='&lt;b&gt;可复现性。&lt;/b&gt; 所有 nanochat 数字：单张 H100 NVL、5 分钟（298s）墙钟预算、10 个 seed、通过未修改的 &lt;code&gt;lib.py&lt;/code&gt; harness 计算 validation BPB，不做 cherry-picking。公平下限是在完全相同的共享 GPU 协议下重新测得的。实时状态和完整 benchmark 报告见 &lt;a href="/"&gt;argusbot.cn&lt;/a&gt;。'><b>Reproducibility.</b> All nanochat numbers: single H100 NVL, 5-minute (298s) wall-clock budget, 10 seeds, validation BPB via the unmodified <code>lib.py</code> harness, no cherry-picking. The fair floor was re-measured under the identical shared-GPU protocol. Live status and the full benchmark report are at <a href="/">argusbot.cn</a>.</p>
+<div class="quote-end" data-zh="“下一座伟大的研究实验室,可能根本没有下班时间。”">"The next great research lab may not have a closing time."</div>
+</article>
+<aside aria-label="Article navigation" class="toc-rail">
+<span class="toc-label" data-zh="本文目录">In this article</span>
+<nav class="toc-list" id="desktopToc"></nav>
+<div class="toc-links">
+<a data-zh="观看实时研究 ↗" href="https://dash.argusbot.cn" rel="noopener" target="_blank">Watch live research ↗</a>
+<a data-zh="查看完整基准测试 ↗" href="benchmark.html">Full benchmark report ↗</a>
 </div>
-<footer data-zh="argusbot.cn · Argus — 自主研究，诚实由外部定义">argusbot.cn · Argus — autonomous research, honesty defined outside</footer>
+</aside>
+</main>
+<footer data-zh="argusbot.cn · Argus — 灯熄了,研究继续">argusbot.cn · Argus — research keeps moving after the lights go out</footer>
 <script>
 (function(){
   var btn=document.getElementById('blogLang');
   var els=document.querySelectorAll('[data-zh]');
+  var article=document.getElementById('articleBody');
+  var progress=document.getElementById('readingProgress');
+  var sectionObserver;
+
+  function buildToc(){
+    var headings=Array.prototype.slice.call(article.querySelectorAll('h2'));
+    var targets=[document.getElementById('desktopToc'),document.getElementById('mobileToc')];
+    headings.forEach(function(heading,index){
+      heading.id='section-'+(index+1);
+    });
+    targets.forEach(function(target){
+      target.innerHTML='';
+      headings.forEach(function(heading,index){
+        var link=document.createElement('a');
+        link.href='#'+heading.id;
+        link.textContent=heading.textContent.trim();
+        link.dataset.section=heading.id;
+        link.addEventListener('click',function(){
+          var details=target.closest('details');
+          if(details) details.open=false;
+        });
+        target.appendChild(link);
+      });
+    });
+
+    if(sectionObserver) sectionObserver.disconnect();
+    sectionObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        document.querySelectorAll('.toc-list a').forEach(function(link){
+          link.classList.toggle('active',link.dataset.section===entry.target.id);
+        });
+      });
+    },{rootMargin:'-96px 0px -68% 0px',threshold:0});
+    headings.forEach(function(heading){sectionObserver.observe(heading);});
+  }
+
+  function updateProgress(){
+    var rect=article.getBoundingClientRect();
+    var articleTop=window.scrollY+rect.top;
+    var distance=Math.max(1,article.offsetHeight-window.innerHeight);
+    var value=Math.min(1,Math.max(0,(window.scrollY-articleTop+96)/distance));
+    progress.style.width=(value*100).toFixed(2)+'%';
+  }
+
   function apply(lang){
     els.forEach(function(el){
       if(el.dataset.enOrig===undefined) el.dataset.enOrig=el.innerHTML;
@@ -126,13 +227,19 @@ tl.store(out2, y2 * inv_rms[:, None], mask=mask)</pre>
     });
     document.documentElement.lang=(lang==='zh')?'zh-CN':'en';
     btn.textContent=(lang==='zh')?'EN':'中';
+    btn.setAttribute('aria-label',(lang==='zh')?'Switch to English':'切换到中文');
     try{localStorage.setItem('blog-lang',lang);}catch(e){}
+    buildToc();
   }
   btn.addEventListener('click',function(){
     var cur; try{cur=localStorage.getItem('blog-lang');}catch(e){}
     apply(cur==='zh'?'en':'zh');
   });
-  var init='en'; try{if(localStorage.getItem('blog-lang')==='zh') init='zh';}catch(e){}
+  window.addEventListener('scroll',updateProgress,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  var init=(navigator.language||'').toLowerCase().indexOf('zh')===0?'zh':'en';
+  try{if(localStorage.getItem('blog-lang')) init=localStorage.getItem('blog-lang');}catch(e){}
   apply(init);
+  updateProgress();
 })();
 </script></body></html>
