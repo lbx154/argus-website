@@ -2,46 +2,88 @@
 import "asciinema-player/dist/bundle/asciinema-player.css";
 ---
 
-<div
-  id="argus-cli-recording"
-  class="cli-recording"
-  role="region"
-  aria-label="Argus CLI 真实操作回放"
->
-  <noscript>
-    <a href="/assets/demos/argus-cli-boxiu-a205d115.cast">下载 CLI 录制</a>
-  </noscript>
+<div class="cli-recording-switcher" data-cli-recording-switcher>
+  <div class="cli-demo-tabs" role="tablist" aria-label="选择 CLI 真实任务">
+    <button
+      type="button"
+      role="tab"
+      aria-selected="true"
+      data-cli-source="/assets/demos/argus-cli-boxiu-a205d115.cast"
+    >
+      <strong>文学创作 · 秋江赋</strong>
+      <span>83s · main@699dc2c</span>
+    </button>
+    <button
+      type="button"
+      role="tab"
+      aria-selected="false"
+      data-cli-source="/assets/demos/argus-cli-math-boxiu-fe6dd4a8.cast"
+    >
+      <strong>计算数学 · Erdős–Straus</strong>
+      <span>76s · main@24cf964</span>
+    </button>
+  </div>
+  <div
+    class="cli-recording"
+    role="tabpanel"
+    aria-label="Argus CLI 真实操作回放"
+    data-cli-recording-mount
+  >
+    <noscript>
+      <a href="/assets/demos/argus-cli-boxiu-a205d115.cast">下载 CLI 录制</a>
+    </noscript>
+  </div>
 </div>
 
 <script>
   import { create } from "asciinema-player";
 
-  const mount = document.querySelector("#argus-cli-recording");
+  const root = document.querySelector("[data-cli-recording-switcher]");
 
-  if (mount instanceof HTMLElement && mount.dataset.ready !== "true") {
-    mount.dataset.ready = "true";
-    const player = create("/assets/demos/argus-cli-boxiu-a205d115.cast", mount, {
-      autoPlay: false,
-      controls: true,
-      cursorMode: "hidden",
-      fit: "width",
-      idleTimeLimit: 2,
-      loop: true,
-      poster: "npt:0:04",
-      preload: true,
-      terminalFontFamily: '"JetBrains Mono", ui-monospace, monospace',
-      terminalFontSize: "12px",
-      terminalLineHeight: 1.28,
-    });
+  if (root instanceof HTMLElement && root.dataset.ready !== "true") {
+    const mount = root.querySelector("[data-cli-recording-mount]");
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-cli-source]")];
 
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (mount instanceof HTMLElement && buttons.length > 0) {
+      root.dataset.ready = "true";
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let visible = false;
+      let player: ReturnType<typeof create> | undefined;
+
+      const load = (button: HTMLButtonElement) => {
+        player?.dispose();
+        mount.replaceChildren();
+        buttons.forEach((candidate) => {
+          candidate.setAttribute("aria-selected", String(candidate === button));
+        });
+        player = create(button.dataset.cliSource ?? "", mount, {
+          autoPlay: false,
+          controls: true,
+          cursorMode: "hidden",
+          fit: "width",
+          idleTimeLimit: 2,
+          loop: true,
+          poster: "npt:0:04",
+          preload: true,
+          terminalFontFamily: '"JetBrains Mono", ui-monospace, monospace',
+          terminalFontSize: "12px",
+          terminalLineHeight: 1.28,
+        });
+        if (visible && !reducedMotion) void player.play();
+      };
+
+      buttons.forEach((button) => button.addEventListener("click", () => load(button)));
+      load(buttons[0]);
+
       new IntersectionObserver(
         ([entry]) => {
-          if (entry?.isIntersecting) void player.play();
-          else player.pause();
+          visible = Boolean(entry?.isIntersecting);
+          if (reducedMotion) return;
+          if (visible) void player?.play();
+          else player?.pause();
         },
         { threshold: 0.2 },
-      ).observe(mount);
+      ).observe(root);
     }
   }
 </script>
