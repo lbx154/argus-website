@@ -35,6 +35,7 @@
       const canObserve = "IntersectionObserver" in window;
       const pointerCleanups: Array<() => void> = [];
       const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
+      const coarsePointer = window.matchMedia("(pointer: coarse), (hover: none)").matches;
       const pointerSurfaces = new WeakSet<Element>();
 
       const attachPointerSurface = (surface: HTMLElement) => {
@@ -85,12 +86,59 @@
       };
 
       if (finePointer) {
+        const cursorDot = document.createElement("span");
+        const cursorRing = document.createElement("span");
+        cursorDot.className = "argus-cursor-dot";
+        cursorRing.className = "argus-cursor-ring";
+        cursorDot.setAttribute("aria-hidden", "true");
+        cursorRing.setAttribute("aria-hidden", "true");
+        document.body.append(cursorRing, cursorDot);
+        gsap.set([cursorDot, cursorRing], { xPercent: -50, yPercent: -50 });
+        const ringX = gsap.quickTo(cursorRing, "x", { duration: 0.32, ease: "power3.out" });
+        const ringY = gsap.quickTo(cursorRing, "y", { duration: 0.32, ease: "power3.out" });
         const ambientMove = (event: PointerEvent) => {
           document.body.style.setProperty("--ambient-x", `${event.clientX}px`);
           document.body.style.setProperty("--ambient-y", `${event.clientY}px`);
+          gsap.set(cursorDot, { x: event.clientX, y: event.clientY, autoAlpha: 1 });
+          ringX(event.clientX);
+          ringY(event.clientY);
+          gsap.to(cursorRing, { autoAlpha: 1, duration: 0.18, overwrite: "auto" });
         };
+        const cursorOver = (event: PointerEvent) => {
+          const interactive = (event.target as Element | null)?.closest(
+            "a, button, .card, .score-row, .role, .paper-card, [data-research-field-plane]",
+          );
+          cursorRing.classList.toggle("active", Boolean(interactive));
+          gsap.to(cursorRing, {
+            scale: interactive ? 1.55 : 1,
+            duration: 0.25,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+        const cursorDown = () => gsap.fromTo(cursorRing, { scale: 0.72 }, {
+          scale: cursorRing.classList.contains("active") ? 1.55 : 1,
+          duration: 0.38,
+          ease: "back.out(2.4)",
+          overwrite: "auto",
+        });
+        const cursorHide = () => gsap.to([cursorDot, cursorRing], {
+          autoAlpha: 0,
+          duration: 0.2,
+          overwrite: "auto",
+        });
         window.addEventListener("pointermove", ambientMove, { passive: true });
-        pointerCleanups.push(() => window.removeEventListener("pointermove", ambientMove));
+        document.addEventListener("pointerover", cursorOver, { passive: true });
+        document.addEventListener("pointerdown", cursorDown, { passive: true });
+        document.documentElement.addEventListener("mouseleave", cursorHide);
+        pointerCleanups.push(() => {
+          window.removeEventListener("pointermove", ambientMove);
+          document.removeEventListener("pointerover", cursorOver);
+          document.removeEventListener("pointerdown", cursorDown);
+          document.documentElement.removeEventListener("mouseleave", cursorHide);
+          cursorDot.remove();
+          cursorRing.remove();
+        });
         document.querySelectorAll<HTMLElement>(
           ".page-hero, .card, .score-row, .role, .launch-command, .paper-card",
         ).forEach(attachPointerSurface);
@@ -116,6 +164,33 @@
             element.removeEventListener("pointerleave", leave);
           });
         });
+      }
+      if (coarsePointer) {
+        const touchPress = (event: PointerEvent) => {
+          if (event.pointerType === "mouse") return;
+          const target = (event.target as Element | null)?.closest<HTMLElement>(
+            ".card, .paper-card, .role, .button, .site-start, [data-research-field-plane]",
+          );
+          if (!target) return;
+          gsap.fromTo(target, { scale: 0.985 }, {
+            scale: 1,
+            duration: 0.36,
+            ease: "back.out(2.2)",
+            clearProps: "scale",
+            overwrite: "auto",
+          });
+          if (target.matches("[data-research-field-plane]")) {
+            gsap.fromTo("[data-research-field-node]", { scale: 0.9 }, {
+              scale: 1,
+              duration: 0.4,
+              stagger: 0.055,
+              ease: "back.out(2)",
+              clearProps: "scale",
+            });
+          }
+        };
+        document.addEventListener("pointerdown", touchPress, { passive: true });
+        pointerCleanups.push(() => document.removeEventListener("pointerdown", touchPress));
       }
 
       const progress = document.querySelector<HTMLElement>("[data-scroll-progress]");
@@ -168,6 +243,18 @@
           ease: "sine.inOut",
           yoyo: true,
           repeat: -1,
+        });
+        gsap.to("[data-research-field-particle]", {
+          x: "random(-10, 10)",
+          y: "random(-9, 9)",
+          scale: "random(0.7, 1.45)",
+          opacity: "random(0.32, 0.9)",
+          duration: "random(1.8, 3.6)",
+          stagger: 0.11,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          repeatRefresh: true,
         });
       }
       if (finePointer && researchPlane) {

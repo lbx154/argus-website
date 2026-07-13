@@ -8,6 +8,23 @@ const caption = locale === "zh"
 
 <figure class="research-field" data-research-field>
   <div class="research-field__plane" data-research-field-plane>
+    <span class="research-field__telemetry top-left">LIVE · 24/7</span>
+    <span class="research-field__telemetry bottom-right">EVIDENCE LOOP</span>
+    <span class="research-field__corner top-left" aria-hidden="true"></span>
+    <span class="research-field__corner top-right" aria-hidden="true"></span>
+    <span class="research-field__corner bottom-left" aria-hidden="true"></span>
+    <span class="research-field__corner bottom-right" aria-hidden="true"></span>
+    {[
+      [14, 32, 4], [23, 74, 3], [34, 18, 5], [42, 84, 3],
+      [57, 12, 3], [63, 73, 5], [76, 25, 4], [86, 62, 3],
+    ].map(([x, y, size], index) => (
+      <span
+        class="research-field__particle"
+        data-research-field-particle
+        style={`--particle-x:${x}%;--particle-y:${y}%;--particle-size:${size}px;--particle-index:${index}`}
+        aria-hidden="true"
+      ></span>
+    ))}
     <svg class="research-field__links" viewBox="0 0 520 360" aria-hidden="true">
       <defs>
         <linearGradient id="field-blue-gold" x1="0" y1="0" x2="1" y2="1">
