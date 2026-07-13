@@ -1,0 +1,105 @@
+<script>
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealSelector = [
+    ".section-head",
+    ".card",
+    ".metric",
+    ".score-row",
+    ".role",
+    ".pipeline > div",
+    ".figure",
+    ".cta-band",
+    ".demo-intro",
+    ".demo-frame",
+    ".demo-caption",
+    ".demo-points > span",
+    ".runtime-flow__track > div",
+  ].join(",");
+  const resetMotionStyles = () => {
+    document.querySelectorAll<HTMLElement>(revealSelector).forEach((element) => {
+      element.style.removeProperty("opacity");
+      element.style.removeProperty("visibility");
+      element.style.removeProperty("transform");
+    });
+  };
+
+  if (reduceMotion) {
+    root.classList.remove("motion-prep");
+  } else {
+    void import("gsap").then(({ gsap }) => {
+      const heroTargets = gsap.utils.toArray<HTMLElement>(
+        ".page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .demo-source",
+      );
+      const revealTargets = gsap.utils.toArray<HTMLElement>(revealSelector);
+      const canObserve = "IntersectionObserver" in window;
+
+      gsap.set(heroTargets, { autoAlpha: 0, y: 24 });
+      if (canObserve) gsap.set(revealTargets, { autoAlpha: 0, y: 20 });
+      root.classList.remove("motion-prep");
+
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .fromTo(".site-header", { autoAlpha: 0, y: -12 }, { autoAlpha: 1, y: 0, duration: 0.42 })
+        .to(heroTargets, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.68,
+          stagger: 0.09,
+          clearProps: "transform,opacity,visibility",
+        }, 0.06);
+
+      const observer = canObserve ? new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer?.unobserve(entry.target);
+          const targets = [...entry.target.querySelectorAll<HTMLElement>(revealSelector)];
+          if (!targets.length) continue;
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.62,
+            stagger: { amount: Math.min(0.48, targets.length * 0.07) },
+            ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
+          });
+        }
+      }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }) : null;
+
+      if (observer) {
+        document.querySelectorAll<HTMLElement>(".metric-strip, .runtime-flow, .section")
+          .forEach((section) => observer.observe(section));
+      }
+
+      const animatedCards = new WeakSet<Element>();
+      const animatePaperCards = () => {
+        const cards = [...document.querySelectorAll<HTMLElement>(".paper-card")]
+          .filter((card) => !animatedCards.has(card));
+        cards.forEach((card) => animatedCards.add(card));
+        if (!cards.length) return;
+        gsap.fromTo(cards, { autoAlpha: 0, y: 16 }, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: { amount: Math.min(0.4, cards.length * 0.04) },
+          ease: "power2.out",
+          clearProps: "transform,opacity,visibility",
+        });
+      };
+      const mutationObserver = "MutationObserver" in window
+        ? new MutationObserver(animatePaperCards)
+        : null;
+      mutationObserver?.observe(document.body, { childList: true, subtree: true });
+      animatePaperCards();
+      window.setTimeout(() => mutationObserver?.disconnect(), 10_000);
+
+      window.addEventListener("pagehide", (event) => {
+        if (event.persisted) return;
+        observer?.disconnect();
+        mutationObserver?.disconnect();
+      }, { once: true });
+    }).catch(() => {
+      root.classList.remove("motion-prep");
+      resetMotionStyles();
+    });
+  }
+</script>

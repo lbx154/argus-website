@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SiteMotion from "../components/SiteMotion.astro";
 import { localeFromPath, pathForLocale } from "../i18n";
 import "../styles/global.css";
 
@@ -46,6 +47,12 @@ const chineseUrl = new URL(chinesePath, Astro.site);
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("motion-prep");
+        window.setTimeout(() => document.documentElement.classList.remove("motion-prep"), 3000);
+      }
+    </script>
     <title>{title}</title>
   </head>
   <body>
@@ -54,5 +61,6 @@ const chineseUrl = new URL(chinesePath, Astro.site);
       <slot />
     </main>
     <Footer />
+    <SiteMotion />
   </body>
 </html>

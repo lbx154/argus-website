@@ -57,6 +57,28 @@ input {
   color: var(--ink);
 }
 
+.motion-prep .site-header,
+.motion-prep .page-hero .eyebrow,
+.motion-prep .page-hero h1,
+.motion-prep .page-hero .lede,
+.motion-prep .page-hero .hero-actions,
+.motion-prep .page-hero .demo-source,
+.motion-prep .section-head,
+.motion-prep .card,
+.motion-prep .metric,
+.motion-prep .score-row,
+.motion-prep .role,
+.motion-prep .pipeline > div,
+.motion-prep .figure,
+.motion-prep .cta-band,
+.motion-prep .demo-intro,
+.motion-prep .demo-frame,
+.motion-prep .demo-caption,
+.motion-prep .demo-points > span,
+.motion-prep .runtime-flow__track > div {
+  opacity: 0;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
