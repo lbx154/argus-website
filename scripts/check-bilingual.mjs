@@ -36,7 +36,7 @@ for (const [englishPath, chinesePath] of pairs) {
   assert(chinese.includes('hreflang="en"'), `${chinesePath} lacks English alternate`);
   const visibleEnglish = english
     .replace(/<script[\s\S]*?<\/script>/g, "")
-    .replace(/简/g, "");
+    .replace(/中/g, "");
   assert(!/[\u3400-\u9fff]/.test(visibleEnglish), `${englishPath} leaks Chinese visible copy`);
   assert(/[\u3400-\u9fff]/.test(chinese), `${chinesePath} lacks Chinese copy`);
 }
