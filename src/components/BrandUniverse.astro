@@ -12,8 +12,8 @@ const words = Array.from({ length: 38 }, (_, index) => ({
   depth: 0.35 + (index % 5) * 0.14,
 }));
 const scrollLabel = locale === "zh" ? "进入 Argus" : "Enter Argus";
-const eyebrow = locale === "zh" ? "自主研究运行时" : "Autonomous research runtime";
-const signature = locale === "zh" ? "持续推进的研究" : "research that keeps moving";
+const eyebrow = locale === "zh" ? "自进化科研运行时" : "Self-evolving research runtime";
+const signature = locale === "zh" ? "从每一次研究中继续生长" : "research that learns from itself";
 ---
 
 <section class="brand-universe" data-brand-universe aria-labelledby="brand-universe-title">
@@ -31,7 +31,7 @@ const signature = locale === "zh" ? "持续推进的研究" : "research that kee
   <div class="brand-universe__halo" aria-hidden="true"></div>
   <div class="brand-universe__core">
     <p>{eyebrow}</p>
-    <h1 id="brand-universe-title" data-brand-core class="font-0">ARGUS</h1>
+    <h1 id="brand-universe-title" data-brand-core data-palette="0" class="font-0">ARGUS</h1>
     <span data-brand-signature>{signature}</span>
   </div>
   <a class="brand-universe__enter" href="#intro">

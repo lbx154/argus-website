@@ -15,10 +15,15 @@
     ".demo-caption",
     ".demo-points > span",
     ".runtime-flow__track > div",
+    ".evolution-step",
+    ".trajectory-entry",
+    ".business-thesis",
+    ".business-foot",
+    ".data-governance",
   ].join(",");
   const resetMotionStyles = () => {
     document.querySelectorAll<HTMLElement>(
-      `${revealSelector}, .site-header, .page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .demo-source, [data-research-field], [data-brand-word], [data-brand-core], .brand-universe__core, .brand-universe__enter`,
+      `${revealSelector}, .site-header, .page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .hero-thesis > div, .page-hero .demo-source, [data-research-field], [data-brand-word], [data-brand-core], .brand-universe__core, .brand-universe__enter`,
     ).forEach((element) => {
       element.style.removeProperty("opacity");
       element.style.removeProperty("visibility");
@@ -31,7 +36,7 @@
   } else {
     void import("gsap").then(({ gsap }) => {
       const heroTargets = gsap.utils.toArray<HTMLElement>(
-        ".page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .demo-source, [data-research-field]",
+        ".page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .hero-thesis > div, .page-hero .demo-source, [data-research-field]",
       );
       const revealTargets = gsap.utils.toArray<HTMLElement>(revealSelector);
       const brandUniverse = document.querySelector<HTMLElement>("[data-brand-universe]");
@@ -74,6 +79,7 @@
             const [text, font] = forms[formIndex];
             brandCore.textContent = text;
             brandCore.className = `font-${font}`;
+            brandCore.dataset.palette = String(formIndex % 4);
           })
           .to(brandCore, {
             autoAlpha: 1,
@@ -83,7 +89,7 @@
             transformOrigin: "50% 50%",
           }));
         if (brandEnter) {
-          brandAnimations.push(gsap.to(brandEnter, {
+            brandAnimations.push(gsap.to(brandEnter.querySelector("i"), {
             y: 6,
             duration: 1.25,
             ease: "sine.inOut",
