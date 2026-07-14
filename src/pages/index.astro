@@ -134,10 +134,8 @@ const copy = locale === "zh" ? {
   </section>
 
   <div class="signal-rail" aria-hidden="true">
-    <div>
-      <span>{copy.signal}</span>
-      <span>{copy.signal}</span>
-      <span>{copy.signal}</span>
+    <div class="signal-rail__track">
+      {Array.from({ length: 6 }, () => <span>{copy.signal}</span>)}
     </div>
   </div>
 

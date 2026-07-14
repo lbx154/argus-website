@@ -372,14 +372,16 @@ main {
 
 .brand-universe__word {
   position: absolute;
-  left: var(--word-x);
-  top: var(--word-y);
+  left: clamp(210px, var(--word-x), calc(100% - 210px));
+  top: clamp(110px, var(--word-y), calc(100% - 110px));
+  display: inline-block;
+  padding-block: 0.14em;
   color: transparent;
   background: linear-gradient(105deg, var(--blue), var(--cyan));
   background-clip: text;
   -webkit-background-clip: text;
   font-size: clamp(13px, var(--word-size), 72px);
-  line-height: 1;
+  line-height: 1.2;
   opacity: calc(0.09 + var(--word-depth) * 0.2);
   transform: translate(-50%, -50%) rotate(var(--word-rotate));
   white-space: nowrap;
@@ -425,8 +427,9 @@ main {
 }
 
 .brand-universe__core h1 {
-  min-height: 0.86em;
+  min-height: 1.18em;
   margin: 14px 0 12px;
+  padding-block: 0.08em 0.12em;
   color: transparent;
   background: linear-gradient(105deg, var(--blue-dark), var(--violet), var(--gold-dark), var(--rose), var(--blue));
   background-size: 260% 100%;
@@ -434,7 +437,7 @@ main {
   -webkit-background-clip: text;
   animation: brand-spectrum 8s ease-in-out infinite alternate;
   font-size: clamp(96px, 18vw, 280px);
-  line-height: 0.82;
+  line-height: 1.08;
   letter-spacing: -0.075em;
   text-shadow:
     0 0 70px color-mix(in srgb, var(--blue) 16%, transparent),
@@ -804,11 +807,12 @@ main {
 .page-hero h1 {
   max-width: 900px;
   margin: 0;
+  padding-block: 0.04em 0.08em;
   font-family: var(--serif);
   font-size: clamp(42px, 6vw, 68px);
   font-weight: 500;
   letter-spacing: -0.035em;
-  line-height: 1.04;
+  line-height: 1.16;
 }
 
 .page-hero h1 em {
@@ -893,13 +897,14 @@ main {
   padding: 0 18px;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--paper) 64%, var(--line));
+  border: 2px solid transparent;
   border-radius: 11px;
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  color: var(--ink);
+  background: transparent;
+  color: #17131f;
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 72%, transparent),
-    0 12px 34px -22px color-mix(in srgb, var(--blue) 55%, transparent);
+    0 1px 0 rgba(255, 255, 255, 0.78),
+    0 12px 34px -20px color-mix(in srgb, var(--blue) 62%, transparent),
+    0 0 18px -10px color-mix(in srgb, var(--rose) 62%, transparent);
   backdrop-filter: blur(16px) saturate(1.25);
   font-size: 13px;
   font-weight: 700;
@@ -909,27 +914,37 @@ main {
 .button::before {
   content: "";
   position: absolute;
-  inset: -85%;
-  z-index: -1;
-  opacity: 0.58;
+  inset: -70%;
+  z-index: -2;
+  opacity: 0.96;
   background:
-    radial-gradient(circle at 20% 28%, #58c7ff 0 11%, transparent 29%),
-    radial-gradient(circle at 74% 22%, #a178ff 0 12%, transparent 30%),
-    radial-gradient(circle at 68% 78%, #ff72ad 0 11%, transparent 31%),
-    radial-gradient(circle at 28% 74%, #ffd257 0 12%, transparent 32%),
-    linear-gradient(115deg, color-mix(in srgb, var(--surface) 80%, transparent), color-mix(in srgb, var(--blue-soft) 70%, transparent));
-  filter: blur(6px) saturate(1.35);
+    radial-gradient(circle at 18% 24%, #45c8ff 0 8%, transparent 19%),
+    radial-gradient(circle at 76% 18%, #9d72ff 0 9%, transparent 21%),
+    radial-gradient(circle at 82% 76%, #ff68ad 0 8%, transparent 20%),
+    radial-gradient(circle at 25% 78%, #ffd34e 0 9%, transparent 22%),
+    radial-gradient(circle at 52% 52%, #7ef0ce 0 7%, transparent 18%),
+    #d9c8ff;
+  filter: blur(4px) saturate(1.5);
   animation: rainbow-glass 10s ease-in-out infinite alternate;
 }
 
-.button.primary {
-  border-color: color-mix(in srgb, #fff 72%, var(--blue));
-  background: color-mix(in srgb, var(--surface) 58%, transparent);
-  color: var(--ink);
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: -1;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 1px 0 #fff,
+    inset 0 -1px 0 rgba(40, 28, 72, 0.06);
+}
+
+.button.primary {
+  color: #17131f;
+  box-shadow:
     0 16px 42px -20px color-mix(in srgb, var(--violet) 62%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--gold) 20%, transparent);
+    0 0 22px -10px color-mix(in srgb, var(--gold) 72%, transparent);
 }
 
 .button.primary::before {
@@ -937,18 +952,17 @@ main {
 }
 
 .button:hover {
-  border-color: color-mix(in srgb, var(--gold) 72%, #fff);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 18px 48px -20px color-mix(in srgb, var(--violet) 70%, transparent);
+    0 18px 48px -18px color-mix(in srgb, var(--violet) 72%, transparent),
+    0 0 24px -8px color-mix(in srgb, var(--gold) 70%, transparent);
 }
 
 :root[data-theme="dark"] .button::before {
-  opacity: 0.34;
+  opacity: 0.78;
 }
 
 :root[data-theme="dark"] .button.primary::before {
-  opacity: 0.44;
+  opacity: 0.9;
 }
 
 @keyframes rainbow-glass {
@@ -969,14 +983,18 @@ main {
 }
 
 .signal-rail > div {
+  --signal-segment-width: max(33.333vw, 480px);
   width: max-content;
   display: flex;
-  gap: 72px;
   padding: 7px 0;
   animation: signal-rail 24s linear infinite;
 }
 
 .signal-rail span {
+  width: var(--signal-segment-width);
+  flex: 0 0 var(--signal-segment-width);
+  padding-inline: 24px;
+  text-align: center;
   color: color-mix(in srgb, var(--on-accent) 82%, var(--gold));
   font-family: var(--mono);
   font-size: 8px;
@@ -986,7 +1004,7 @@ main {
 }
 
 @keyframes signal-rail {
-  to { transform: translateX(calc(-33.333% - 24px)); }
+  to { transform: translateX(calc(var(--signal-segment-width) * -3)); }
 }
 
 .metric-grid {
@@ -1053,7 +1071,7 @@ main {
   font-size: clamp(30px, 4vw, 44px);
   font-weight: 500;
   letter-spacing: -0.025em;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .section-head p {
@@ -2271,6 +2289,8 @@ main {
   }
 
   .brand-universe__word {
+    left: clamp(110px, var(--word-x), calc(100% - 110px));
+    top: clamp(78px, var(--word-y), calc(100% - 78px));
     font-size: clamp(12px, var(--word-size), 38px);
   }
 
