@@ -44,6 +44,10 @@ for (const [englishPath, chinesePath] of pairs) {
   assert(/[\u3400-\u9fff]/.test(chinese), `${chinesePath} lacks Chinese copy`);
   assert(!english.includes("argus-mark-gold.png"), `${englishPath} still uses the legacy mark`);
   assert(!chinese.includes("argus-mark-gold.png"), `${chinesePath} still uses the legacy mark`);
+  assert(english.includes('gradientUnits="userSpaceOnUse"'), `${englishPath} logo gradient restarts per path`);
+  assert(chinese.includes('gradientUnits="userSpaceOnUse"'), `${chinesePath} logo gradient restarts per path`);
+  assert(english.includes('x1="180" y1="0" x2="1280" y2="0"'), `${englishPath} horizontal logo gradient misses the visible artwork`);
+  assert(chinese.includes('x1="180" y1="0" x2="1280" y2="0"'), `${chinesePath} horizontal logo gradient misses the visible artwork`);
   assert(english.includes('class="footer-brand"') && english.includes('aria-label="Argus home"'), `${englishPath} footer logo is unnamed`);
   assert(chinese.includes('class="footer-brand"') && chinese.includes('aria-label="Argus 首页"'), `${chinesePath} footer logo is unnamed`);
 }
