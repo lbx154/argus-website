@@ -39,6 +39,24 @@
   --shadow: 0 24px 64px -44px rgba(8, 27, 54, 0.45);
 }
 
+:root:lang(zh-CN) {
+  --serif: "Noto Sans SC", "Noto Sans CJK SC", system-ui, sans-serif;
+}
+
+:root:lang(zh-CN) h1:not([data-brand-core]) {
+  line-height: 1.3;
+}
+
+:root:lang(zh-CN) h2,
+:root:lang(zh-CN) h3 {
+  line-height: 1.32;
+}
+
+:root:lang(zh-CN) h2,
+:root:lang(zh-CN) h3 {
+  padding-block: 0.04em;
+}
+
 :root[data-theme="dark"] {
   --paper: #0b1422;
   --canvas: #07101c;
@@ -347,6 +365,7 @@ main {
 }
 
 .brand-universe {
+  --serif: "Fraunces", Georgia, serif;
   position: relative;
   min-height: calc(100svh - 55px);
   display: grid;
@@ -408,10 +427,17 @@ main {
     radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 32%);
 }
 
-.brand-universe__core {
+.brand-universe__core-scroll {
   position: relative;
   z-index: 3;
   width: min(1180px, calc(100% - 40px));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.brand-universe__core {
+  width: 100%;
   text-align: center;
   pointer-events: none;
 }
@@ -2064,6 +2090,17 @@ main {
   border-color: #fff;
   background: #fff;
   color: #0b2e68;
+}
+
+.cta-band .hero-actions .button:last-child {
+  color: #fff;
+}
+
+.cta-band .hero-actions .button:last-child::after {
+  background: color-mix(in srgb, #172a68 72%, var(--violet));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(2, 10, 34, 0.28);
 }
 
 .paper-explorer {

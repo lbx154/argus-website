@@ -45,6 +45,8 @@
       const activeBrandWords = brandWords.filter((word) => getComputedStyle(word).display !== "none");
       const brandWordOpacities = activeBrandWords.map((word) => Number(getComputedStyle(word).opacity));
       const brandCore = document.querySelector<HTMLElement>("[data-brand-core]");
+      const brandCoreScroll = document.querySelector<HTMLElement>("[data-brand-core-scroll]");
+      const brandHalo = document.querySelector<HTMLElement>(".brand-universe__halo");
       const brandEnter = document.querySelector<HTMLElement>(".brand-universe__enter");
       const brandAnimations: gsap.core.Animation[] = [];
       let brandVisibilityObserver: IntersectionObserver | null = null;
@@ -181,7 +183,7 @@
           brandUniverse.addEventListener("pointermove", brandMove, { passive: true });
           pointerCleanups.push(() => brandUniverse.removeEventListener("pointermove", brandMove));
         }
-        document.querySelectorAll<HTMLElement>(".button.primary, .site-start").forEach((element) => {
+        document.querySelectorAll<HTMLElement>(".button, .site-start").forEach((element) => {
           const xTo = gsap.quickTo(element, "x", { duration: 0.3, ease: "power3.out" });
           const yTo = gsap.quickTo(element, "y", { duration: 0.3, ease: "power3.out" });
           const move = (event: PointerEvent) => {
@@ -248,6 +250,45 @@
         pointerCleanups.push(() => {
           window.removeEventListener("scroll", updateProgress);
           window.removeEventListener("resize", updateProgress);
+        });
+      }
+
+      if (brandUniverse && brandWordLayer && brandCoreScroll && brandHalo) {
+        const compactHero = window.matchMedia("(max-width: 760px)").matches;
+        const scaleTo = (target: HTMLElement, duration: number) => {
+          const scaleXTo = gsap.quickTo(target, "scaleX", { duration, ease: "power2.out" });
+          const scaleYTo = gsap.quickTo(target, "scaleY", { duration, ease: "power2.out" });
+          return (value: number) => {
+            scaleXTo(value);
+            scaleYTo(value);
+          };
+        };
+        const coreScaleTo = scaleTo(brandCoreScroll, 0.22);
+        const coreYTo = gsap.quickTo(brandCoreScroll, "y", { duration: 0.22, ease: "power2.out" });
+        const coreOpacityTo = gsap.quickTo(brandCoreScroll, "opacity", { duration: 0.18, ease: "power1.out" });
+        const wordsScaleTo = scaleTo(brandWordLayer, 0.25);
+        const wordsOpacityTo = gsap.quickTo(brandWordLayer, "opacity", { duration: 0.2, ease: "power1.out" });
+        const haloScaleTo = scaleTo(brandHalo, 0.28);
+        const enterOpacityTo = brandEnter
+          ? gsap.quickTo(brandEnter, "opacity", { duration: 0.16, ease: "power1.out" })
+          : null;
+        const updateBrandScroll = () => {
+          const range = Math.max(1, brandUniverse.offsetHeight * 0.8);
+          const amount = Math.min(1, Math.max(0, (window.scrollY - brandUniverse.offsetTop) / range));
+          coreScaleTo(1 - amount * (compactHero ? 0.18 : 0.28));
+          coreYTo(amount * (compactHero ? -12 : -36));
+          coreOpacityTo(1 - amount * 0.12);
+          wordsScaleTo(1 - amount * (compactHero ? 0.1 : 0.18));
+          wordsOpacityTo(1 - amount * 0.32);
+          haloScaleTo(1 - amount * (compactHero ? 0.14 : 0.24));
+          enterOpacityTo?.(Math.max(0, 1 - amount * 2.4));
+        };
+        window.addEventListener("scroll", updateBrandScroll, { passive: true });
+        window.addEventListener("resize", updateBrandScroll);
+        updateBrandScroll();
+        pointerCleanups.push(() => {
+          window.removeEventListener("scroll", updateBrandScroll);
+          window.removeEventListener("resize", updateBrandScroll);
         });
       }
 
