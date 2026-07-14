@@ -2086,17 +2086,17 @@ main {
   color: #fff;
 }
 
-.cta-band .button:first-child {
+.cta-band .button.primary {
   border-color: #fff;
   background: #fff;
   color: #0b2e68;
 }
 
-.cta-band .hero-actions .button:last-child {
+.cta-band .button.cta-secondary {
   color: #fff;
 }
 
-.cta-band .hero-actions .button:last-child::after {
+.cta-band .button.cta-secondary::after {
   background: color-mix(in srgb, #172a68 72%, var(--violet));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
