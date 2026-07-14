@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ResearchField from "../components/ResearchField.astro";
+import BrandUniverse from "../components/BrandUniverse.astro";
 import { localeFromPath, pathForLocale } from "../i18n";
 
 const locale = localeFromPath(Astro.url.pathname);
@@ -48,7 +49,9 @@ const copy = locale === "zh" ? {
   title={copy.title}
   description={copy.description}
 >
-  <section class="page-hero">
+  <BrandUniverse locale={locale} />
+
+  <section id="intro" class="page-hero product-intro">
     <div class="shell hero-system-grid">
       <div class="hero-system-copy">
         <p class="eyebrow">Autonomous research runtime</p>

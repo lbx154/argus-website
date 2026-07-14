@@ -17,7 +17,9 @@
     ".runtime-flow__track > div",
   ].join(",");
   const resetMotionStyles = () => {
-    document.querySelectorAll<HTMLElement>(revealSelector).forEach((element) => {
+    document.querySelectorAll<HTMLElement>(
+      `${revealSelector}, .site-header, .page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .demo-source, [data-research-field], [data-brand-word], [data-brand-core], .brand-universe__core, .brand-universe__enter`,
+    ).forEach((element) => {
       element.style.removeProperty("opacity");
       element.style.removeProperty("visibility");
       element.style.removeProperty("transform");
@@ -32,11 +34,70 @@
         ".page-hero .eyebrow, .page-hero h1, .page-hero .lede, .page-hero .hero-actions, .page-hero .demo-source, [data-research-field]",
       );
       const revealTargets = gsap.utils.toArray<HTMLElement>(revealSelector);
+      const brandUniverse = document.querySelector<HTMLElement>("[data-brand-universe]");
+      const brandWordLayer = document.querySelector<HTMLElement>("[data-brand-word-layer]");
+      const brandWords = gsap.utils.toArray<HTMLElement>("[data-brand-word]");
+      const activeBrandWords = brandWords.filter((word) => getComputedStyle(word).display !== "none");
+      const brandWordOpacities = activeBrandWords.map((word) => Number(getComputedStyle(word).opacity));
+      const brandCore = document.querySelector<HTMLElement>("[data-brand-core]");
+      const brandEnter = document.querySelector<HTMLElement>(".brand-universe__enter");
+      const brandAnimations: gsap.core.Animation[] = [];
+      let brandVisibilityObserver: IntersectionObserver | null = null;
       const canObserve = "IntersectionObserver" in window;
       const pointerCleanups: Array<() => void> = [];
       const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
       const coarsePointer = window.matchMedia("(pointer: coarse), (hover: none)").matches;
       const pointerSurfaces = new WeakSet<Element>();
+
+      if (brandUniverse && brandCore) {
+        const forms = [
+          ["ARGUS", 0], ["Argus", 3], ["argus", 2], ["ARGUS", 5],
+          ["Argus", 4], ["argus", 7], ["ARGUS", 1], ["Argus", 6],
+        ] as const;
+        let formIndex = 0;
+        activeBrandWords.forEach((word, index) => {
+          brandAnimations.push(gsap.to(word, {
+            x: `random(${-20 - index % 3 * 4}, ${20 + index % 4 * 3})`,
+            y: `random(${-16 - index % 4 * 3}, ${16 + index % 3 * 4})`,
+            rotation: `random(${-8 - index % 3}, ${8 + index % 4})`,
+            duration: `random(${10 + index % 5}, ${20 + index % 7})`,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            repeatRefresh: true,
+          }));
+        });
+        brandAnimations.push(gsap.timeline({ repeat: -1, repeatDelay: 1.45, delay: 1.5 })
+          .to(brandCore, { autoAlpha: 0, scale: 0.965, duration: 0.22, ease: "power2.in" })
+          .call(() => {
+            formIndex = (formIndex + 1) % forms.length;
+            const [text, font] = forms[formIndex];
+            brandCore.textContent = text;
+            brandCore.className = `font-${font}`;
+          })
+          .to(brandCore, {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.42,
+            ease: "back.out(1.8)",
+            transformOrigin: "50% 50%",
+          }));
+        if (brandEnter) {
+          brandAnimations.push(gsap.to(brandEnter, {
+            y: 6,
+            duration: 1.25,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          }));
+        }
+        if ("IntersectionObserver" in window) {
+          brandVisibilityObserver = new IntersectionObserver(([entry]) => {
+            brandAnimations.forEach((animation) => animation.paused(!entry?.isIntersecting));
+          }, { threshold: 0.02 });
+          brandVisibilityObserver.observe(brandUniverse);
+        }
+      }
 
       const attachPointerSurface = (surface: HTMLElement) => {
         if (!finePointer || pointerSurfaces.has(surface)) return;
@@ -86,62 +147,34 @@
       };
 
       if (finePointer) {
-        const cursorDot = document.createElement("span");
-        const cursorRing = document.createElement("span");
-        cursorDot.className = "argus-cursor-dot";
-        cursorRing.className = "argus-cursor-ring";
-        cursorDot.setAttribute("aria-hidden", "true");
-        cursorRing.setAttribute("aria-hidden", "true");
-        document.body.append(cursorRing, cursorDot);
-        gsap.set([cursorDot, cursorRing], { xPercent: -50, yPercent: -50 });
-        const ringX = gsap.quickTo(cursorRing, "x", { duration: 0.32, ease: "power3.out" });
-        const ringY = gsap.quickTo(cursorRing, "y", { duration: 0.32, ease: "power3.out" });
         const ambientMove = (event: PointerEvent) => {
           document.body.style.setProperty("--ambient-x", `${event.clientX}px`);
           document.body.style.setProperty("--ambient-y", `${event.clientY}px`);
-          gsap.set(cursorDot, { x: event.clientX, y: event.clientY, autoAlpha: 1 });
-          ringX(event.clientX);
-          ringY(event.clientY);
-          gsap.to(cursorRing, { autoAlpha: 1, duration: 0.18, overwrite: "auto" });
         };
-        const cursorOver = (event: PointerEvent) => {
-          const interactive = (event.target as Element | null)?.closest(
-            "a, button, .card, .score-row, .role, .paper-card, [data-research-field-plane]",
-          );
-          cursorRing.classList.toggle("active", Boolean(interactive));
-          gsap.to(cursorRing, {
-            scale: interactive ? 1.55 : 1,
-            duration: 0.25,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
-        };
-        const cursorDown = () => gsap.fromTo(cursorRing, { scale: 0.72 }, {
-          scale: cursorRing.classList.contains("active") ? 1.55 : 1,
-          duration: 0.38,
-          ease: "back.out(2.4)",
-          overwrite: "auto",
-        });
-        const cursorHide = () => gsap.to([cursorDot, cursorRing], {
-          autoAlpha: 0,
-          duration: 0.2,
-          overwrite: "auto",
-        });
         window.addEventListener("pointermove", ambientMove, { passive: true });
-        document.addEventListener("pointerover", cursorOver, { passive: true });
-        document.addEventListener("pointerdown", cursorDown, { passive: true });
-        document.documentElement.addEventListener("mouseleave", cursorHide);
         pointerCleanups.push(() => {
           window.removeEventListener("pointermove", ambientMove);
-          document.removeEventListener("pointerover", cursorOver);
-          document.removeEventListener("pointerdown", cursorDown);
-          document.documentElement.removeEventListener("mouseleave", cursorHide);
-          cursorDot.remove();
-          cursorRing.remove();
         });
         document.querySelectorAll<HTMLElement>(
           ".page-hero, .card, .score-row, .role, .launch-command, .paper-card",
         ).forEach(attachPointerSurface);
+        if (brandUniverse && brandWordLayer && brandCore) {
+          const layerX = gsap.quickTo(brandWordLayer, "x", { duration: 0.9, ease: "power3.out" });
+          const layerY = gsap.quickTo(brandWordLayer, "y", { duration: 0.9, ease: "power3.out" });
+          const coreX = gsap.quickTo(brandCore, "x", { duration: 0.7, ease: "power3.out" });
+          const coreY = gsap.quickTo(brandCore, "y", { duration: 0.7, ease: "power3.out" });
+          const brandMove = (event: PointerEvent) => {
+            const rect = brandUniverse.getBoundingClientRect();
+            const x = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+            const y = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+            layerX(x * -24);
+            layerY(y * -18);
+            coreX(x * 8);
+            coreY(y * 6);
+          };
+          brandUniverse.addEventListener("pointermove", brandMove, { passive: true });
+          pointerCleanups.push(() => brandUniverse.removeEventListener("pointermove", brandMove));
+        }
         document.querySelectorAll<HTMLElement>(".button.primary, .site-start").forEach((element) => {
           const xTo = gsap.quickTo(element, "x", { duration: 0.3, ease: "power3.out" });
           const yTo = gsap.quickTo(element, "y", { duration: 0.3, ease: "power3.out" });
@@ -281,11 +314,28 @@
       }
 
       gsap.set(heroTargets, { autoAlpha: 0, y: 24 });
+      if (brandUniverse) {
+        gsap.set(activeBrandWords, { autoAlpha: 0 });
+        gsap.set(".brand-universe__core, .brand-universe__enter", { autoAlpha: 0 });
+      }
       if (canObserve) gsap.set(revealTargets, { autoAlpha: 0, y: 20 });
       root.classList.remove("motion-prep");
 
       gsap.timeline({ defaults: { ease: "power3.out" } })
         .fromTo(".site-header", { autoAlpha: 0, y: -12 }, { autoAlpha: 1, y: 0, duration: 0.42 })
+        .to(activeBrandWords, {
+          autoAlpha: (index) => brandWordOpacities[index] ?? 0.2,
+          duration: 0.9,
+          stagger: { amount: 0.7, from: "random" },
+          clearProps: "opacity,visibility",
+        }, 0)
+        .fromTo(
+          ".brand-universe__core",
+          { autoAlpha: 0, scale: 0.9 },
+          { autoAlpha: 1, scale: 1, duration: 1, ease: "power3.out" },
+          0.08,
+        )
+        .to(".brand-universe__enter", { autoAlpha: 1, duration: 0.5 }, 0.7)
         .to(heroTargets, {
           autoAlpha: 1,
           y: 0,
@@ -296,20 +346,29 @@
 
       const observer = canObserve ? new IntersectionObserver((entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          observer?.unobserve(entry.target);
           const targets = [...entry.target.querySelectorAll<HTMLElement>(revealSelector)];
           if (!targets.length) continue;
-          gsap.to(targets, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.62,
-            stagger: { amount: Math.min(0.48, targets.length * 0.07) },
-            ease: "power2.out",
-            clearProps: "transform,opacity,visibility",
-          });
+          if (entry.isIntersecting) {
+            gsap.to(targets, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.62,
+              stagger: { amount: Math.min(0.48, targets.length * 0.07) },
+              ease: "power2.out",
+              overwrite: "auto",
+              clearProps: "transform,opacity,visibility",
+            });
+          } else {
+            gsap.to(targets, {
+              autoAlpha: 0,
+              y: entry.boundingClientRect.top < 0 ? -14 : 14,
+              duration: 0.28,
+              ease: "power1.out",
+              overwrite: "auto",
+            });
+          }
         }
-      }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }) : null;
+      }, { rootMargin: "-6% 0px -10% 0px", threshold: 0.08 }) : null;
 
       if (observer) {
         document.querySelectorAll<HTMLElement>(".metric-strip, .runtime-flow, .section")
@@ -341,6 +400,7 @@
         if (event.persisted) return;
         observer?.disconnect();
         mutationObserver?.disconnect();
+        brandVisibilityObserver?.disconnect();
         pointerCleanups.forEach((cleanup) => cleanup());
       }, { once: true });
     }).catch(() => {
