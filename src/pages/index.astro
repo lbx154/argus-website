@@ -3,6 +3,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import ResearchField from "../components/ResearchField.astro";
 import BrandUniverse from "../components/BrandUniverse.astro";
 import DenseIntelligence from "../components/DenseIntelligence.astro";
+import HomeChapterMarker from "../components/HomeChapterMarker.astro";
 import MathematicalManifesto from "../components/MathematicalManifesto.astro";
 import { localeFromPath, pathForLocale } from "../i18n";
 
@@ -111,6 +112,7 @@ const copy = locale === "zh" ? {
 >
   <BrandUniverse locale={locale} />
 
+  <HomeChapterMarker number="01" title="WHAT IT IS" />
   <section id="intro" class="page-hero product-intro">
     <div class="shell hero-system-grid">
       <div class="hero-system-copy">
@@ -141,9 +143,11 @@ const copy = locale === "zh" ? {
     </div>
   </div>
 
+  <HomeChapterMarker number="02" title="DENSE INTELLIGENCE" />
   <DenseIntelligence locale={locale} />
   <MathematicalManifesto locale={locale} />
 
+  <HomeChapterMarker number="03" title="HOW IT EVOLVES" />
   <section id="evolution" class="section">
     <div class="shell">
       <div class="section-head">
@@ -169,6 +173,7 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
+  <HomeChapterMarker number="04" title="WHAT IT COMPOUNDS" />
   <section id="process-data" class="section surface data-economy">
     <div class="shell">
       <div class="section-head wide">
@@ -217,6 +222,7 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
+  <HomeChapterMarker number="05" title="WHERE IT EXPANDS" />
   <section class="section">
     <div class="shell">
       <div class="section-head">
@@ -242,6 +248,7 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
+  <HomeChapterMarker number="06" title="START" />
   <section class="section">
     <div class="shell">
       <div class="cta-band">

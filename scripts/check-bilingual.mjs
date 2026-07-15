@@ -56,6 +56,14 @@ for (const page of ["index.html", "zh.html"]) {
   const html = read(page);
   assert(html.includes('data-argus-logo="horizontal"'), `${page} lacks the rounded horizontal logo`);
   assert(html.includes('data-argus-logo="mark"'), `${page} lacks the rounded mark`);
+  const chapters = [...html.matchAll(/data-home-chapter="(0[1-6])"/g)].map((match) => match[1]);
+  assert(
+    JSON.stringify(chapters) === JSON.stringify(["01", "02", "03", "04", "05", "06"]),
+    `${page} homepage chapter order is ${chapters.join(",") || "missing"}`,
+  );
+  for (const label of ["WHAT IT IS", "DENSE INTELLIGENCE", "HOW IT EVOLVES", "WHAT IT COMPOUNDS", "WHERE IT EXPANDS", "START"]) {
+    assert(html.includes(label), `${page} lacks chapter label: ${label}`);
+  }
   const metricsAt = html.indexOf('class="metric-strip"');
   const signalAt = html.indexOf('class="signal-rail"');
   const denseAt = html.indexOf('id="dense-intelligence"');

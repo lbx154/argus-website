@@ -1,0 +1,20 @@
+---
+type Props = {
+  number: `0${1 | 2 | 3 | 4 | 5 | 6}`;
+  title: string;
+};
+
+const { number, title } = Astro.props;
+---
+
+<div
+  class="home-chapter-marker shell"
+  data-home-chapter={number}
+  aria-label={`Chapter ${number}: ${title}`}
+>
+  <span class="home-chapter-marker__number" aria-hidden="true">{number}</span>
+  <div class="home-chapter-marker__label">
+    <strong>{title}</strong>
+    <i aria-hidden="true"></i>
+  </div>
+</div>
