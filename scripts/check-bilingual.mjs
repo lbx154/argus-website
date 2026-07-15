@@ -55,20 +55,28 @@ for (const [englishPath, chinesePath] of pairs) {
 for (const page of ["index.html", "zh.html"]) {
   const html = read(page);
   assert(html.includes('data-argus-logo="horizontal"'), `${page} lacks the rounded horizontal logo`);
-  assert(html.includes('data-argus-logo="mark"'), `${page} lacks the rounded mark`);
-  const chapters = [...html.matchAll(/data-home-chapter="(0[1-6])"/g)].map((match) => match[1]);
-  assert(
-    JSON.stringify(chapters) === JSON.stringify(["01", "02", "03", "04", "05", "06"]),
-    `${page} homepage chapter order is ${chapters.join(",") || "missing"}`,
-  );
-  for (const label of ["WHAT IT IS", "DENSE INTELLIGENCE", "HOW IT EVOLVES", "WHAT IT COMPOUNDS", "WHERE IT EXPANDS", "START"]) {
-    assert(html.includes(label), `${page} lacks chapter label: ${label}`);
-  }
+  assert(!html.includes("data-brand-universe"), `${page} still renders the kinetic BrandUniverse opening`);
+  assert(!html.includes("data-home-chapter"), `${page} still renders numbered homepage chapters`);
+  const heroAt = html.indexOf('class="page-hero"');
+  const denseAt = html.indexOf('id="dense-intelligence"');
   const metricsAt = html.indexOf('class="metric-strip"');
   const signalAt = html.indexOf('class="signal-rail"');
-  const denseAt = html.indexOf('id="dense-intelligence"');
-  assert(metricsAt >= 0 && signalAt >= 0 && denseAt >= 0, `${page} lacks homepage proof blocks`);
-  assert(metricsAt < signalAt && signalAt < denseAt, `${page} does not surface results before Dense Intelligence`);
+  const evolutionAt = html.indexOf('id="evolution"');
+  const multiAgentAt = html.indexOf('id="multi-agent"');
+  const processAt = html.indexOf('id="process-data"');
+  assert(
+    [heroAt, denseAt, metricsAt, signalAt, evolutionAt, multiAgentAt, processAt].every((index) => index >= 0),
+    `${page} lacks a restored homepage section`,
+  );
+  assert(
+    heroAt < denseAt &&
+      denseAt < metricsAt &&
+      metricsAt < signalAt &&
+      signalAt < evolutionAt &&
+      evolutionAt < multiAgentAt &&
+      multiAgentAt < processAt,
+    `${page} homepage section order was not restored`,
+  );
 }
 
 for (const page of ["start.html", "zh/start.html"]) {

@@ -1534,6 +1534,32 @@ main {
   font-size: 12px;
 }
 
+.architecture-thesis {
+  margin-top: 18px;
+}
+
+.business-thesis .architecture-thesis__body {
+  max-width: 900px;
+  margin-top: 12px;
+  color: #d5e3f6;
+  font-size: 14px;
+}
+
+.business-thesis .architecture-thesis__source {
+  max-width: 980px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(213, 227, 246, 0.24);
+  color: #b9cce5;
+  font-size: 12px;
+}
+
+.architecture-thesis__source a {
+  color: #edc96f;
+  text-decoration-color: rgba(237, 201, 111, 0.58);
+  text-underline-offset: 3px;
+}
+
 .business-grid {
   display: grid;
   gap: 10px;

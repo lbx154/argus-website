@@ -1,14 +1,13 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ResearchField from "../components/ResearchField.astro";
-import BrandUniverse from "../components/BrandUniverse.astro";
 import DenseIntelligence from "../components/DenseIntelligence.astro";
-import HomeChapterMarker from "../components/HomeChapterMarker.astro";
 import MathematicalManifesto from "../components/MathematicalManifesto.astro";
 import { localeFromPath, pathForLocale } from "../i18n";
 
 const locale = localeFromPath(Astro.url.pathname);
 const href = (path: string) => pathForLocale(path, locale);
+const asiPaperHref = "https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/From_AGI_to_ASI.pdf";
 const copy = locale === "zh" ? {
   title: "Argus — 自进化科研基础 Agent",
   description: "Argus 将每一次研究过程转化为数据、Skill 与评测信号，在真实实验中持续扩展到新的 OOD 任务，并沉淀论文背后的高价值过程数据。",
@@ -31,6 +30,16 @@ const copy = locale === "zh" ? {
   loopNote: "每一轮都抬高能力上限、拓宽任务面，并加深长期记忆。",
   loopReturn: "Life 持续运行：工作、学习、再工作",
   loopSteps: [["01", "未知目标", "目标可以分布外，答案甚至可以尚不存在。"], ["02", "计划与执行", "组合模型、工具、记忆与已有 Skills。"], ["03", "证据与失败", "记录实验、反例、卡点和每次决策依据。"], ["04", "能力蒸馏", "生成可复用 Skill、Verifier、记忆与新任务。"], ["05", "Life 更新", "将证据写入长期记忆，更新路由、工作流、工具配置与评测。"], ["06", "扩展新边界", "下一类 OOD 任务不再从零开始。"]],
+  architectureEyebrow: "Why multi-agent",
+  architectureTitle: "长程智能没有免费的午餐。",
+  architectureBody: "把全部历史不断塞进同一个上下文，看起来像是在给智能体增加记忆；实际上，每新增一段 token，也新增了后续检索、压缩、校验和纠错的成本。任务跑得越久，陈旧假设、失败分支和相互冲突的结论越容易淹没有效信号。上下文长度不是组织能力，更多也不天然更好。",
+  architecturePoints: [["上下文会腐烂", "让一个上下文同时承担发散、执行、记忆和自我评审，轮次越多，噪声与角色冲突越难控制。"], ["强模型不等于强系统", "把最强模型放进最简陋的 harness，期待它自然走向 ASI，是把模型能力、记忆系统和组织能力混为一谈。"], ["多智能体也不是堆人数", "Argus 不是靠多开 Agent 碰运气，而是用角色边界、独立上下文、外置项目状态和独立验收，把 token 成本限制在可管理的局部。"]],
+  thesisEyebrow: "我们的判断",
+  thesisTitle: "“一个无敌模型 + 一个粗糙 harness = ASI”不是系统设计，是技术童话。",
+  thesisBody: "单 Agent 可以完成短任务；把它当作跨天、数百轮自主研究的终局架构，才是一种“免费午餐”假设。人类最伟大的创新也从来不只依赖一个天才大脑，而依赖团队、制度、记录、实验和同行质疑。机器智能不会神奇地免除这些组织成本。",
+  sourcePrefix: "唐杰援引 Google DeepMind 2026 年的",
+  sourceTitle: "《From AGI to ASI: A Roadmap to Superintelligence》",
+  sourceSuffix: "指出：即使单个智能体的能力保持不变，扩大智能体数量与交互时长仍可能涌现更高层级的能力。通往更高智能的关键，不只在更强的单体，也在能够持续协作的系统。",
   dataEyebrow: "The missing data market",
   dataTitle: "论文公开了答案，却几乎从不公开答案是怎样被找到的。",
   dataBody: "一篇论文、一个数学猜想的背后，从 idea 如何产生，到遇到什么困难、为什么原路线失败、如何判断该换路，再到最终证据链——这些极其精细的过程通常是研究者的看家本领，也是今天公开科研记录中的巨大空白。Argus 原生记录这条过程。",
@@ -78,6 +87,16 @@ const copy = locale === "zh" ? {
   loopNote: "Every cycle raises the ceiling, widens the task surface, and deepens durable memory.",
   loopReturn: "Life keeps running: work, learn, and work again",
   loopSteps: [["01", "Unknown objective", "The task may be OOD and the answer may not exist yet."], ["02", "Plan and execute", "Compose models, tools, memory, and existing skills."], ["03", "Evidence and failure", "Record experiments, counterexamples, bottlenecks, and decisions."], ["04", "Distill capability", "Create reusable skills, verifiers, memory, and new tasks."], ["05", "Life update", "Write evidence into durable memory and update routing, workflows, tools, and evaluations."], ["06", "Expand the frontier", "The next class of OOD work no longer starts from zero."]],
+  architectureEyebrow: "Why multi-agent",
+  architectureTitle: "There is no free lunch in long-horizon intelligence.",
+  architectureBody: "Appending every event to one ever-growing context looks like more memory. In practice, every token also creates future retrieval, compression, validation, and correction cost. As a project runs longer, stale assumptions, failed branches, and conflicting conclusions bury the signal. Context length is not organizational capacity, and more is not automatically better.",
+  architecturePoints: [["Long contexts rot", "When one context must brainstorm, execute, remember, and review itself, noise and role conflict compound with every iteration."], ["Model strength is not system strength", "Putting the strongest model inside the weakest harness and expecting ASI to emerge confuses model capability with memory and organizational capability."], ["Multi-agent is not headcount", "Argus does not win by spawning agents at random. It uses bounded roles, separate contexts, external project state, and independent review to keep token cost local and manageable."]],
+  thesisEyebrow: "Our position",
+  thesisTitle: "“A perfect model + a primitive harness = ASI” is not systems design. It is a technological fairy tale.",
+  thesisBody: "A single agent can finish short tasks. Treating it as the final architecture for multi-day research with hundreds of iterations is the free-lunch assumption. Human innovation has never depended on a lone genius alone; it depends on teams, institutions, records, experiments, and peer challenge. Machine intelligence does not get those organizational costs for free.",
+  sourcePrefix: "Google DeepMind's 2026",
+  sourceTitle: "From AGI to ASI: A Roadmap to Superintelligence",
+  sourceSuffix: "argues that even when individual-agent intelligence is fixed, scaling the number and duration of interactions can produce higher-order capabilities. The path to greater intelligence is not only a stronger individual model, but a system that can sustain coordination.",
   dataEyebrow: "The missing data market",
   dataTitle: "Papers publish the answer. They rarely publish how the answer was found.",
   dataBody: "Behind a paper or mathematical conjecture lies a path from the birth of an idea to dead ends, bottleneck diagnosis, strategic pivots, and the final chain of evidence. These fine-grained decisions are often a researcher's most guarded craft—and a vast blank space in today's public research record. Argus records that process natively.",
@@ -110,10 +129,7 @@ const copy = locale === "zh" ? {
   title={copy.title}
   description={copy.description}
 >
-  <BrandUniverse locale={locale} />
-
-  <HomeChapterMarker number="01" title="WHAT IT IS" />
-  <section id="intro" class="page-hero product-intro">
+  <section class="page-hero">
     <div class="shell hero-system-grid">
       <div class="hero-system-copy">
         <p class="eyebrow">{copy.heroEyebrow}</p>
@@ -131,6 +147,9 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
+  <DenseIntelligence locale={locale} />
+  <MathematicalManifesto locale={locale} />
+
   <section class="metric-strip" aria-label={copy.metricLabel}>
     <div class="metric-grid">
       {copy.metrics.map(([value, label]) => <div class="metric"><strong>{value}</strong><span>{label}</span></div>)}
@@ -143,11 +162,6 @@ const copy = locale === "zh" ? {
     </div>
   </div>
 
-  <HomeChapterMarker number="02" title="DENSE INTELLIGENCE" />
-  <DenseIntelligence locale={locale} />
-  <MathematicalManifesto locale={locale} />
-
-  <HomeChapterMarker number="03" title="HOW IT EVOLVES" />
   <section id="evolution" class="section">
     <div class="shell">
       <div class="section-head">
@@ -173,7 +187,27 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
-  <HomeChapterMarker number="04" title="WHAT IT COMPOUNDS" />
+  <section id="multi-agent" class="section">
+    <div class="shell">
+      <div class="section-head wide">
+        <p class="eyebrow">{copy.architectureEyebrow}</p>
+        <h2>{copy.architectureTitle}</h2>
+        <p>{copy.architectureBody}</p>
+      </div>
+      <div class="card-grid">
+        {copy.architecturePoints.map(([title, body], index) => <article class="card"><span class="number">{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{body}</p></article>)}
+      </div>
+      <aside class="business-thesis architecture-thesis">
+        <p class="eyebrow">{copy.thesisEyebrow}</p>
+        <h3>{copy.thesisTitle}</h3>
+        <p class="architecture-thesis__body">{copy.thesisBody}</p>
+        <p class="architecture-thesis__source">
+          {copy.sourcePrefix} <a href={asiPaperHref} target="_blank" rel="noopener noreferrer">{copy.sourceTitle}</a> {copy.sourceSuffix}
+        </p>
+      </aside>
+    </div>
+  </section>
+
   <section id="process-data" class="section surface data-economy">
     <div class="shell">
       <div class="section-head wide">
@@ -222,7 +256,6 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
-  <HomeChapterMarker number="05" title="WHERE IT EXPANDS" />
   <section class="section">
     <div class="shell">
       <div class="section-head">
@@ -248,7 +281,6 @@ const copy = locale === "zh" ? {
     </div>
   </section>
 
-  <HomeChapterMarker number="06" title="START" />
   <section class="section">
     <div class="shell">
       <div class="cta-band">
