@@ -40,6 +40,14 @@ const paperSummaries: Record<string, PaperSummary> = {
     en: "Compares bare prompting, generic sunk-cost warnings, and a prospective-value reframe on 720 decisions. The reframe improves the primary hosted-backend matrix, but weaker replication evidence limits the claim to a promising candidate rather than broad robustness.",
     zh: "在 720 个决策任务上比较原始提示、通用沉没成本警告和前瞻价值重构。重构方法在主后端上取得改进，但复现实验较弱，因此只能视为有前景的候选方案，不能宣称普遍稳健。",
   },
+  "agreement-margin-abstention": {
+    en: "Fuses semantic answer-cluster agreement with greedy token margin for post-hoc selective QA confidence. On 720 held-out questions AMA has the best aggregate AURAC, but its small lead is below the preregistered threshold and unstable across families and clustering choices.",
+    zh: "将语义答案簇的一致性与 greedy token margin 融合，用于问答后的选择性置信度估计。在 720 个留出问题上 AMA 的总体 AURAC 最高，但领先幅度低于预注册阈值，且会随任务族和聚类设置变化。",
+  },
+  "q3c-evidence-conditioned-confidence": {
+    en: "Trains a QLoRA question-candidate-context judge that evaluates answers together with evidence and sampled alternatives. Q3C raises raw score from 22.0% to 31.7% and cuts overconfident errors from 76% to 12%, while RAG and TruthfulQA expose important operating-point limits.",
+    zh: "训练 QLoRA question-candidate-context 判别器，将候选答案、证据和采样备选项联合评估。Q3C 将原始得分从 22.0% 提升到 31.7%，并把过度自信错误从 76% 降至 12%，但 RAG 与 TruthfulQA 结果也暴露出关键的弃答阈值边界。",
+  },
   "auditable-evidence-admission": {
     en: "Introduces EG-MPoT, which plans visual subquestions, admits supported observations into memory, and answers from that trace. It performs well on POPE and constrained HallusionBench, while A-OKVQA shows where answer-first prompting remains preferable.",
     zh: "提出 EG-MPoT：规划视觉子问题，将受支持的观察写入记忆，再从可审计轨迹生成答案。方法在 POPE 和受限 HallusionBench 上表现良好，而 A-OKVQA 显示直接答案优先仍有适用场景。",

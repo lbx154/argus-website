@@ -90,6 +90,26 @@
     "categoryDescription": "LLM 认知与决策偏差 · 免训练诊断"
   },
   {
+    "id": "agreement-margin-abstention",
+    "title": "Agreement-Margin Abstention for Selective Question Answering: A Diagnostic Result",
+    "href": "/papers/confidence-reliability/agreement-margin-abstention.pdf",
+    "pages": 11,
+    "status": "Manuscript",
+    "category": "reliability",
+    "categoryLabel": "Confidence, Calibration & Abstention",
+    "categoryDescription": "开放域问答中的置信度估计、校准与安全弃答"
+  },
+  {
+    "id": "q3c-evidence-conditioned-confidence",
+    "title": "Q3C: Evidence-Conditioned Candidate Confidence for Safer Abstention in Open-Domain Question Answering",
+    "href": "/papers/confidence-reliability/q3c-evidence-conditioned-confidence.pdf",
+    "pages": 13,
+    "status": "Manuscript",
+    "category": "reliability",
+    "categoryLabel": "Confidence, Calibration & Abstention",
+    "categoryDescription": "开放域问答中的置信度估计、校准与安全弃答"
+  },
+  {
     "id": "auditable-evidence-admission",
     "title": "Auditable Evidence Admission for Traceable Multimodal Reasoning",
     "href": "/papers/multimodal-mllm/auditable-evidence-admission.pdf",

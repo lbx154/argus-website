@@ -12,6 +12,7 @@ const chineseLabels: Record<string, string> = {
   cognitive: "LLM 认知偏差",
   efficiency: "效率、压缩与解码",
   multimodal: "多模态与视觉语言模型",
+  reliability: "置信度、校准与弃答",
   trace: "状态轨迹与可审计性",
   world: "世界模型",
 };
@@ -20,6 +21,7 @@ const englishDescriptions: Record<string, string> = {
   cognitive: "Cognition and decision bias in LLMs · training-free diagnostics",
   efficiency: "Compression, speculative decoding, RAG decoding, quantization, and KV cache",
   multimodal: "Vision-language and multimodal perception · diagnostics, mitigation, and efficiency",
+  reliability: "Confidence estimation, calibration, and safer abstention for open-domain QA",
   trace: "Auditable protocols for state traces",
   world: "World-state tracking and structured counterfactual simulation",
 };
@@ -51,14 +53,14 @@ const typedPapers: Paper[] = papers.map((paper) => {
 });
 const copy = locale === "zh" ? {
   title: "Research · Argus",
-  description: "Argus 自主研究成果集：六个研究方向，41 份精选论文 PDF。",
-  hero: "41 篇论文，六条研究线。",
-  lede: "35 篇 Manuscript，6 篇 Draft。重复版本已经移除。",
+  description: "Argus 自主研究成果集：七个研究方向，43 份精选论文 PDF。",
+  hero: "43 篇论文，七条研究线。",
+  lede: "37 篇 Manuscript，6 篇 Draft。重复版本已经移除。",
 } : {
   title: "Research · Argus",
-  description: "The Argus autonomous research collection: 41 selected papers across six research programs.",
-  hero: "41 papers across six research programs.",
-  lede: "35 manuscripts and 6 drafts, with duplicate versions removed.",
+  description: "The Argus autonomous research collection: 43 selected papers across seven research programs.",
+  hero: "43 papers across seven research programs.",
+  lede: "37 manuscripts and 6 drafts, with duplicate versions removed.",
 };
 ---
 
