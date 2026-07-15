@@ -84,7 +84,7 @@ const copy = locale === "zh" ? {
       <h1>{copy.heroLead}<em>{copy.heroEm}</em></h1>
       <p class="lede">{copy.lede}</p>
       <div class="hero-actions">
-        <a class="button primary" href="#cli">{copy.fullCli}</a>
+        <a class="button primary" href="#run-picker">{copy.fullCli}</a>
         <a class="button" href="#webui">{copy.web}</a>
       </div>
       <p class="demo-source">{copy.source}</p>
@@ -113,14 +113,7 @@ const copy = locale === "zh" ? {
         </div>
       </div>
 
-      <div class="demo-frame terminal-demo">
-        <div class="demo-frame__bar">
-          <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <strong>Argus CLI</strong>
-          <span>4 REAL RUNS</span>
-        </div>
-        <ResearchVideoDemo />
-      </div>
+      <ResearchVideoDemo />
 
       <p class="demo-caption">
         <strong>{copy.cliCaptionTitle}</strong>

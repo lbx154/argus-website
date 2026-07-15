@@ -3,66 +3,94 @@ import { localeFromPath } from "../i18n";
 
 const locale = localeFromPath(Astro.url.pathname);
 const copy = locale === "zh" ? {
-  choose: "选择一条真实运行记录",
+  heading: "选择一条真实运行",
+  subheading: "四个任务，四种能力边界。",
+  swipeHint: "滑动查看更多",
+  nowPlaying: "正在播放",
+  play: "播放",
+  frameTitle: "Argus CLI",
+  frameBadge: "REAL RUN",
   download: "下载当前演示视频",
   runs: [
     {
+      category: "研究 → 论文",
       title: "研究方向 → 论文",
-      meta: "19:54 → 2:17 · 分段变速",
+      duration: "19:54 → 2:17",
+      pacing: "分段变速",
       label: "Argus 从研究方向到论文交付的真实回放",
       src: "/assets/demos/argus-research-to-paper-condensed.mp4",
       poster: "/assets/demos/argus-research-to-paper-poster.webp",
     },
     {
+      category: "方法 → Benchmark",
       title: "方法实现 → Benchmark",
-      meta: "11:29 → 2:07 · 分段变速",
+      duration: "11:29 → 2:07",
+      pacing: "分段变速",
       label: "Argus 实现 Agreement-Margin 并完成真实 benchmark 的回放",
       src: "/assets/demos/argus-ama-benchmark-condensed.mp4",
       poster: "/assets/demos/argus-ama-benchmark-poster.webp",
     },
     {
+      category: "文学 → 成稿",
       title: "文学创作 → 成稿",
-      meta: "1:29 · 完整回放",
+      duration: "1:29",
+      pacing: "完整回放",
       label: "Argus 完成《雨停之前》文学创作与章节审校的真实回放",
       src: "/assets/demos/argus-literary-creation.mp4",
       poster: "/assets/demos/argus-literary-creation-poster.webp",
     },
     {
+      category: "数学 → 验收",
       title: "计算数学 → 验收",
-      meta: "1:17 · 完整回放",
+      duration: "1:17",
+      pacing: "完整回放",
       label: "Argus 完成 Erdős–Straus 计算研究、双算法审计与 Reviewer 验收的真实回放",
       src: "/assets/demos/argus-math-erdos-straus.mp4",
       poster: "/assets/demos/argus-math-erdos-straus-poster.webp",
     },
   ],
 } : {
-  choose: "Choose a real Argus run",
+  heading: "Choose a real Argus run",
+  subheading: "Four tasks. Four capability boundaries.",
+  swipeHint: "Swipe to explore",
+  nowPlaying: "NOW PLAYING",
+  play: "Play",
+  frameTitle: "Argus CLI",
+  frameBadge: "REAL RUN",
   download: "Download the current demo video",
   runs: [
     {
+      category: "Research → paper",
       title: "Research direction → paper",
-      meta: "19:54 → 2:17 · variable speed",
+      duration: "19:54 → 2:17",
+      pacing: "variable speed",
       label: "A real Argus run from research direction to paper delivery",
       src: "/assets/demos/argus-research-to-paper-condensed.mp4",
       poster: "/assets/demos/argus-research-to-paper-poster.webp",
     },
     {
+      category: "Method → benchmark",
       title: "Method → benchmark",
-      meta: "11:29 → 2:07 · variable speed",
+      duration: "11:29 → 2:07",
+      pacing: "variable speed",
       label: "A real Argus run implementing Agreement-Margin on real benchmarks",
       src: "/assets/demos/argus-ama-benchmark-condensed.mp4",
       poster: "/assets/demos/argus-ama-benchmark-poster.webp",
     },
     {
+      category: "Literary → final draft",
       title: "Literary brief → final draft",
-      meta: "1:29 · complete replay",
+      duration: "1:29",
+      pacing: "complete replay",
       label: "A real Argus literary-writing and chapter-review run for Before the Rain Stops",
       src: "/assets/demos/argus-literary-creation.mp4",
       poster: "/assets/demos/argus-literary-creation-poster.webp",
     },
     {
+      category: "Math → audit",
       title: "Computational math → audit",
-      meta: "1:17 · complete replay",
+      duration: "1:17",
+      pacing: "complete replay",
       label: "A real Argus Erdős–Straus computational study with two-algorithm auditing and Reviewer acceptance",
       src: "/assets/demos/argus-math-erdos-straus.mp4",
       poster: "/assets/demos/argus-math-erdos-straus-poster.webp",
@@ -71,45 +99,73 @@ const copy = locale === "zh" ? {
 };
 ---
 
-<div class="research-video-switcher" data-research-video-switcher>
-  <div class="cli-demo-tabs research-video-tabs" role="tablist" aria-label={copy.choose}>
-    {copy.runs.map((run, index) => (
-      <button
-        id={`research-video-tab-${index}`}
-        type="button"
-        role="tab"
-        aria-controls="research-video-panel"
-        aria-selected={index === 0 ? "true" : "false"}
-        tabindex={index === 0 ? 0 : -1}
-        data-video-src={run.src}
-        data-video-poster={run.poster}
-        data-video-label={run.label}
-      >
-        <strong>{run.title}</strong>
-        <span>{run.meta}</span>
-      </button>
-    ))}
+<div class="run-demo" data-research-video-switcher>
+  <div class="run-picker" id="run-picker" data-run-picker>
+    <div class="run-picker__head">
+      <h3>{copy.heading}</h3>
+      <p>{copy.subheading}</p>
+    </div>
+
+    <div class="run-rail" role="tablist" aria-label={copy.heading}>
+      {copy.runs.map((run, index) => (
+        <button
+          id={`run-card-${index}`}
+          class="run-card"
+          type="button"
+          role="tab"
+          aria-controls="research-video-panel"
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? 0 : -1}
+          data-video-src={run.src}
+          data-video-poster={run.poster}
+          data-video-label={run.label}
+        >
+          <span class="run-card__poster" style={`background-image: url(${run.poster})`} aria-hidden="true"></span>
+          <span class="run-card__scrim" aria-hidden="true"></span>
+          <span class="run-card__category" data-run-category>{run.category}</span>
+          <span class="run-card__now" data-now-playing>{copy.nowPlaying}</span>
+          <span class="run-card__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </span>
+          <span class="run-card__body">
+            <strong class="run-card__title">{run.title}</strong>
+            <span class="run-card__meta">
+              <span class="run-card__duration" data-run-duration>{run.duration}</span>
+              <span class="run-card__pacing">{run.pacing}</span>
+            </span>
+          </span>
+        </button>
+      ))}
+    </div>
+    <p class="run-rail__hint" aria-hidden="true">{copy.swipeHint}</p>
   </div>
 
-  <div
-    id="research-video-panel"
-    class="research-video-stage"
-    role="tabpanel"
-    aria-labelledby="research-video-tab-0"
-  >
-    <video
-      data-research-video
-      controls
-      loop
-      muted
-      playsinline
-      preload="metadata"
-      poster={copy.runs[0].poster}
-      aria-label={copy.runs[0].label}
+  <div class="demo-frame terminal-demo run-player">
+    <div class="demo-frame__bar">
+      <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <strong>{copy.frameTitle}</strong>
+      <span>{copy.frameBadge}</span>
+    </div>
+    <div
+      id="research-video-panel"
+      class="research-video-stage"
+      role="tabpanel"
+      aria-labelledby="run-card-0"
     >
-      <source src={copy.runs[0].src} type="video/mp4" />
-      <a data-video-download href={copy.runs[0].src}>{copy.download}</a>
-    </video>
+      <video
+        data-research-video
+        controls
+        loop
+        muted
+        playsinline
+        preload="metadata"
+        poster={copy.runs[0].poster}
+        aria-label={copy.runs[0].label}
+      >
+        <source src={copy.runs[0].src} type="video/mp4" />
+        <a data-video-download href={copy.runs[0].src}>{copy.download}</a>
+      </video>
+    </div>
   </div>
 </div>
 
@@ -121,12 +177,14 @@ const copy = locale === "zh" ? {
     const source = video?.querySelector<HTMLSourceElement>("source");
     const download = video?.querySelector<HTMLAnchorElement>("[data-video-download]");
     const panel = root.querySelector<HTMLElement>('[role="tabpanel"]');
+    const player = root.querySelector<HTMLElement>(".run-player");
     const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-video-src]")];
 
     if (!(video && source && download && panel && buttons.length > 0)) return;
 
     root.dataset.ready = "true";
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const desktop = window.matchMedia("(min-width: 861px)");
     let visible = false;
     let activeSource = "";
 
@@ -134,7 +192,7 @@ const copy = locale === "zh" ? {
       if (visible && !reducedMotion) void video.play().catch(() => undefined);
     };
 
-    const load = (button: HTMLButtonElement) => {
+    const load = (button: HTMLButtonElement, scrollIntoView = false) => {
       const nextSource = button.dataset.videoSrc ?? "";
 
       buttons.forEach((candidate) => {
@@ -143,6 +201,13 @@ const copy = locale === "zh" ? {
         candidate.tabIndex = selected ? 0 : -1;
       });
       panel.setAttribute("aria-labelledby", button.id);
+
+      if (scrollIntoView && desktop.matches && player) {
+        player.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "nearest",
+        });
+      }
 
       if (nextSource === activeSource) {
         playWhenAppropriate();
@@ -160,7 +225,7 @@ const copy = locale === "zh" ? {
     };
 
     buttons.forEach((button, index) => {
-      button.addEventListener("click", () => load(button));
+      button.addEventListener("click", () => load(button, true));
       button.addEventListener("keydown", (event) => {
         let nextIndex: number | undefined;
 
@@ -176,8 +241,11 @@ const copy = locale === "zh" ? {
 
         if (nextIndex === undefined) return;
         event.preventDefault();
-        buttons[nextIndex]?.focus();
-        if (buttons[nextIndex]) load(buttons[nextIndex]);
+        const next = buttons[nextIndex];
+        if (next) {
+          next.focus();
+          load(next, true);
+        }
       });
     });
 

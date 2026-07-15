@@ -58,7 +58,28 @@ for (const page of ["index.html", "zh.html"]) {
   assert(html.includes('data-argus-logo="mark"'), `${page} lacks the rounded mark`);
 }
 
+for (const page of ["start.html", "zh/start.html"]) {
+  const html = read(page);
+  const pickerIndex = html.indexOf("data-run-picker");
+  const frameIndex = html.indexOf("demo-frame");
+  assert(pickerIndex !== -1, `${page} lacks the external run picker (data-run-picker)`);
+  assert(frameIndex !== -1, `${page} lacks the CLI demo frame`);
+  assert(pickerIndex < frameIndex, `${page} renders the run picker inside or after the CLI frame`);
+  const cardCount = (html.match(/data-video-src=/g) || []).length;
+  assert(cardCount === 4, `${page} must expose four run cards, found ${cardCount}`);
+  assert(html.includes("data-run-category"), `${page} run cards lack a category badge`);
+  assert(html.includes("data-run-duration"), `${page} run cards lack duration metadata`);
+  assert(html.includes("data-now-playing"), `${page} lacks the now-playing badge`);
+  assert(!html.includes("cli-demo-tabs"), `${page} still nests text tabs inside the CLI frame`);
+}
+
 const css = fs.readFileSync(path.resolve("src/styles/global.css"), "utf8");
+assert(css.includes("scroll-snap-type: x mandatory"), "run rail lacks mandatory horizontal snap");
+assert(css.includes("min(82vw"), "mobile run cards are not ~82vw wide");
+assert(
+  css.includes("linear-gradient(90deg, var(--blue), var(--gold))"),
+  "selected run card lacks the blue-to-gold border token",
+);
 assert(css.includes("scroll-padding-inline: 18px"), "mobile nav lacks scroll padding");
 assert(css.includes("scroll-snap-type: x proximity"), "mobile nav lacks scroll snapping");
 assert(css.includes("--signal-segment-width: max(33.333vw, 480px)"), "signal rail segment width changed");
