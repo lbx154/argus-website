@@ -4,6 +4,9 @@ import { localeFromPath } from "../i18n";
 
 const locale = localeFromPath(Astro.url.pathname);
 const stages = ["research", "plan", "benchmark", "run", "analysis", "draft", "review", "submission"];
+const trajectoryChart = locale === "zh"
+  ? "/assets/nanochat-b200-trajectory.svg"
+  : "/assets/nanochat-b200-trajectory.en.svg";
 const copy = locale === "zh" ? {
   title: "How It Works · Argus",
   description: "Argus 如何用 LifeSupervisor、四个角色和 SkillLoop 持续经营一个研究项目。",
@@ -80,7 +83,7 @@ const copy = locale === "zh" ? {
         <p>{copy.runBody}</p>
       </div>
       <figure class="figure">
-        <img src="/assets/nanochat-b200-trajectory.svg" alt={copy.alt} />
+        <img src={trajectoryChart} alt={copy.alt} />
         <figcaption>{copy.caption}</figcaption>
       </figure>
     </div>

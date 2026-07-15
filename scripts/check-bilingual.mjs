@@ -147,6 +147,24 @@ assert(
 );
 const smallFavicon = fs.readFileSync(path.resolve("public/assets/argus-mark-rounded-small.svg"), "utf8");
 assert(smallFavicon.includes('fill="#073e8c"'), "small SVG favicon lacks explicit deep-blue fill");
+const englishHow = read("how.html");
+const chineseHow = read("zh/how.html");
+assert(englishHow.includes("/assets/nanochat-b200-trajectory.en.svg"), "English How page lacks English nanochat chart");
+assert(chineseHow.includes("/assets/nanochat-b200-trajectory.svg"), "Chinese How page lacks Chinese nanochat chart");
+const englishTrajectory = fs.readFileSync(path.resolve("public/assets/nanochat-b200-trajectory.en.svg"), "utf8");
+const chineseTrajectory = fs.readFileSync(path.resolve("public/assets/nanochat-b200-trajectory.svg"), "utf8");
+assert(!/[\u3400-\u9fff]/.test(englishTrajectory), "English nanochat chart contains Chinese labels");
+assert(
+  englishTrajectory.includes("human SOTA 0.9646") && chineseTrajectory.includes("human SOTA 0.9646"),
+  "Bilingual nanochat charts disagree on the human SOTA reference",
+);
+const rightLegendLabels = [...englishTrajectory.matchAll(/<text x="678"[^>]*>([^<]+)<\/text>/g)]
+  .map((match) => match[1]);
+assert(rightLegendLabels.length === 5, "English nanochat chart legend count changed");
+assert(
+  rightLegendLabels.every((label) => [...label].length <= 24),
+  `English nanochat chart legend may clip: ${rightLegendLabels.join(" | ")}`,
+);
 
 for (const page of fs.readdirSync(dist, { recursive: true })) {
   if (typeof page !== "string" || !page.endsWith(".html")) continue;
