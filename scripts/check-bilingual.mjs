@@ -55,7 +55,7 @@ for (const [englishPath, chinesePath] of pairs) {
 for (const page of ["index.html", "zh.html"]) {
   const html = read(page);
   assert(html.includes('data-argus-logo="horizontal"'), `${page} lacks the rounded horizontal logo`);
-  assert(!html.includes("data-brand-universe"), `${page} still renders the kinetic BrandUniverse opening`);
+  assert(html.includes("data-brand-universe"), `${page} lacks the kinetic BrandUniverse opening`);
   assert(!html.includes("data-home-chapter"), `${page} still renders numbered homepage chapters`);
   const heroAt = html.indexOf('class="page-hero"');
   const denseAt = html.indexOf('id="dense-intelligence"');

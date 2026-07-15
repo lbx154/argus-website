@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import ResearchField from "../components/ResearchField.astro";
+import BrandUniverse from "../components/BrandUniverse.astro";
 import DenseIntelligence from "../components/DenseIntelligence.astro";
 import MathematicalManifesto from "../components/MathematicalManifesto.astro";
 import { localeFromPath, pathForLocale } from "../i18n";
@@ -129,6 +130,8 @@ const copy = locale === "zh" ? {
   title={copy.title}
   description={copy.description}
 >
+  <BrandUniverse locale={locale} />
+
   <section class="page-hero">
     <div class="shell hero-system-grid">
       <div class="hero-system-copy">
