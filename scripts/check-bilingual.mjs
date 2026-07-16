@@ -92,10 +92,12 @@ assert(sitemap.includes("https://argusbot.cn/zh/release.html"), "sitemap.xml lac
 
 for (const page of ["release.html", "zh/release.html"]) {
   const html = read(page);
-  assert(html.includes("npm install -g @argusbot/cli@beta"), `${page} lacks the npm beta install command`);
-  assert(html.includes("argus-skill --setup"), `${page} lacks first-time setup`);
+  assert(html.includes("npm install -g @argusevolve/argus@beta"), `${page} lacks the single-package npm beta install command`);
+  assert(html.includes("https://argusbot.cn/argus/install.sh"), `${page} lacks the Linux installer command`);
+  assert(html.includes("https://argusbot.cn/argus/install.ps1"), `${page} lacks the Windows installer command`);
+  assert(html.includes("argus --setup"), `${page} lacks first-time setup`);
   assert(html.includes("argus --web"), `${page} lacks the Web cockpit command`);
-  assert(html.includes("0.1.0"), `${page} lacks the Binary Preview version`);
+  assert(html.includes("0.1.1"), `${page} lacks the Binary Preview version`);
   assert(html.includes("Coming Soon") || html.includes("coming soon"), `${page} lacks code-coming-soon copy`);
   assert(html.includes("npm Beta") || html.includes("npm beta"), `${page} lacks npm beta positioning`);
 }

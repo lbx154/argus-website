@@ -7,21 +7,23 @@ const href = (path: string) => pathForLocale(path, locale);
 const copy = locale === "zh" ? {
   title: "Release 与安装 · Argus",
   description: "Argus Binary Preview 的 npm 内测安装方式、平台支持、版本状态与更新命令。npm Beta 先行，核心代码 Coming Soon。",
-  eyebrow: "Binary Preview · 0.1.0",
+  eyebrow: "Binary Preview · 0.1.1",
   hero: "通过 npm 安装 Argus。",
   lede: "代码 Coming Soon。第一阶段先通过 npm Binary Preview 开放二进制内测，收集真实安装、平台兼容与长期运行反馈。",
   pending: "代码 Coming Soon · npm Beta 先行",
   pendingBody: "Linux x64 与 Windows Terminal / PowerShell 版本均已通过原生 CI 构建、测试、二进制 smoke 与 npm 包检查。首批内测通过 npm 的 beta 通道发布，核心代码将在发布治理与贡献流程准备完成后开放。",
   updated: "状态更新：2026 年 7 月 16 日",
-  installTitle: "安装 npm Beta",
-  installBody: "需要 Node.js 22 或更高版本。使用 beta tag 加入内测，npm 会自动选择与你的系统匹配的平台包。",
-  installLabel: "安装内测版本",
+  installTitle: "安装 Argus Beta",
+  installBody: "Linux x64 与 Windows x64 可直接安装原生二进制；也可通过单一 npm 包安装，npm 路径需要 Node.js 18 或更高版本。",
+  linuxInstallLabel: "Linux x64",
+  windowsInstallLabel: "Windows x64",
+  installLabel: "npm 备用安装",
   setupLabel: "首次配置",
   launchLabel: "启动 Terminal cockpit",
   webLabel: "启动 Web cockpit",
   stepsLabel: "安装步骤",
   steps: [
-    ["01", "安装", "npm 下载轻量启动器和对应平台二进制。"],
+    ["01", "安装", "官网脚本或 npm 只下载与你的平台匹配的原生二进制。"],
     ["02", "配置", "运行交互式 setup，配置模型后端、API 与机器规则。"],
     ["03", "启动", "在项目目录运行 argus；同一会话也可切换到 Web cockpit。"],
   ],
@@ -32,17 +34,17 @@ const copy = locale === "zh" ? {
     ["Windows x64", "Validated", "面向 Windows Terminal、PowerShell 与经典控制台；真实 .exe 已通过 Windows runner 构建和 smoke test。"],
   ],
   packageTitle: "包里有什么",
-  packageBody: "公开分发面保持很小，平台实现彼此隔离。",
+  packageBody: "用户只面对一个 npm 包名；平台二进制以同一包名的版本变体发布。",
   packageFacts: [
-    ["@argusbot/cli", "约 1.4 KB", "命令入口与平台选择器"],
-    ["平台包", "约 55 MB", "argus-core 可执行文件、SHA-256 与第三方许可证清单"],
+    ["@argusevolve/argus", "单一包名", "命令入口、平台选择与 Linux / Windows 版本变体"],
+    ["原生二进制", "按平台下载", "argus-core 可执行文件、SHA-256 与第三方许可证清单"],
     ["核心代码", "Coming Soon", "内测阶段先验证二进制发行；源码、贡献规范与开发文档随后开放"],
   ],
-  releaseTitle: "0.1.0 Binary Preview",
+  releaseTitle: "0.1.1 Binary Preview",
   releasePoints: [
     "Terminal 与 Web cockpit，共享 Manager、Planner、Engineer、Reviewer 状态",
     "后端自动启动、版本握手、真实 PID 所有权与安全停止",
-    "Linux x64 与 Windows x64 独立平台包",
+    "单一 npm 包名下的 Linux x64 与 Windows x64 平台版本",
     "npm Beta 先行收集安装与运行反馈；核心代码 Coming Soon",
   ],
   limitsTitle: "Preview 边界",
@@ -59,21 +61,23 @@ const copy = locale === "zh" ? {
 } : {
   title: "Release & Installation · Argus",
   description: "npm beta installation, platform support, release status, and update commands for the Argus Binary Preview. npm beta comes first; core code is coming soon.",
-  eyebrow: "Binary Preview · 0.1.0",
+  eyebrow: "Binary Preview · 0.1.1",
   hero: "Install Argus from npm.",
   lede: "Code is coming soon. The first phase opens a binary npm preview to collect real installation, compatibility, and long-running feedback.",
   pending: "Code coming soon · npm beta first",
   pendingBody: "Linux x64 and Windows Terminal / PowerShell have both passed native CI builds, tests, binary smoke checks, and npm package verification. The first testers install through npm's beta channel; core code follows once release governance and contribution workflows are ready.",
   updated: "Status updated July 16, 2026",
-  installTitle: "Install the npm beta",
-  installBody: "Node.js 22 or newer is required. Join the preview through the beta tag; npm selects the matching platform package automatically.",
-  installLabel: "Install the beta",
+  installTitle: "Install the Argus beta",
+  installBody: "Linux x64 and Windows x64 can install the native binary directly. The single-package npm alternative requires Node.js 18 or newer.",
+  linuxInstallLabel: "Linux x64",
+  windowsInstallLabel: "Windows x64",
+  installLabel: "npm alternative",
   setupLabel: "First-time setup",
   launchLabel: "Launch the Terminal cockpit",
   webLabel: "Launch the Web cockpit",
   stepsLabel: "Installation steps",
   steps: [
-    ["01", "Install", "npm downloads the small launcher and the executable for your platform."],
+    ["01", "Install", "The official installer or npm downloads only the native binary for your platform."],
     ["02", "Configure", "Run the guided setup for model backends, API access, and machine policy."],
     ["03", "Launch", "Run argus from a project directory, or switch the same session to the Web cockpit."],
   ],
@@ -84,17 +88,17 @@ const copy = locale === "zh" ? {
     ["Windows x64", "Validated", "Targets Windows Terminal, PowerShell, and the classic console; the real .exe passed build and smoke tests on the Windows runner."],
   ],
   packageTitle: "What ships",
-  packageBody: "The public distribution surface stays small and platform-specific.",
+  packageBody: "Users see one npm package name; native binaries ship as platform-specific versions of that same package.",
   packageFacts: [
-    ["@argusbot/cli", "~1.4 KB", "Command shims and platform selection"],
-    ["Platform package", "~55 MB", "argus-core executable, SHA-256, and third-party notices"],
+    ["@argusevolve/argus", "One package name", "Command shims, platform selection, and Linux / Windows variants"],
+    ["Native binary", "Downloaded per platform", "argus-core executable, SHA-256, and third-party notices"],
     ["Core code", "Coming soon", "The beta validates binary distribution first; source, contribution rules, and developer docs follow"],
   ],
-  releaseTitle: "0.1.0 Binary Preview",
+  releaseTitle: "0.1.1 Binary Preview",
   releasePoints: [
     "Terminal and Web cockpits with shared Manager, Planner, Engineer, and Reviewer state",
     "Automatic backend startup, release handshake, real PID ownership, and clean shutdown",
-    "Separate Linux x64 and Windows x64 platform packages",
+    "Linux x64 and Windows x64 variants under one npm package name",
     "npm beta comes first for installation and runtime feedback; core code is coming soon",
   ],
   limitsTitle: "Preview boundaries",
@@ -142,8 +146,10 @@ const copy = locale === "zh" ? {
       <div class="install-grid">
         <div class="install-command-stack">
           {[
-            [copy.installLabel, "npm install -g @argusbot/cli@beta"],
-            [copy.setupLabel, "argus-skill --setup"],
+            [copy.linuxInstallLabel, "curl -fsSL https://argusbot.cn/argus/install.sh | sh"],
+            [copy.windowsInstallLabel, "powershell -ExecutionPolicy ByPass -c \"irm https://argusbot.cn/argus/install.ps1 | iex\""],
+            [copy.installLabel, "npm install -g @argusevolve/argus@beta"],
+            [copy.setupLabel, "argus --setup"],
             [copy.launchLabel, "argus"],
             [copy.webLabel, "argus --web"],
           ].map(([label, command]) => (
@@ -212,8 +218,8 @@ const copy = locale === "zh" ? {
           <h2>{copy.updateTitle}</h2>
         </div>
         <div class="install-command-stack compact-commands">
-          <div class="install-command"><span>{copy.updateLabel}</span><code>npm install -g @argusbot/cli@beta</code></div>
-          <div class="install-command"><span>{copy.uninstallLabel}</span><code>npm uninstall -g @argusbot/cli</code></div>
+          <div class="install-command"><span>{copy.updateLabel}</span><code>npm install -g @argusevolve/argus@beta</code></div>
+          <div class="install-command"><span>{copy.uninstallLabel}</span><code>npm uninstall -g @argusevolve/argus</code></div>
         </div>
       </div>
     </div>
