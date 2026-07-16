@@ -18,7 +18,14 @@ if (-not $BetaVersion) {
 }
 
 $PlatformVersion = "$BetaVersion-win32-x64"
-$VersionMetadata = Invoke-RestMethod "$RegistryUrl/$PackagePath/$PlatformVersion"
+try {
+  $VersionMetadata = Invoke-RestMethod "$RegistryUrl/$PackagePath/$PlatformVersion"
+}
+catch {
+  # Transitional fallback for the first beta, before platform variants moved
+  # under the single @argusevolve/argus package name.
+  $VersionMetadata = Invoke-RestMethod "$RegistryUrl/@argusevolve%2fargus-win32-x64/$BetaVersion"
+}
 $TarballUrl = $VersionMetadata.dist.tarball
 if (-not $TarballUrl) {
   throw "Could not resolve the Windows binary tarball."

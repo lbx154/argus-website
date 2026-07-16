@@ -25,7 +25,13 @@ beta_version=$(printf '%s' "$tags_json" | sed -n 's/.*"beta"[[:space:]]*:[[:spac
 [ -n "$beta_version" ] || fail "npm beta tag is unavailable"
 
 platform_version="${beta_version}-linux-x64"
-version_json=$(curl -fsSL "$REGISTRY_URL/$PACKAGE_PATH/$platform_version")
+if version_json=$(curl -fsSL "$REGISTRY_URL/$PACKAGE_PATH/$platform_version" 2>/dev/null); then
+  :
+else
+  # Transitional fallback for the first beta, before platform variants moved
+  # under the single @argusevolve/argus package name.
+  version_json=$(curl -fsSL "$REGISTRY_URL/@argusevolve%2fargus-linux-x64/$beta_version")
+fi
 tarball_url=$(printf '%s' "$version_json" | sed -n 's/.*"tarball"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
 [ -n "$tarball_url" ] || fail "could not resolve Linux binary tarball"
 
