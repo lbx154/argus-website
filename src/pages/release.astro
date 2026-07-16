@@ -6,16 +6,16 @@ const locale = localeFromPath(Astro.url.pathname);
 const href = (path: string) => pathForLocale(path, locale);
 const copy = locale === "zh" ? {
   title: "Release 与安装 · Argus",
-  description: "Argus Binary Preview 的 npm 安装方式、平台支持、版本状态与更新命令。核心仓库保持私有，公开包只分发启动器和平台二进制。",
+  description: "Argus Binary Preview 的 npm 内测安装方式、平台支持、版本状态与更新命令。npm Beta 先行，核心代码 Coming Soon。",
   eyebrow: "Binary Preview · 0.1.0",
   hero: "通过 npm 安装 Argus。",
-  lede: "核心仓库保持私有；公开 npm 包只包含一个轻量启动器和对应平台的可执行文件，不包含 Argus Python 源码树。",
-  pending: "发布候选 · npm 尚未开放",
-  pendingBody: "安装命令已经冻结并完成 Linux 本地验证，Windows 原生构建正在等待私有 CI runner 验证。npm 包尚未发布；状态变为 Available 前，安装命令会返回未找到。",
+  lede: "代码 Coming Soon。第一阶段先通过 npm Binary Preview 开放二进制内测，收集真实安装、平台兼容与长期运行反馈。",
+  pending: "代码 Coming Soon · npm Beta 先行",
+  pendingBody: "Linux x64 已完成本地端到端验证，Windows Terminal / PowerShell 版本进入原生 CI 验证。首批内测通过 npm 的 beta 通道发布，核心代码将在发布治理与贡献流程准备完成后开放。",
   updated: "状态更新：2026 年 7 月 16 日",
-  installTitle: "安装 Binary Preview",
-  installBody: "需要 Node.js 22 或更高版本。npm 会自动选择与你的系统匹配的平台包。",
-  installLabel: "全局安装",
+  installTitle: "安装 npm Beta",
+  installBody: "需要 Node.js 22 或更高版本。使用 beta tag 加入内测，npm 会自动选择与你的系统匹配的平台包。",
+  installLabel: "安装内测版本",
   setupLabel: "首次配置",
   launchLabel: "启动 Terminal cockpit",
   webLabel: "启动 Web cockpit",
@@ -36,14 +36,14 @@ const copy = locale === "zh" ? {
   packageFacts: [
     ["@argusbot/cli", "约 1.4 KB", "命令入口与平台选择器"],
     ["平台包", "约 55 MB", "argus-core 可执行文件、SHA-256 与第三方许可证清单"],
-    ["核心源码", "不包含", "npm tarball 不含 .py、tests、docs 或私有 Git 历史"],
+    ["核心代码", "Coming Soon", "内测阶段先验证二进制发行；源码、贡献规范与开发文档随后开放"],
   ],
   releaseTitle: "0.1.0 Binary Preview",
   releasePoints: [
     "Terminal 与 Web cockpit，共享 Manager、Planner、Engineer、Reviewer 状态",
     "后端自动启动、版本握手、真实 PID 所有权与安全停止",
     "Linux x64 与 Windows x64 独立平台包",
-    "公开包不包含 Python 源码树；核心 GitHub 仓库保持 private",
+    "npm Beta 先行收集安装与运行反馈；核心代码 Coming Soon",
   ],
   limitsTitle: "Preview 边界",
   limits: [
@@ -52,22 +52,22 @@ const copy = locale === "zh" ? {
     "二进制分发避免直接公开源码，但不是不可逆向的密码学安全边界。",
   ],
   updateTitle: "更新与卸载",
-  updateLabel: "更新",
+  updateLabel: "更新 Beta",
   uninstallLabel: "卸载",
   demo: "先看真实运行 →",
   research: "浏览公开研究 →",
 } : {
   title: "Release & Installation · Argus",
-  description: "npm installation, platform support, release status, and update commands for the Argus Binary Preview. The core repository stays private; public packages contain only launchers and platform binaries.",
+  description: "npm beta installation, platform support, release status, and update commands for the Argus Binary Preview. npm beta comes first; core code is coming soon.",
   eyebrow: "Binary Preview · 0.1.0",
   hero: "Install Argus from npm.",
-  lede: "The core repository remains private. Public npm packages contain a small launcher and a platform executable—not the Argus Python source tree.",
-  pending: "Release candidate · npm not yet available",
-  pendingBody: "The command surface is frozen and the Linux package has passed local validation. The native Windows build is awaiting verification on the private CI runner. Until this status changes to Available, npm will report that the packages are not found.",
+  lede: "Code is coming soon. The first phase opens a binary npm preview to collect real installation, compatibility, and long-running feedback.",
+  pending: "Code coming soon · npm beta first",
+  pendingBody: "Linux x64 has passed local end-to-end validation, and the Windows Terminal / PowerShell build is entering native CI verification. The first testers install through npm's beta channel; core code follows once release governance and contribution workflows are ready.",
   updated: "Status updated July 16, 2026",
-  installTitle: "Install the Binary Preview",
-  installBody: "Node.js 22 or newer is required. npm selects the matching platform package automatically.",
-  installLabel: "Global install",
+  installTitle: "Install the npm beta",
+  installBody: "Node.js 22 or newer is required. Join the preview through the beta tag; npm selects the matching platform package automatically.",
+  installLabel: "Install the beta",
   setupLabel: "First-time setup",
   launchLabel: "Launch the Terminal cockpit",
   webLabel: "Launch the Web cockpit",
@@ -88,14 +88,14 @@ const copy = locale === "zh" ? {
   packageFacts: [
     ["@argusbot/cli", "~1.4 KB", "Command shims and platform selection"],
     ["Platform package", "~55 MB", "argus-core executable, SHA-256, and third-party notices"],
-    ["Core source", "Not included", "No .py tree, tests, docs, or private Git history in the npm tarball"],
+    ["Core code", "Coming soon", "The beta validates binary distribution first; source, contribution rules, and developer docs follow"],
   ],
   releaseTitle: "0.1.0 Binary Preview",
   releasePoints: [
     "Terminal and Web cockpits with shared Manager, Planner, Engineer, and Reviewer state",
     "Automatic backend startup, release handshake, real PID ownership, and clean shutdown",
     "Separate Linux x64 and Windows x64 platform packages",
-    "No Python source tree in public packages; the core GitHub repository remains private",
+    "npm beta comes first for installation and runtime feedback; core code is coming soon",
   ],
   limitsTitle: "Preview boundaries",
   limits: [
@@ -104,7 +104,7 @@ const copy = locale === "zh" ? {
     "Binary distribution avoids direct source publication, but it is not a cryptographic barrier against reverse engineering.",
   ],
   updateTitle: "Update or remove",
-  updateLabel: "Update",
+  updateLabel: "Update beta",
   uninstallLabel: "Uninstall",
   demo: "Watch real runs →",
   research: "Browse public research →",
@@ -142,7 +142,7 @@ const copy = locale === "zh" ? {
       <div class="install-grid">
         <div class="install-command-stack">
           {[
-            [copy.installLabel, "npm install -g @argusbot/cli"],
+            [copy.installLabel, "npm install -g @argusbot/cli@beta"],
             [copy.setupLabel, "argus-skill --setup"],
             [copy.launchLabel, "argus"],
             [copy.webLabel, "argus --web"],
@@ -212,7 +212,7 @@ const copy = locale === "zh" ? {
           <h2>{copy.updateTitle}</h2>
         </div>
         <div class="install-command-stack compact-commands">
-          <div class="install-command"><span>{copy.updateLabel}</span><code>npm update -g @argusbot/cli</code></div>
+          <div class="install-command"><span>{copy.updateLabel}</span><code>npm install -g @argusbot/cli@beta</code></div>
           <div class="install-command"><span>{copy.uninstallLabel}</span><code>npm uninstall -g @argusbot/cli</code></div>
         </div>
       </div>
